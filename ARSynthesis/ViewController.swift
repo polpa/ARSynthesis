@@ -56,8 +56,11 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
         if !hitTest.isEmpty {
             let results = hitTest.first!
             let node = results.node
+            let nodeIndex = Int(node.name!)
             let pinchAction = SCNAction.scale(by: sender.scale, duration: 0)
             node.runAction(pinchAction)
+            //This works!!
+            mixer.scaleOscillatorAmplitude(index: nodeIndex!, scalingFactor: Double(sender.scale))
             sender.scale = 1.0
         }
         

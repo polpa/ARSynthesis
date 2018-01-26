@@ -34,6 +34,10 @@ class AudioMixer{
         oscillatorArray.remove(at: index)
     }
     
+    open func scaleOscillatorAmplitude(index: Int, scalingFactor: Double){
+        oscillatorArray[index].amplitude = oscillatorArray[index].amplitude * scalingFactor
+    }
+    
     open func appendEffect(effectName: String){
         switch effectName {
         case "reverb":
