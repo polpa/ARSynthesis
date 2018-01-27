@@ -15,10 +15,11 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
     var mixer: AudioMixer!
     @IBOutlet var planeDetectionLabel: UILabel!
     let itemsArray: [String] = ["oscillator", "mixer", "sequencer", "reverb"]
+    var nodeArray: [SCNNode] = []
+    var effectArray: [SCNNode] = []
     @IBOutlet weak var itemsCollectionView: UICollectionView!
     @IBOutlet weak var sceneView: ARSCNView!
     let configuration = ARWorldTrackingConfiguration()
-    var i = 0
     var selectedItem: String?
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,7 +57,7 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
         if !hitTest.isEmpty {
             let results = hitTest.first!
             let node = results.node
-            let nodeIndex = Int(node.name!)
+            let nodeIndex = nodeArray.index(of: node)
             let pinchAction = SCNAction.scale(by: sender.scale, duration: 0)
             node.runAction(pinchAction)
             //This works!!
@@ -68,6 +69,7 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
     }
     
     open func volume (x: CGFloat, y: CGFloat, z: CGFloat) -> Double{
+
         return Double(x*y*z)
     }
     
@@ -77,35 +79,67 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
         let tapLocation = sender.location(in: sceneView)
         let hitTest = sceneView.hitTest(tapLocation, types: .existingPlaneUsingExtent)
         let hitTestItems = sceneView.hitTest(tapLocation)
-        print(hitTestItems.isEmpty)
-        if(hitTestItems.isNotEmpty){
-            print(hitTestItems.first?.node.name)
-        }
        if !hitTest.isEmpty{
-        if hitTestItems.isEmpty || hitTestItems.first?.node.name == nil{
+        if hitTestItems.isEmpty {
             self.addItem(hitTestResult: hitTest.first!)
-        } else if hitTestItems.first?.node.name != nil {
-            print(hitTestItems.first?.node.name!)
+        } else if (!hitTestItems.isEmpty) {
             let node = self.sceneView.scene.rootNode.childNode(withName: (hitTestItems.first?.node.name)!, recursively: true) //Recursively means that it looks through all the scene to find the node with the given name, otherwise it just gets the inmediate child
+            let name = node?.geometry?.name!
             node?.removeFromParentNode()
-            mixer.removeOscillator(index: Int((hitTestItems.first?.node.name)!)!)
-            i = i-1
+            
+            print(name!)
+            switch name! {
+            case "box":
+                let currentIndex = nodeArray.index(of: node!)
+                mixer.removeOscillator(index: currentIndex!)
+                nodeArray.remove(at: currentIndex!)
+                break
+            case "reverb":
+                let currentIndex = effectArray.index(of: node!)
+                print("reverb is being removed at index: \(currentIndex!)")
+                break
+            default:
+                break
+            }
+            
         }
         }
     }
     
+    
     func addItem(hitTestResult: ARHitTestResult) {
         if let selectedItem = self.selectedItem {
+            print(selectedItem)
             let scene = SCNScene(named: "Models.scnassets/\(selectedItem).scn")
             let node = (scene?.rootNode.childNode(withName: selectedItem, recursively: false))!
-            node.name = "\(i)"
+            node.name = "\(selectedItem)"
             let transform = hitTestResult.worldTransform
             let thirdColumn = transform.columns.3
             node.position = SCNVector3(thirdColumn.x, thirdColumn.y, thirdColumn.z)
-            self.sceneView.scene.rootNode.addChildNode(node)
-            if selectedItem.elementsEqual("oscillator") {
-                mixer.appendOscillator(index: i)
-                i = i + 1
+            var effectIndex = effectArray.count
+            var currentIndex = nodeArray.count
+
+            switch selectedItem {
+            case "oscillator":
+                nodeArray.insert(node, at: currentIndex)
+                self.sceneView.scene.rootNode.addChildNode(nodeArray[currentIndex])
+                for node in nodeArray{
+                    node.name = String("\(nodeArray.index(of: node))")
+                }
+                print(currentIndex)
+                mixer.appendOscillator(index: currentIndex)
+                break
+            case "reverb":
+                effectArray.insert(node, at: effectIndex)
+                self.sceneView.scene.rootNode.addChildNode(effectArray[effectIndex])
+                for node in effectArray{
+                    node.name = String("\(effectArray.index(of: node))")
+                }
+                mixer.appendEffect(effectName: "Reverb")
+                print("This is the reverb Module")
+                break
+            default:
+                break
             }
         }
     }
@@ -121,16 +155,16 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath)
         self.selectedItem = itemsArray[indexPath.row]
-        cell?.backgroundColor = UIColor.green
+        cell?.backgroundColor = UIColor.purple
     }
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        //Handles the case where an item is deselected.
         let cell = collectionView.cellForItem(at: indexPath)
-        cell?.backgroundColor = UIColor.orange
+        cell?.backgroundColor = UIColor.black
     }
     
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         guard anchor is ARPlaneAnchor else {return}
-        print("Plane has been detected")
         DispatchQueue.main.async{
             self.planeDetectionLabel.text = "Plane Detected!"
         }
@@ -138,7 +172,6 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
     
     func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor){
         guard anchor is ARPlaneAnchor else {return}
-        print("plane is updating")
     }
     
     func renderer(_ renderer: SCNSceneRenderer, didRemove node: SCNNode, for anchor: ARAnchor){
@@ -149,20 +182,34 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
         let sceneView = sender.view as! ARSCNView
         let holdLocation = sender.location(in: sceneView)
         let hitTest = sceneView.hitTest(holdLocation)
-        print(hitTest.isEmpty)
         if !hitTest.isEmpty {
             let result = hitTest.first!
             if sender.state == .began {
                 let rotation = SCNAction.rotateBy(x: 0, y: CGFloat(360.degreesToRadians), z: 0, duration: 10)
                 let forever = SCNAction.repeatForever(rotation)
                 result.node.runAction(forever)
-                print(result.node.eulerAngles)
+            }else if sender.state == .changed{
+                if(result.node.eulerAngles.y >= (2 * .pi))
+                {
+                    result.node.eulerAngles.y = 0
+                }
+                decodeEulerAngles(angleValues: result.node.eulerAngles.y)
             } else if sender.state == .ended {
                 result.node.removeAllActions()
             }
         }
-        
-        
+    }
+    
+    func decodeEulerAngles(angleValues: Float){
+        if (angleValues <= .pi/2){
+            print("WAVEFORM 1")
+        } else if (angleValues > (.pi/2) && angleValues <= .pi){
+            print("WAVEFORM 2")
+        } else if (angleValues > .pi && angleValues <= ((3 * .pi)/2)){
+            print("WAVEFORM 3")
+        } else if (angleValues > ((3 * .pi)/2) && angleValues <= 2 * .pi) {
+            print("WAVEFORM 4")
+        }
     }
     
 }

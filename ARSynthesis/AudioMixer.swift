@@ -23,13 +23,13 @@ class AudioMixer{
     }
     
     open func appendOscillator(index: Int){
-        print("YOYO")
         oscillatorArray.append(AKOscillator(waveform: AKTable(.sine)))
         oscillatorArray[index].start()
         oscillatorArray[index].play()
         oscillatorArray[index].connect(to: mixer)
     }
     open func removeOscillator(index: Int){
+        print(index)
         oscillatorArray[index].stop()
         oscillatorArray.remove(at: index)
     }
@@ -41,12 +41,13 @@ class AudioMixer{
     open func appendEffect(effectName: String){
         switch effectName {
         case "reverb":
+            print("This is basically adding a reverb to the scene")
             let reverb = AKReverb()
             reverb.dryWetMix = 0.9
             reverb.start()
             reverb.loadFactoryPreset(.cathedral)
             effectsArray.append(reverb)
-            effectsArray[j].connect(to: mixer)
+            mixer.connect(to: AKReverb(effectsArray[j]))
             j = j + 1
             break
         default:
