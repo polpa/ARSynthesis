@@ -13,12 +13,13 @@ class AudioMixer{
     var oscillatorArray: [AKOscillator] = []
     var effectsArray: [AKNode] = []
     var mixer = AKMixer()
-    var i: Int = 0
-    var j: Int = 0
+    var effectsMixer = AKMixer()
     
     init(){
         mixer.start()
-        AudioKit.output = mixer
+        mixer.connect(input: effectsMixer)
+        effectsMixer.start()
+        AudioKit.output = effectsMixer
         AudioKit.start()
     }
     
@@ -38,17 +39,17 @@ class AudioMixer{
         oscillatorArray[index].amplitude = oscillatorArray[index].amplitude * scalingFactor
     }
     
-    open func appendEffect(effectName: String){
+    open func appendEffect(effectName: String, index: Int){
         switch effectName {
         case "reverb":
             print("This is basically adding a reverb to the scene")
             let reverb = AKReverb()
-            reverb.dryWetMix = 0.9
+            reverb.dryWetMix = 1
             reverb.start()
             reverb.loadFactoryPreset(.cathedral)
             effectsArray.append(reverb)
-            mixer.connect(to: AKReverb(effectsArray[j]))
-            j = j + 1
+            mixer.setOutput(to: AKReverb(effectsArray[index]))
+            AKReverb(effectsArray[index]).connect(to: effectsMixer)
             break
         default:
             break

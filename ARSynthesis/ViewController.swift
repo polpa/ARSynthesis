@@ -14,7 +14,7 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
     
     var mixer: AudioMixer!
     @IBOutlet var planeDetectionLabel: UILabel!
-    let itemsArray: [String] = ["oscillator", "mixer", "sequencer", "reverb"]
+    let itemsArray: [String] = ["oscillator", "reverb"]
     var nodeArray: [SCNNode] = []
     var effectArray: [SCNNode] = []
     @IBOutlet weak var itemsCollectionView: UICollectionView!
@@ -31,20 +31,13 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
         self.sceneView.delegate = self
         self.registerGestureRecognizers()
         self.sceneView.autoenablesDefaultLighting = true
-
-        // Do any additional setup after loading the view, typically from a nib.
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func registerGestureRecognizers() {
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapped))
         let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(pinch))
-       let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(rotate))
-       longPressGestureRecognizer.minimumPressDuration = 0.1
+        let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(rotate))
+        longPressGestureRecognizer.minimumPressDuration = 0.1
         self.sceneView.addGestureRecognizer(longPressGestureRecognizer)
         self.sceneView.addGestureRecognizer(pinchGestureRecognizer)
         self.sceneView.addGestureRecognizer(tapGestureRecognizer)
@@ -69,7 +62,6 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
     }
     
     open func volume (x: CGFloat, y: CGFloat, z: CGFloat) -> Double{
-
         return Double(x*y*z)
     }
     
@@ -83,27 +75,32 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
         if hitTestItems.isEmpty {
             self.addItem(hitTestResult: hitTest.first!)
         } else if (!hitTestItems.isEmpty) {
-            let node = self.sceneView.scene.rootNode.childNode(withName: (hitTestItems.first?.node.name)!, recursively: true) //Recursively means that it looks through all the scene to find the node with the given name, otherwise it just gets the inmediate child
-            let name = node?.geometry?.name!
-            node?.removeFromParentNode()
-            
-            print(name!)
-            switch name! {
-            case "box":
-                let currentIndex = nodeArray.index(of: node!)
-                mixer.removeOscillator(index: currentIndex!)
-                nodeArray.remove(at: currentIndex!)
-                break
-            case "reverb":
-                let currentIndex = effectArray.index(of: node!)
-                print("reverb is being removed at index: \(currentIndex!)")
-                break
-            default:
-                break
-            }
+            //Recursively means that it looks through all the scene to find the node with the given name, otherwise it just gets the inmediate child
+            let node = self.sceneView.scene.rootNode.childNode(withName: (hitTestItems.first?.node.name)!, recursively: true)
+            removeGivenNode(node: node)
             
         }
         }
+    }
+    
+    func removeGivenNode (node: SCNNode!){
+        let name = node?.geometry?.name!
+        node?.removeFromParentNode()
+        print(name!)
+        switch name! {
+        case "box":
+            let currentIndex = nodeArray.index(of: node!)
+            mixer.removeOscillator(index: currentIndex!)
+            nodeArray.remove(at: currentIndex!)
+            break
+        case "pyramid":
+            let currentIndex = effectArray.index(of: node!)
+            effectArray.remove(at: currentIndex!)
+            break
+        default:
+            break
+        }
+        
     }
     
     
@@ -116,15 +113,15 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
             let transform = hitTestResult.worldTransform
             let thirdColumn = transform.columns.3
             node.position = SCNVector3(thirdColumn.x, thirdColumn.y, thirdColumn.z)
-            var effectIndex = effectArray.count
-            var currentIndex = nodeArray.count
+            let effectIndex = effectArray.count
+            let currentIndex = nodeArray.count
 
             switch selectedItem {
             case "oscillator":
                 nodeArray.insert(node, at: currentIndex)
                 self.sceneView.scene.rootNode.addChildNode(nodeArray[currentIndex])
                 for node in nodeArray{
-                    node.name = String("\(nodeArray.index(of: node))")
+                    node.name = String("\(nodeArray.index(of: node)!)")
                 }
                 print(currentIndex)
                 mixer.appendOscillator(index: currentIndex)
@@ -133,9 +130,9 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
                 effectArray.insert(node, at: effectIndex)
                 self.sceneView.scene.rootNode.addChildNode(effectArray[effectIndex])
                 for node in effectArray{
-                    node.name = String("\(effectArray.index(of: node))")
+                    node.name = String("\(effectArray.index(of: node)!)")
                 }
-                mixer.appendEffect(effectName: "Reverb")
+                mixer.appendEffect(effectName: "Reverb", index: effectArray.index(of: node)!)
                 print("This is the reverb Module")
                 break
             default:
