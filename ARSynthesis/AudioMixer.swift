@@ -14,16 +14,11 @@ class AudioMixer{
     var effectsArray: [AKNode] = []
     var mixer = AKMixer()
     var effectsMixer = AKMixer()
-    var emptyEffect = AKReverb()
     
     init(){
         mixer.start()
         effectsMixer.start()
-        mixer.connect(to: emptyEffect)
-        emptyEffect.start()
-        emptyEffect.dryWetMix = 0
-        emptyEffect.connect(to: effectsMixer)
-        AudioKit.output = effectsMixer
+        AudioKit.output = mixer
         AudioKit.start()
     }
     
@@ -48,17 +43,18 @@ class AudioMixer{
     
     open func appendEffect(effectName: String, index: Int){
         switch effectName {
-        case "reverb":
+        case "Reverb":
+            //This is working!!!!!!!
             print("This is basically adding a reverb to the scene")
             let reverb = AKReverb()
-            effectsArray.append(reverb)
-            AKReverb(effectsArray[index]).start()
-            AKReverb(effectsArray[index]).dryWetMix = 1
-            AKReverb(effectsArray[index]).loadFactoryPreset(.cathedral)
-            for effect in effectsArray{
-                mixer.connect(to: AKReverb(effect))
-                effect.connect(to: effectsMixer)
-            }
+            reverb.start()
+            reverb.dryWetMix = 1
+            reverb.loadFactoryPreset(.cathedral)
+            mixer.disconnectOutput()
+            mixer.connect(to: reverb)
+            effectsMixer.disconnectInput()
+            reverb.connect(to: effectsMixer)
+            AudioKit.output = effectsMixer
             break
         default:
             break

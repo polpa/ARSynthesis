@@ -2,8 +2,8 @@
 //  ViewController.swift
 //  ARSynthesis
 //
-//  Created by Rayan Slim on 2017-08-18.
-//  Copyright © 2017 Rayan Slim. All rights reserved.
+//  Created by Pol Piella on 2017-08-18.
+//  Copyright © 2017 Pol Piella. All rights reserved.
 //
 
 import UIKit
@@ -90,7 +90,6 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
         let tapLocation = sender.location(in: sceneView)
         let hitTest = sceneView.hitTest(tapLocation)
         if !hitTest.isEmpty{
-            print(hitTest.first?.node.name)
             self.sceneView.scene.rootNode.enumerateChildNodes { (node, stop) in
                 if node == hitTest.first?.node {
                     let caseName = node.geometry?.name!
@@ -204,6 +203,7 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
                 for node in effectArray{
                     node.name = String("\(effectArray.index(of: node)!)")
                 }
+                print("HEYHO")
                 mixer.appendEffect(effectName: "Reverb", index: effectArray.index(of: node)!)
                 break
             default:
