@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '30736B830D0B798C4B4DBE43725A53DB'
-               BlueprintName = 'SVProgressHUD'
+               BlueprintIdentifier = '9AD6E417B292CCB529632F0FA6F2EFEC'
+               BlueprintName = 'DynamicBlurView'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'SVProgressHUD.framework'>
+               BuildableName = 'DynamicBlurView.framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
