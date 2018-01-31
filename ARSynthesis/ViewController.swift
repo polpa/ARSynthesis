@@ -10,6 +10,7 @@ import UIKit
 import ARKit
 import SceneKit
 import AudioKit
+import PopupDialog
 import SVProgressHUD
 
 class ViewController: UIViewController, UICollectionViewDataSource , UICollectionViewDelegate, ARSCNViewDelegate{
@@ -34,19 +35,52 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        SVProgressHUD.show(withStatus: "Trying to detect plane, please and move around to find a horizontal surface")
+        DispatchQueue.main.async{
+            self.showStandardDialog()
+        }
+
+    }
+    
+    func showStandardDialog(animated: Bool = true) {
+        
+        // Prepare the popup
+        let title = "WELCOME TO ARSYNTHESIS"
+        let message = "Please be aware that, for a good and safe AR experience, one must always watch its environment and not use it while conducting potentially hazardous situations"
+        
+        // Create the dialog
+        let popup = PopupDialog(title: title,
+                                message: message,
+                                buttonAlignment: .horizontal,
+                                transitionStyle: .zoomIn,
+                                gestureDismissal: true,
+                                hideStatusBar: true) {
+                                    print("Completed")
+        }
+        
+        // Create first button
+        let buttonOne = CancelButton(title: "OK") {
+            SVProgressHUD.show(withStatus: "Trying to detect plane, please and move around to find a horizontal surface")
+        }
+        
+        // Add buttons to dialog
+        popup.addButtons([buttonOne])
+        
+        // Present dialog
+        self.present(popup, animated: animated, completion: nil)
     }
     
     func registerGestureRecognizers() {
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapped))
-        let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(pinch))
-        let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(rotate))
+        let oneTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapped))
+        oneTapGestureRecognizer.numberOfTapsRequired = 1
         let doubleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(doubleTapped))
         doubleTapGestureRecognizer.numberOfTapsRequired = 2
+        oneTapGestureRecognizer.require(toFail: doubleTapGestureRecognizer)
+        let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(pinch))
+        let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(rotate))
         longPressGestureRecognizer.minimumPressDuration = 0.1
         self.sceneView.addGestureRecognizer(longPressGestureRecognizer)
         self.sceneView.addGestureRecognizer(pinchGestureRecognizer)
-        self.sceneView.addGestureRecognizer(tapGestureRecognizer)
+        self.sceneView.addGestureRecognizer(oneTapGestureRecognizer)
         self.sceneView.addGestureRecognizer(doubleTapGestureRecognizer)
     }
     
@@ -58,7 +92,7 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
         if !hitTest.isEmpty{
             print(hitTest.first?.node.name)
             self.sceneView.scene.rootNode.enumerateChildNodes { (node, stop) in
-                if node.name == (hitTest.first?.node.name)!{
+                if node == hitTest.first?.node {
                     self.mixer.removeOscillator(index: nodeArray.index(of: node)!)
                     self.nodeArray.remove(at: nodeArray.index(of: node)!)
                     node.removeFromParentNode()
@@ -124,8 +158,8 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
     func deltaModulusCalculation (input:SCNVector3, measured: SCNVector3) -> Double{
         var modulus: Double = 0
         let squaredX = Double(pow(Double(input.x - measured.x), Double(2)))
-        let squaredY = Double(pow(Double(input.z - measured.z), Double(2)))
-        modulus = Double(sqrt(squaredX + squaredY))
+        let squaredZ = Double(pow(Double(input.z - measured.z), Double(2)))
+        modulus = Double(sqrt(squaredX + squaredZ))
         return modulus
     }
     

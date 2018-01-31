@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '30736B830D0B798C4B4DBE43725A53DB'
-               BlueprintName = 'SVProgressHUD'
+               BlueprintIdentifier = 'C3A2387CB10ECDC465DCFC2B05E490E9'
+               BlueprintName = 'PopupDialog'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'SVProgressHUD.framework'>
+               BuildableName = 'PopupDialog.framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
