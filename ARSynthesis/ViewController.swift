@@ -93,15 +93,28 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
             print(hitTest.first?.node.name)
             self.sceneView.scene.rootNode.enumerateChildNodes { (node, stop) in
                 if node == hitTest.first?.node {
-                    self.mixer.removeOscillator(index: nodeArray.index(of: node)!)
-                    self.nodeArray.remove(at: nodeArray.index(of: node)!)
-                    node.removeFromParentNode()
+                    let caseName = node.geometry?.name!
+                    switch caseName! {
+                    case "box":
+                        self.mixer.removeOscillator(index: nodeArray.index(of: node)!)
+                        self.nodeArray.remove(at: nodeArray.index(of: node)!)
+                        node.removeFromParentNode()
+                        break
+                    case "pyramid":
+                        self.effectArray.remove(at: effectArray.index(of: node)!)
+                        node.removeFromParentNode()
+                        break
+                    default:
+                        break
+                    }
+
                 }
             }
         }
         
     }
     @objc func pinch(sender: UIPinchGestureRecognizer) {
+
         let sceneView = sender.view as! ARSCNView
         let pinchLocation = sender.location(in: sceneView)
         let hitTest = sceneView.hitTest(pinchLocation)
