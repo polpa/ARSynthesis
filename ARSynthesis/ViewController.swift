@@ -1,6 +1,6 @@
 //
 //  ViewController.swift
-//  Ikea
+//  ARSynthesis
 //
 //  Created by Rayan Slim on 2017-08-18.
 //  Copyright © 2017 Rayan Slim. All rights reserved.
@@ -8,12 +8,12 @@
 
 import UIKit
 import ARKit
+import SceneKit
 import AudioKit
+import SVProgressHUD
 
 class ViewController: UIViewController, UICollectionViewDataSource , UICollectionViewDelegate, ARSCNViewDelegate{
-    
     var mixer: AudioMixer!
-    @IBOutlet var planeDetectionLabel: UILabel!
     let itemsArray: [String] = ["oscillator", "reverb"]
     var nodeArray: [SCNNode] = []
     var effectArray: [SCNNode] = []
@@ -33,16 +33,40 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
         self.sceneView.autoenablesDefaultLighting = true
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        SVProgressHUD.show(withStatus: "Trying to detect plane, please and move around to find a horizontal surface")
+    }
+    
     func registerGestureRecognizers() {
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapped))
         let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(pinch))
         let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(rotate))
+        let doubleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(doubleTapped))
+        doubleTapGestureRecognizer.numberOfTapsRequired = 2
         longPressGestureRecognizer.minimumPressDuration = 0.1
         self.sceneView.addGestureRecognizer(longPressGestureRecognizer)
         self.sceneView.addGestureRecognizer(pinchGestureRecognizer)
         self.sceneView.addGestureRecognizer(tapGestureRecognizer)
+        self.sceneView.addGestureRecognizer(doubleTapGestureRecognizer)
     }
     
+    @objc func doubleTapped(sender: UITapGestureRecognizer){
+        //This recognises the number of touches
+        let sceneView = sender.view as! ARSCNView
+        let tapLocation = sender.location(in: sceneView)
+        let hitTest = sceneView.hitTest(tapLocation)
+        if !hitTest.isEmpty{
+            print(hitTest.first?.node.name)
+            self.sceneView.scene.rootNode.enumerateChildNodes { (node, stop) in
+                if node.name == (hitTest.first?.node.name)!{
+                    self.mixer.removeOscillator(index: nodeArray.index(of: node)!)
+                    self.nodeArray.remove(at: nodeArray.index(of: node)!)
+                    node.removeFromParentNode()
+                }
+            }
+        }
+        
+    }
     @objc func pinch(sender: UIPinchGestureRecognizer) {
         let sceneView = sender.view as! ARSCNView
         let pinchLocation = sender.location(in: sceneView)
@@ -57,8 +81,6 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
             mixer.scaleOscillatorAmplitude(index: nodeIndex!, scalingFactor: Double(sender.scale))
             sender.scale = 1.0
         }
-        
-        
     }
     
     open func volume (x: CGFloat, y: CGFloat, z: CGFloat) -> Double{
@@ -75,34 +97,37 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
         if hitTestItems.isEmpty {
             self.addItem(hitTestResult: hitTest.first!)
         } else if (!hitTestItems.isEmpty) {
-            //Recursively means that it looks through all the scene to find the node with the given name, otherwise it just gets the inmediate child
-            let node = self.sceneView.scene.rootNode.childNode(withName: (hitTestItems.first?.node.name)!, recursively: true)
-            removeGivenNode(node: node)
-            
-        }
+            var modulusArray: [Double] = []
+            sceneView.scene.rootNode.enumerateChildNodes { (node, stop) in
+                if node.name != nil && node.name != (hitTestItems.first?.node.name){
+                    var i = 0
+                    //When pressing on a node, the closest neighbor is found.
+                    let positionNode1 = node.position
+                    let positionNode2 = hitTestItems.first?.node.position
+                    modulusArray.append(deltaModulusCalculation(input: positionNode1, measured: positionNode2!))
+                    node.name = String(deltaModulusCalculation(input: positionNode1, measured: positionNode2!))
+                    print(node.name!)
+                    i = i + 1
+                }
+            }
+            if !modulusArray.isEmpty{
+                let minimum = String(describing: modulusArray.min()!)
+                print(minimum)
+                let closestNode = self.sceneView.scene.rootNode.childNode(withName: minimum, recursively: true)
+                closestNode?.geometry?.firstMaterial?.diffuse.contents = UIColor.yellow
+            }
+
+            }
         }
     }
-    
-    func removeGivenNode (node: SCNNode!){
-        let name = node?.geometry?.name!
-        node?.removeFromParentNode()
-        print(name!)
-        switch name! {
-        case "box":
-            let currentIndex = nodeArray.index(of: node!)
-            mixer.removeOscillator(index: currentIndex!)
-            nodeArray.remove(at: currentIndex!)
-            break
-        case "pyramid":
-            let currentIndex = effectArray.index(of: node!)
-            effectArray.remove(at: currentIndex!)
-            break
-        default:
-            break
-        }
-        
+
+    func deltaModulusCalculation (input:SCNVector3, measured: SCNVector3) -> Double{
+        var modulus: Double = 0
+        let squaredX = Double(pow(Double(input.x - measured.x), Double(2)))
+        let squaredY = Double(pow(Double(input.z - measured.z), Double(2)))
+        modulus = Double(sqrt(squaredX + squaredY))
+        return modulus
     }
-    
     
     func addItem(hitTestResult: ARHitTestResult) {
         if let selectedItem = self.selectedItem {
@@ -133,7 +158,6 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
                     node.name = String("\(effectArray.index(of: node)!)")
                 }
                 mixer.appendEffect(effectName: "Reverb", index: effectArray.index(of: node)!)
-                print("This is the reverb Module")
                 break
             default:
                 break
@@ -163,7 +187,7 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         guard anchor is ARPlaneAnchor else {return}
         DispatchQueue.main.async{
-            self.planeDetectionLabel.text = "Plane Detected!"
+            SVProgressHUD.dismiss()
         }
     }
     
@@ -173,6 +197,9 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
     
     func renderer(_ renderer: SCNSceneRenderer, didRemove node: SCNNode, for anchor: ARAnchor){
         guard anchor is ARPlaneAnchor else {return}
+    }
+    func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
+        
     }
     
     @objc func rotate(sender: UILongPressGestureRecognizer) {
@@ -196,7 +223,6 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
             }
         }
     }
-    
     func decodeEulerAngles(angleValues: Float){
         if (angleValues <= .pi/2){
             print("WAVEFORM 1")

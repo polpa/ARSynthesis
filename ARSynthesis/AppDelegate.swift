@@ -44,3 +44,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
+//USEFUL CODES
+//@IBAction func recogniseNodeLocations(_ sender: UIButton) {
+//    sceneView.scene.rootNode.enumerateChildNodes { (node, stop) in
+//    }
+//}
+//node.enumerateChildNodes { (childNode, _) in
+//    childNode.removeFromParentNode()
+//}
+
+//To find center of the plane
+//SCNVector3(planeAnchor.center.x,planeAnchor.center.y,planeAnchor.center.z)
+

@@ -1,0 +1,29 @@
+PODS:
+  - AudioKit (4.0.4):
+    - AudioKit/UI (= 4.0.4)
+  - AudioKit/UI (4.0.4)
+  - DZNEmptyDataSet (1.8.1)
+  - SVProgressHUD (2.2.2)
+
+DEPENDENCIES:
+  - AudioKit (~> 4.0.4)
+  - DZNEmptyDataSet
+  - SVProgressHUD (from `https://github.com/SVProgressHUD/SVProgressHUD.git`)
+
+EXTERNAL SOURCES:
+  SVProgressHUD:
+    :git: https://github.com/SVProgressHUD/SVProgressHUD.git
+
+CHECKOUT OPTIONS:
+  SVProgressHUD:
+    :commit: 950e0857d3eed9276409e2e661cdd32a7e39bc6a
+    :git: https://github.com/SVProgressHUD/SVProgressHUD.git
+
+SPEC CHECKSUMS:
+  AudioKit: 647145c0462dc9dc8a8582998cd6db5f2e1ea848
+  DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
+  SVProgressHUD: 59b2d3dabacbd051576d21d32293ca7228dc18b0
+
+PODFILE CHECKSUM: 8f139d1adcb1a7aefb7e9c9a8d9dcb21c2e7cc4d
+
+COCOAPODS: 1.4.0

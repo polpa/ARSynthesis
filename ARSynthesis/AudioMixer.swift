@@ -14,20 +14,27 @@ class AudioMixer{
     var effectsArray: [AKNode] = []
     var mixer = AKMixer()
     var effectsMixer = AKMixer()
+    var emptyEffect = AKReverb()
     
     init(){
         mixer.start()
-        mixer.connect(input: effectsMixer)
         effectsMixer.start()
+        mixer.connect(to: emptyEffect)
+        emptyEffect.start()
+        emptyEffect.dryWetMix = 0
+        emptyEffect.connect(to: effectsMixer)
         AudioKit.output = effectsMixer
         AudioKit.start()
     }
     
     open func appendOscillator(index: Int){
+        //This WORKS!
         oscillatorArray.append(AKOscillator(waveform: AKTable(.sine)))
         oscillatorArray[index].start()
         oscillatorArray[index].play()
-        oscillatorArray[index].connect(to: mixer)
+        for oscillator in oscillatorArray{
+            oscillator.connect(to: mixer)
+        }
     }
     open func removeOscillator(index: Int){
         print(index)
@@ -44,17 +51,18 @@ class AudioMixer{
         case "reverb":
             print("This is basically adding a reverb to the scene")
             let reverb = AKReverb()
-            reverb.dryWetMix = 1
-            reverb.start()
-            reverb.loadFactoryPreset(.cathedral)
             effectsArray.append(reverb)
-            mixer.setOutput(to: AKReverb(effectsArray[index]))
-            AKReverb(effectsArray[index]).connect(to: effectsMixer)
+            AKReverb(effectsArray[index]).start()
+            AKReverb(effectsArray[index]).dryWetMix = 1
+            AKReverb(effectsArray[index]).loadFactoryPreset(.cathedral)
+            for effect in effectsArray{
+                mixer.connect(to: AKReverb(effect))
+                effect.connect(to: effectsMixer)
+            }
             break
         default:
             break
         }
-        
     }
     
 }

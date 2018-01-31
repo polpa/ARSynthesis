@@ -14,23 +14,20 @@
 		0B05EE381F47134D00E6F8F4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B05EE361F47134D00E6F8F4 /* LaunchScreen.storyboard */; };
 		0B05EE401F47166600E6F8F4 /* itemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B05EE3F1F47166600E6F8F4 /* itemCell.swift */; };
 		0BC46DE41F7490A600C231F6 /* Models.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 0BC46DE31F7490A600C231F6 /* Models.scnassets */; };
-		2B97A272201B536A0066B600 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2B97A271201B536A0066B600 /* Info.plist */; };
+		29D95D18BDB0505641A9B854 /* Pods_ARSynthesis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59DCF4F0B3D1F3E3CE40A458 /* Pods_ARSynthesis.framework */; };
 		2B9BFCD5201A12EA00F52D1A /* brick-roughness.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2B9BFCD2201A12E900F52D1A /* brick-roughness.jpg */; };
 		2B9BFCD6201A12EA00F52D1A /* brick-diffuse.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2B9BFCD3201A12E900F52D1A /* brick-diffuse.jpg */; };
 		2B9BFCD7201A12EA00F52D1A /* brick-bump.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2B9BFCD4201A12EA00F52D1A /* brick-bump.jpg */; };
 		2B9BFCD9201A15D600F52D1A /* AudioMixer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B9BFCD8201A15D600F52D1A /* AudioMixer.swift */; };
-		2B9BFCE1201A170800F52D1A /* AudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B9BFCE0201A170700F52D1A /* AudioKit.framework */; };
-		2B9BFCE2201A170800F52D1A /* AudioKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2B9BFCE0201A170700F52D1A /* AudioKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		2B9BFCDF201A16D100F52D1A /* Embed Frameworks */ = {
+		2BD8B3AC2020AAEC004CC5C4 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				2B9BFCE2201A170800F52D1A /* AudioKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -51,7 +48,9 @@
 		2B9BFCD3201A12E900F52D1A /* brick-diffuse.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "brick-diffuse.jpg"; sourceTree = "<group>"; };
 		2B9BFCD4201A12EA00F52D1A /* brick-bump.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "brick-bump.jpg"; sourceTree = "<group>"; };
 		2B9BFCD8201A15D600F52D1A /* AudioMixer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMixer.swift; sourceTree = "<group>"; };
-		2B9BFCE0201A170700F52D1A /* AudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AudioKit.framework; sourceTree = "<group>"; };
+		59DCF4F0B3D1F3E3CE40A458 /* Pods_ARSynthesis.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ARSynthesis.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A868C110EC61EF958EAE711B /* Pods-ARSynthesis.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ARSynthesis.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ARSynthesis/Pods-ARSynthesis.debug.xcconfig"; sourceTree = "<group>"; };
+		B3DF46C423AA82397E578AF1 /* Pods-ARSynthesis.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ARSynthesis.release.xcconfig"; path = "Pods/Target Support Files/Pods-ARSynthesis/Pods-ARSynthesis.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,7 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2B9BFCE1201A170800F52D1A /* AudioKit.framework in Frameworks */,
+				29D95D18BDB0505641A9B854 /* Pods_ARSynthesis.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -69,9 +68,10 @@
 		0B05EE211F47134D00E6F8F4 = {
 			isa = PBXGroup;
 			children = (
-				2B9BFCE0201A170700F52D1A /* AudioKit.framework */,
 				0B05EE2C1F47134D00E6F8F4 /* ARSynthesis */,
 				0B05EE2B1F47134D00E6F8F4 /* Products */,
+				FEC13416EE6FC3773C24A845 /* Frameworks */,
+				E541201C7DEB3CC2C32EAAE1 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -102,6 +102,23 @@
 			path = ARSynthesis;
 			sourceTree = "<group>";
 		};
+		E541201C7DEB3CC2C32EAAE1 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A868C110EC61EF958EAE711B /* Pods-ARSynthesis.debug.xcconfig */,
+				B3DF46C423AA82397E578AF1 /* Pods-ARSynthesis.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		FEC13416EE6FC3773C24A845 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				59DCF4F0B3D1F3E3CE40A458 /* Pods_ARSynthesis.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -109,10 +126,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0B05EE3C1F47134D00E6F8F4 /* Build configuration list for PBXNativeTarget "ARSynthesis" */;
 			buildPhases = (
+				D610D85181250C2E73A844B4 /* [CP] Check Pods Manifest.lock */,
 				0B05EE261F47134D00E6F8F4 /* Sources */,
 				0B05EE271F47134D00E6F8F4 /* Frameworks */,
 				0B05EE281F47134D00E6F8F4 /* Resources */,
-				2B9BFCDF201A16D100F52D1A /* Embed Frameworks */,
+				2BD8B3AC2020AAEC004CC5C4 /* Embed Frameworks */,
+				24F72CF015ED9C0180D5BC25 /* [CP] Embed Pods Frameworks */,
+				20F268F909F008E325214E8F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -130,7 +150,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0900;
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = "Pol Piella";
 				TargetAttributes = {
 					0B05EE291F47134D00E6F8F4 = {
@@ -161,7 +181,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2B97A272201B536A0066B600 /* Info.plist in Resources */,
 				2B9BFCD6201A12EA00F52D1A /* brick-diffuse.jpg in Resources */,
 				2B9BFCD5201A12EA00F52D1A /* brick-roughness.jpg in Resources */,
 				0B05EE381F47134D00E6F8F4 /* LaunchScreen.storyboard in Resources */,
@@ -173,6 +192,66 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		20F268F909F008E325214E8F /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ARSynthesis/Pods-ARSynthesis-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		24F72CF015ED9C0180D5BC25 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-ARSynthesis/Pods-ARSynthesis-frameworks.sh",
+				"${PODS_ROOT}/AudioKit/iOS/AudioKit.framework",
+				"${PODS_ROOT}/AudioKit/iOS/AudioKitUI.framework",
+				"${BUILT_PRODUCTS_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework",
+				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AudioKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AudioKitUI.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DZNEmptyDataSet.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ARSynthesis/Pods-ARSynthesis-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D610D85181250C2E73A844B4 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ARSynthesis-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		0B05EE261F47134D00E6F8F4 /* Sources */ = {
@@ -317,6 +396,7 @@
 		};
 		0B05EE3D1F47134D00E6F8F4 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A868C110EC61EF958EAE711B /* Pods-ARSynthesis.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = K9HC9F9A9T;
@@ -335,6 +415,7 @@
 		};
 		0B05EE3E1F47134D00E6F8F4 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B3DF46C423AA82397E578AF1 /* Pods-ARSynthesis.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = K9HC9F9A9T;

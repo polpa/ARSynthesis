@@ -1,0 +1,6 @@
+framework module Pods_ARSynthesis {
+  umbrella header "Pods-ARSynthesis-umbrella.h"
+
+  export *
+  module * { export * }
+}
