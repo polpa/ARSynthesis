@@ -15,9 +15,6 @@
 		0B05EE401F47166600E6F8F4 /* itemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B05EE3F1F47166600E6F8F4 /* itemCell.swift */; };
 		0BC46DE41F7490A600C231F6 /* Models.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 0BC46DE31F7490A600C231F6 /* Models.scnassets */; };
 		29D95D18BDB0505641A9B854 /* Pods_ARSynthesis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59DCF4F0B3D1F3E3CE40A458 /* Pods_ARSynthesis.framework */; };
-		2B9BFCD5201A12EA00F52D1A /* brick-roughness.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2B9BFCD2201A12E900F52D1A /* brick-roughness.jpg */; };
-		2B9BFCD6201A12EA00F52D1A /* brick-diffuse.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2B9BFCD3201A12E900F52D1A /* brick-diffuse.jpg */; };
-		2B9BFCD7201A12EA00F52D1A /* brick-bump.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2B9BFCD4201A12EA00F52D1A /* brick-bump.jpg */; };
 		2B9BFCD9201A15D600F52D1A /* AudioMixer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B9BFCD8201A15D600F52D1A /* AudioMixer.swift */; };
 		2BE50A2720263A06002685E5 /* LineNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE50A2620263A06002685E5 /* LineNode.swift */; };
 /* End PBXBuildFile section */
@@ -45,9 +42,6 @@
 		0B05EE3F1F47166600E6F8F4 /* itemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = itemCell.swift; sourceTree = "<group>"; };
 		0BC46DE31F7490A600C231F6 /* Models.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = Models.scnassets; sourceTree = "<group>"; };
 		2B97A271201B536A0066B600 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2B9BFCD2201A12E900F52D1A /* brick-roughness.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "brick-roughness.jpg"; sourceTree = "<group>"; };
-		2B9BFCD3201A12E900F52D1A /* brick-diffuse.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "brick-diffuse.jpg"; sourceTree = "<group>"; };
-		2B9BFCD4201A12EA00F52D1A /* brick-bump.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "brick-bump.jpg"; sourceTree = "<group>"; };
 		2B9BFCD8201A15D600F52D1A /* AudioMixer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMixer.swift; sourceTree = "<group>"; };
 		2BE50A2620263A06002685E5 /* LineNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineNode.swift; sourceTree = "<group>"; };
 		59DCF4F0B3D1F3E3CE40A458 /* Pods_ARSynthesis.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ARSynthesis.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -88,9 +82,6 @@
 		0B05EE2C1F47134D00E6F8F4 /* ARSynthesis */ = {
 			isa = PBXGroup;
 			children = (
-				2B9BFCD4201A12EA00F52D1A /* brick-bump.jpg */,
-				2B9BFCD3201A12E900F52D1A /* brick-diffuse.jpg */,
-				2B9BFCD2201A12E900F52D1A /* brick-roughness.jpg */,
 				0B05EE2D1F47134D00E6F8F4 /* AppDelegate.swift */,
 				0B05EE2F1F47134D00E6F8F4 /* ViewController.swift */,
 				2BE50A2620263A06002685E5 /* LineNode.swift */,
@@ -184,11 +175,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2B9BFCD6201A12EA00F52D1A /* brick-diffuse.jpg in Resources */,
-				2B9BFCD5201A12EA00F52D1A /* brick-roughness.jpg in Resources */,
 				0B05EE381F47134D00E6F8F4 /* LaunchScreen.storyboard in Resources */,
 				0BC46DE41F7490A600C231F6 /* Models.scnassets in Resources */,
-				2B9BFCD7201A12EA00F52D1A /* brick-bump.jpg in Resources */,
 				0B05EE351F47134D00E6F8F4 /* Assets.xcassets in Resources */,
 				0B05EE331F47134D00E6F8F4 /* Main.storyboard in Resources */,
 			);

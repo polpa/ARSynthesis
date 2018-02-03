@@ -11,7 +11,6 @@ import ARKit
 import AudioKit
 import PopupDialog
 import SVProgressHUD
-import SceneKit
 
 /// This class handles the main user interface.
 class ViewController: UIViewController, UICollectionViewDataSource , UICollectionViewDelegate, ARSCNViewDelegate{
@@ -169,8 +168,8 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
                 let material = SCNMaterial()
                 material.diffuse.contents = UIColor.cyan
                 material.specular.contents = UIColor.green
-                var v1 = closestNode?.position
-                var v2 = currentNode.position
+                let v1 = closestNode?.position
+                let v2 = currentNode.position
                 let lineNode = LineNode(v1: v1!, v2: v2, material: [material])
                 self.sceneView.scene.rootNode.addChildNode(lineNode)
             }

@@ -7,7 +7,6 @@ target 'ARSynthesis' do
 
   # Pods for ARSynthesis
   pod 'DZNEmptyDataSet'
-  pod 'DZNEmptyDataSet'
   pod 'SVProgressHUD', :git => 'https://github.com/SVProgressHUD/SVProgressHUD.git'
   pod 'AudioKit', '~> 4.0.4'
   pod 'PopupDialog', '~> 0.6' #This implements functionality for popUp Dialogues.

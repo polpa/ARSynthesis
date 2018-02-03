@@ -6,7 +6,6 @@
 //  Copyright © 2018 Pol Piella. All rights reserved.
 //
 import ARKit
-import SceneKit
 class LineNode: SCNNode
 {
     init(
