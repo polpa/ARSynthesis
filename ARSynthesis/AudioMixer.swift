@@ -1,19 +1,21 @@
 //
-//  File.swift
-//  Ikea
+//  AudioMixer.swift
+//  ARSynthesis
 //
 //  Created by Pol Piella on 25/01/2018.
-//  Copyright © 2018 Rayan Slim. All rights reserved.
+//  Copyright © 2018 Pol Piella. All rights reserved.
 //
 
 import Foundation
 import AudioKit
 
+/// This is the core Audio Processing class.
 class AudioMixer{
     var oscillatorArray: [AKOscillator] = []
     var effectsArray: [AKNode] = []
     var mixer = AKMixer()
     var effectsMixer = AKMixer()
+    /// Class initializer
     init(){
         mixer.start()
         effectsMixer.start()
@@ -39,9 +41,19 @@ class AudioMixer{
         oscillatorArray[index].stop()
         oscillatorArray.remove(at: index)
     }
+    /// This function scales the amplitude of an oscillator whenever, called with the pinchGestureRecognizer.
+    ///
+    /// - Parameters:
+    ///   - index: Current oscillator array's index.
+    ///   - scalingFactor: Amplitude Scaling Factor.
     open func scaleOscillatorAmplitude(index: Int, scalingFactor: Double){
         oscillatorArray[index].amplitude = oscillatorArray[index].amplitude * scalingFactor
     }
+    /// This function adds an effect to the effects array.
+    ///
+    /// - Parameters:
+    ///   - effectName: Effect Type
+    ///   - index: Current effect array's index.
     open func appendEffect(effectName: String, index: Int){
         switch effectName {
         case "Reverb":

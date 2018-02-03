@@ -22,6 +22,7 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
     @IBOutlet weak var sceneView: ARSCNView!
     let configuration = ARWorldTrackingConfiguration()
     var selectedItem: String?
+    var node = SCNNode()
     override func viewDidLoad() {
         super.viewDidLoad()
         mixer = AudioMixer()
@@ -37,11 +38,8 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
     override func viewDidAppear(_ animated: Bool) {
         DispatchQueue.main.async{
             self.showStandardDialog()
-            
         }
-
     }
-
     /// Presents a warning pop up dialogue whenever this function is called.
     /// This is using a pod called PopupDialog, and the code has been inspired from the documentation examples.
     /// - Parameter animated: True to allow the presentation animation.
@@ -66,8 +64,8 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
     /// This function registers all of the gesture recognizers, initializes them and adds them to the augmented reality scene.
     func registerGestureRecognizers() {
         let oneTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapped))
-        oneTapGestureRecognizer.numberOfTapsRequired = 1
         let doubleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(doubleTapped))
+        oneTapGestureRecognizer.numberOfTapsRequired = 1
         doubleTapGestureRecognizer.numberOfTapsRequired = 2
         oneTapGestureRecognizer.require(toFail: doubleTapGestureRecognizer)
         let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(pinch))
@@ -124,7 +122,6 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
             sender.scale = 1.0
         }
     }
-    
     /// Calculates the volume, with three input dimensions
     ///
     /// - Parameters:
@@ -135,7 +132,6 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
     open func volume (x: CGFloat, y: CGFloat, z: CGFloat) -> Double{
         return Double(x*y*z)
     }
-    
     /// This function deals with all of the single tapping in the ARSCNView.
     ///
     /// - Parameter sender: This is the tap gesture recognizer
@@ -171,7 +167,6 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
             }
         }
     }
-
     /// Calculates the modulus of the horizontal distance between two nodes (audio modules) and returns a Double. This can then be used to find the nearest neighbor.
     /// - Parameters:
     ///   - relative: Input different vectors to find their distance relative to the anchored value
@@ -184,7 +179,6 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
         modulus = Double(sqrt(squaredX + squaredZ))
         return modulus
     }
-
     /// This function handles all the item addition to the augmented reality scene.
     ///
     /// - Parameter hitTestResult: This is the result array when a touch is detected.
@@ -199,7 +193,6 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
             node.position = SCNVector3(thirdColumn.x, thirdColumn.y, thirdColumn.z)
             let effectIndex = effectArray.count
             let currentIndex = nodeArray.count
-
             switch selectedItem {
             case "oscillator":
                 nodeArray.insert(node, at: currentIndex)
@@ -307,20 +300,26 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
         let holdLocation = sender.location(in: sceneView)
         let hitTest = sceneView.hitTest(holdLocation)
         if !hitTest.isEmpty {
-            let result = hitTest.first!
-            if sender.state == .began {
-                let rotation = SCNAction.rotateBy(x: 0, y: CGFloat(360.degreesToRadians), z: 0, duration: 10)
-                let forever = SCNAction.repeatForever(rotation)
-                result.node.runAction(forever)
-            }else if sender.state == .changed{
-                if(result.node.eulerAngles.y >= (2 * .pi))
-                {
-                    result.node.eulerAngles.y = 0
-                }
-                decodeEulerAngles(angleValues: result.node.eulerAngles.y)
-            } else if sender.state == .ended {
-                result.node.removeAllActions()
+            node = (hitTest.first?.node)!
+            print("Update!")
+            if(node.eulerAngles.y >= (2 * .pi))
+            {
+                node.eulerAngles.y = 0
             }
+            decodeEulerAngles(angleValues: node.eulerAngles.y)
+            if sender.state == .began {
+                let rotation = SCNAction.rotateBy(x: 0, y: CGFloat(360.degreesToRadians), z: 0, duration: 5)
+                let forever = SCNAction.repeatForever(rotation)
+                node.runAction(forever)
+              
+            }else if sender.state == .changed{
+            } else if sender.state == .ended {
+                node.removeAllActions()
+            } else if sender.state == .failed{
+                node.removeAllActions()
+            }
+        } else {
+            node.removeAllActions()
         }
     }
     
@@ -339,7 +338,6 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
         }
     }
 }
-
 // MARK: - This is a list of extension functions to avoid magic numbers and handle some of the functionality.
 extension Int {
     var degreesToRadians: Double { return Double(self) * .pi/180}
