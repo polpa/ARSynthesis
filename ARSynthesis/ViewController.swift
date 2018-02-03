@@ -11,6 +11,7 @@ import ARKit
 import AudioKit
 import PopupDialog
 import SVProgressHUD
+import SceneKit
 
 /// This class handles the main user interface.
 class ViewController: UIViewController, UICollectionViewDataSource , UICollectionViewDelegate, ARSCNViewDelegate{
@@ -140,21 +141,24 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
         let tapLocation = sender.location(in: sceneView)
         let hitTest = sceneView.hitTest(tapLocation, types: .existingPlaneUsingExtent)
         let hitTestItems = sceneView.hitTest(tapLocation)
+        var currentNode = SCNNode()
        if !hitTest.isEmpty{
         if hitTestItems.isEmpty {
             self.addItem(hitTestResult: hitTest.first!)
         } else if (!hitTestItems.isEmpty) {
             var modulusArray: [Double] = []
+            currentNode = (hitTestItems.first?.node)!
             sceneView.scene.rootNode.enumerateChildNodes { (node, stop) in
                 if node.name != nil && node.name != (hitTestItems.first?.node.name){
-                    var i = 0
                     //When pressing on a node, the closest neighbor is found.
                     let positionNode1 = node.position
                     let positionNode2 = hitTestItems.first?.node.position
                     modulusArray.append(deltaModulusCalculation(relative:positionNode1, anchor: positionNode2!))
                     node.name = String(deltaModulusCalculation(relative:  positionNode1, anchor: positionNode2!))
-                    print(node.name!)
-                    i = i + 1
+                    if deltaModulusCalculation(relative:  positionNode1, anchor: positionNode2!) > 0 {
+                        
+                    }
+
                 }
             }
             if !modulusArray.isEmpty{
@@ -162,6 +166,13 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
                 print(minimum)
                 let closestNode = self.sceneView.scene.rootNode.childNode(withName: minimum, recursively: true)
                 closestNode?.geometry?.firstMaterial?.diffuse.contents = UIColor.yellow
+                let material = SCNMaterial()
+                material.diffuse.contents = UIColor.cyan
+                material.specular.contents = UIColor.green
+                var v1 = closestNode?.position
+                var v2 = currentNode.position
+                let lineNode = LineNode(v1: v1!, v2: v2, material: [material])
+                self.sceneView.scene.rootNode.addChildNode(lineNode)
             }
 
             }
