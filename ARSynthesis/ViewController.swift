@@ -16,6 +16,7 @@ import SVProgressHUD
 class ViewController: UIViewController, UICollectionViewDataSource , UICollectionViewDelegate, ARSCNViewDelegate{
     var mixer: AudioMixer!
     let itemsArray: [String] = ["oscillator", "reverb"]
+    var collectionCells: [UICollectionViewCell] = []
     var nodeArray: [SCNNode] = []
     var effectArray: [SCNNode] = []
     @IBOutlet weak var itemsCollectionView: UICollectionView!
@@ -96,6 +97,9 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
                     case "pyramid":
                         self.effectArray.remove(at: effectArray.index(of: node)!)
                         node.removeFromParentNode()
+                        let reverbCell = collectionCells[1]
+                        reverbCell.isUserInteractionEnabled = true
+                        reverbCell.backgroundColor = UIColor.black
                         break
                     default:
                         break
@@ -162,7 +166,6 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
             }
             if !modulusArray.isEmpty{
                 let minimum = String(describing: modulusArray.min()!)
-                print(minimum)
                 let closestNode = self.sceneView.scene.rootNode.childNode(withName: minimum, recursively: true)
                 closestNode?.geometry?.firstMaterial?.diffuse.contents = UIColor.yellow
                 let material = SCNMaterial()
@@ -193,8 +196,7 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
     ///
     /// - Parameter hitTestResult: This is the result array when a touch is detected.
     func addItem(hitTestResult: ARHitTestResult) {
-        if let selectedItem = self.selectedItem {
-            print(selectedItem)
+        if var selectedItem = self.selectedItem {
             let scene = SCNScene(named: "Models.scnassets/\(selectedItem).scn")
             let node = (scene?.rootNode.childNode(withName: selectedItem, recursively: false))!
             node.name = "\(selectedItem)"
@@ -205,6 +207,21 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
             let currentIndex = nodeArray.count
             switch selectedItem {
             case "oscillator":
+                let sides = [
+                    UIColor.black,          // Front
+                    UIColor.black,        // Right
+                    UIColor.black,        // Back
+                    UIColor.black,        // Left
+                    #imageLiteral(resourceName: "Oscillator"),        // Top
+                    UIColor.black         // Bottom
+                    ] as! [Any]
+                let materials = sides.map { (side) -> SCNMaterial in
+                    let material = SCNMaterial()
+                    material.diffuse.contents = side
+                    material.locksAmbientWithDiffuse = true
+                    return material
+                }
+                node.geometry?.materials = materials
                 nodeArray.insert(node, at: currentIndex)
                 self.sceneView.scene.rootNode.addChildNode(nodeArray[currentIndex])
                 for node in nodeArray{
@@ -219,8 +236,12 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
                 for node in effectArray{
                     node.name = String("\(effectArray.index(of: node)!)")
                 }
-                print("HEYHO")
                 mixer.appendEffect(effectName: "Reverb", index: effectArray.index(of: node)!)
+                let reverbCell = collectionCells[1]
+                reverbCell.isUserInteractionEnabled = false
+                reverbCell.isSelected = false
+                reverbCell.backgroundColor = UIColor.red
+                selectedItem = "oscillator"
                 break
             default:
                 break
@@ -244,6 +265,7 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "item", for: indexPath) as! itemCell
         cell.itemLabel.text = self.itemsArray[indexPath.row]
+        collectionCells.append(cell)
         return cell
     }
     /// This function is called whenever an item in the collection view is selected.
@@ -263,7 +285,11 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
     ///   - indexPath: Index for each row/column
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath)
-        cell?.backgroundColor = UIColor.black
+        if (cell?.isUserInteractionEnabled)!{
+            cell?.backgroundColor = UIColor.black
+        } else {
+            cell?.backgroundColor = UIColor.red
+        }
     }
     /// This renderer calls this function every time a plane is detected and added.
     ///

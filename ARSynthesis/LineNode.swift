@@ -28,7 +28,7 @@ class LineNode: SCNNode
         let cylgeo = SCNBox(width: 0.02, height: height1, length: 0.001, chamferRadius: 0)
         cylgeo.materials = material
         
-        let ndCylinder = SCNNode(geometry: cylgeo )
+        let ndCylinder = SCNNode(geometry: cylgeo)
         ndCylinder.position.y = Float(-height1/2) + 0.001
         ndZAlign.addChildNode(ndCylinder)
         
