@@ -15,7 +15,7 @@ import SVProgressHUD
 /// This class handles the main user interface.
 class ViewController: UIViewController, UICollectionViewDataSource , UICollectionViewDelegate, ARSCNViewDelegate{
     var mixer: AudioMixer!
-    let itemsArray: [String] = ["oscillator", "reverb"]
+    let itemsArray: [String] = ["oscillator", "reverb", "mixer"]
     var collectionCells: [UICollectionViewCell] = []
     var nodeArray: [SCNNode] = []
     var effectArray: [SCNNode] = []
@@ -24,6 +24,7 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
     let configuration = ARWorldTrackingConfiguration()
     var selectedItem: String?
     var node = SCNNode()
+    var storedNode = SCNNode()
     override func viewDidLoad() {
         super.viewDidLoad()
         mixer = AudioMixer()
@@ -70,7 +71,7 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
         doubleTapGestureRecognizer.numberOfTapsRequired = 2
         oneTapGestureRecognizer.require(toFail: doubleTapGestureRecognizer)
         let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(pinch))
-        let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(rotate))
+        let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPress))
         longPressGestureRecognizer.minimumPressDuration = 0.1
         self.sceneView.addGestureRecognizer(longPressGestureRecognizer)
         self.sceneView.addGestureRecognizer(pinchGestureRecognizer)
@@ -144,13 +145,11 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
         let tapLocation = sender.location(in: sceneView)
         let hitTest = sceneView.hitTest(tapLocation, types: .existingPlaneUsingExtent)
         let hitTestItems = sceneView.hitTest(tapLocation)
-        var currentNode = SCNNode()
        if !hitTest.isEmpty{
         if hitTestItems.isEmpty {
             self.addItem(hitTestResult: hitTest.first!)
         } else if (!hitTestItems.isEmpty) {
             var modulusArray: [Double] = []
-            currentNode = (hitTestItems.first?.node)!
             sceneView.scene.rootNode.enumerateChildNodes { (node, stop) in
                 if node.name != nil && node.name != (hitTestItems.first?.node.name){
                     //When pressing on a node, the closest neighbor is found.
@@ -168,17 +167,22 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
                 let minimum = String(describing: modulusArray.min()!)
                 let closestNode = self.sceneView.scene.rootNode.childNode(withName: minimum, recursively: true)
                 closestNode?.geometry?.firstMaterial?.diffuse.contents = UIColor.yellow
-                let material = SCNMaterial()
-                material.diffuse.contents = UIColor.cyan
-                material.specular.contents = UIColor.green
-                let v1 = closestNode?.position
-                let v2 = currentNode.position
-                let lineNode = LineNode(v1: v1!, v2: v2, material: [material])
-                self.sceneView.scene.rootNode.addChildNode(lineNode)
+                
             }
 
             }
         }
+    }
+    
+    func drawLineBetweenNodes (name: String, node1: SCNNode, node2: SCNNode){
+        let material = SCNMaterial()
+        material.diffuse.contents = UIColor.white
+        material.specular.contents = UIColor.white
+        let v1 = node1.position
+        let v2 = node2.position
+        let lineNode = LineNode(name: name, v1: v1, v2: v2, material: [material])
+        self.sceneView.scene.rootNode.addChildNode(lineNode)
+        
     }
     /// Calculates the modulus of the horizontal distance between two nodes (audio modules) and returns a Double. This can then be used to find the nearest neighbor.
     /// - Parameters:
@@ -241,8 +245,25 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
                 reverbCell.isUserInteractionEnabled = false
                 reverbCell.isSelected = false
                 reverbCell.backgroundColor = UIColor.red
-                selectedItem = "oscillator"
+                self.selectedItem = "oscillator"
                 break
+            case "mixer":
+                let sides = [
+                    UIColor.white,          // Front
+                    UIColor.white,        // Right
+                    UIColor.white,        // Back
+                    UIColor.white,        // Left
+                    #imageLiteral(resourceName: "mixer"),        // Top
+                    UIColor.white         // Bottom
+                    ] as! [Any]
+                let materials = sides.map { (side) -> SCNMaterial in
+                    let material = SCNMaterial()
+                    material.diffuse.contents = side
+                    material.locksAmbientWithDiffuse = true
+                    return material
+                }
+                node.geometry?.materials = materials
+                self.sceneView.scene.rootNode.addChildNode(node)
             default:
                 break
             }
@@ -331,7 +352,7 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
     
     /// When a long press is detected, the pressed node rotates (360 degrees), within 10 seconds. If the press ends, the node stops rotating.
     /// - Parameter sender: Gesture recognizer to handle long presses.
-    @objc func rotate(sender: UILongPressGestureRecognizer) {
+    @objc func longPress(sender: UILongPressGestureRecognizer) {
         let sceneView = sender.view as! ARSCNView
         let holdLocation = sender.location(in: sceneView)
         let hitTest = sceneView.hitTest(holdLocation)
@@ -347,8 +368,15 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
                 let rotation = SCNAction.rotateBy(x: 0, y: CGFloat(360.degreesToRadians), z: 0, duration: 5)
                 let forever = SCNAction.repeatForever(rotation)
                 node.runAction(forever)
-              
+                storedNode = node
             }else if sender.state == .changed{
+                if node == storedNode{
+                    
+                } else {
+                   print("Draw Line")
+                    self.drawLineBetweenNodes(name: node.name!,node1: node, node2: storedNode)
+                    print("Need to connect NOW")
+                }
             } else if sender.state == .ended {
                 node.removeAllActions()
             } else if sender.state == .failed{

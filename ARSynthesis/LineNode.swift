@@ -8,14 +8,15 @@
 import ARKit
 class LineNode: SCNNode
 {
-    init(
+    init(name: String,
         v1: SCNVector3,  // where line starts
         v2: SCNVector3,  // where line ends
         material: [SCNMaterial] )  // any material.
     {
         super.init()
         let  height1 = self.distanceBetweenPoints2(A: v1, B: v2) as CGFloat //v1.distance(v2)
-        
+        self.name = name
+        print(self.name)
         position = v1
         
         let ndV2 = SCNNode()
@@ -33,7 +34,6 @@ class LineNode: SCNNode
         ndZAlign.addChildNode(ndCylinder)
         
         addChildNode(ndZAlign)
-        
         constraints = [SCNLookAtConstraint(target: ndV2)]
     }
     
