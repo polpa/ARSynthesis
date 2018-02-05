@@ -180,6 +180,8 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
         material.specular.contents = UIColor.white
         let v1 = node1.position
         let v2 = node2.position
+        node1.inputIsConnected = true
+        node2.inputIsConnected = true
         let lineNode = LineNode(name: name, v1: v1, v2: v2, material: [material])
         self.sceneView.scene.rootNode.addChildNode(lineNode)
         
@@ -225,6 +227,7 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
                     material.locksAmbientWithDiffuse = true
                     return material
                 }
+                node.allowsMultipleInputs = false
                 node.geometry?.materials = materials
                 nodeArray.insert(node, at: currentIndex)
                 self.sceneView.scene.rootNode.addChildNode(nodeArray[currentIndex])
@@ -235,6 +238,7 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
                 mixer.appendOscillator(index: currentIndex)
                 break
             case "reverb":
+                node.allowsMultipleInputs = true
                 effectArray.insert(node, at: effectIndex)
                 self.sceneView.scene.rootNode.addChildNode(effectArray[effectIndex])
                 for node in effectArray{
@@ -358,7 +362,6 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
         let hitTest = sceneView.hitTest(holdLocation)
         if !hitTest.isEmpty {
             node = (hitTest.first?.node)!
-            print("Update!")
             if(node.eulerAngles.y >= (2 * .pi))
             {
                 node.eulerAngles.y = 0
@@ -372,10 +375,8 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
             }else if sender.state == .changed{
                 if node == storedNode{
                     
-                } else {
-                   print("Draw Line")
+                } else if !node.inputIsConnected! {
                     self.drawLineBetweenNodes(name: node.name!,node1: node, node2: storedNode)
-                    print("Need to connect NOW")
                 }
             } else if sender.state == .ended {
                 node.removeAllActions()

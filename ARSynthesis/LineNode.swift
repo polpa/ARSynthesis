@@ -43,7 +43,7 @@ class LineNode: SCNNode
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+        
     func distanceBetweenPoints2(A: SCNVector3, B: SCNVector3) -> CGFloat {
         let l = sqrt(
             (A.x - B.x) * (A.x - B.x)

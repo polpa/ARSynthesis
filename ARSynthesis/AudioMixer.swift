@@ -15,6 +15,7 @@ class AudioMixer{
     var effectsArray: [AKNode] = []
     var mixer = AKMixer()
     var effectsMixer = AKMixer()
+    var strung: String = ""
     /// Class initializer
     init(){
         mixer.start()
