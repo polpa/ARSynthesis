@@ -47,21 +47,13 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
     /// This is using a pod called PopupDialog, and the code has been inspired from the documentation examples.
     /// - Parameter animated: True to allow the presentation animation.
     func showStandardDialog(animated: Bool = true) {
-        let title = "WELCOME TO ARSYNTHESIS"
-        let message = "Please be aware that, for a good and safe AR experience, one must always watch its environment and not use it while conducting potentially hazardous situations"
-        let popup = PopupDialog(title: title,
-                                message: message,
-                                buttonAlignment: .horizontal,
-                                transitionStyle: .zoomIn,
-                                gestureDismissal: true,
-                                hideStatusBar: true) {
-                                    print("Completed")
-        }
+        let popup = PopupDialog(identifier: "intro")
         let cancelButton = CancelButton(title: "OK") {
             SVProgressHUD.show(withStatus: "Trying to detect plane, please and move around to find a horizontal surface")
         }
         popup.addButtons([cancelButton])
         self.present(popup, animated: animated, completion: nil)
+
     }
     
     /// This function registers all of the gesture recognizers, initializes them and adds them to the augmented reality scene.
@@ -87,12 +79,14 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
         let tapLocation = sender.location(in: sceneView)
         let hitTest = sceneView.hitTest(tapLocation)
         if !hitTest.isEmpty{
+            hitTest.first?.node.removeAllLinks(scene: sceneView)
             self.sceneView.scene.rootNode.enumerateChildNodes { (node, stop) in
                 if node == hitTest.first?.node {
                     let caseName = node.geometry?.name!
                     switch caseName! {
                     case "box":
-                        self.mixer.removeOscillator(index: nodeArray.index(of: node)!)
+                        mixer.removeOscillator(oscillator: node.audioNodeContained! as! AKOscillator)
+                        node.removeAllLinks(scene: sceneView)
                         self.nodeArray.remove(at: nodeArray.index(of: node)!)
                         node.removeFromParentNode()
                         break
@@ -185,7 +179,8 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
         startingNode.isConnectedTo = destinationNode.name
         destinationNode.inputIsConnected = true
         destinationNode.isConnectedTo = startingNode.name
-        let lineNode = LineNode(name: identifier, v1: v1, v2: v2, material: [material])
+        let linkName = "Link \(startingNode.name ?? "") | \(destinationNode.name ?? "")"
+        let lineNode = LineNode(name: linkName, v1: v1, v2: v2, material: [material])
         self.sceneView.scene.rootNode.addChildNode(lineNode)
         
     }
@@ -205,7 +200,7 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
     ///
     /// - Parameter hitTestResult: This is the result array when a touch is detected.
     func addItem(hitTestResult: ARHitTestResult) {
-        if var selectedItem = self.selectedItem {
+        if let selectedItem = self.selectedItem {
             let scene = SCNScene(named: "Models.scnassets/\(selectedItem).scn")
             let node = (scene?.rootNode.childNode(withName: selectedItem, recursively: false))!
             node.name = "\(selectedItem)"
@@ -240,7 +235,9 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
                     node.name = String("\(nodeArray.index(of: node)!)")
                 }
                 print(currentIndex)
-                mixer.appendOscillator(index: currentIndex)
+                let osc = AKOscillator(waveform: AKTable(.sawtooth))
+                node.audioNodeContained = osc
+                mixer.appendOscillator(oscillator: node.audioNodeContained! as! AKOscillator)
                 break
             case "reverb":
                 node.allowsMultipleInputs = true
@@ -251,7 +248,9 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
                 for node in effectArray{
                     node.name = String("\(effectArray.index(of: node)!)")
                 }
-                mixer.appendEffect(effectName: "Reverb", index: effectArray.index(of: node)!)
+                let reverb = AKReverb()
+                node.audioNodeContained = reverb
+                mixer.appendReverb(reverb: node.audioNodeContained as! AKReverb)
                 let reverbCell = collectionCells[1]
                 reverbCell.isUserInteractionEnabled = false
                 reverbCell.isSelected = false
@@ -260,11 +259,11 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
                 break
             case "mixer":
                 let sides = [
-                    UIColor.white,          // Front
+                    UIColor.white,        // Front
                     UIColor.white,        // Right
                     UIColor.white,        // Back
                     UIColor.white,        // Left
-                    #imageLiteral(resourceName: "mixer"),        // Top
+                    #imageLiteral(resourceName: "mixer"),                   // Top
                     UIColor.white         // Bottom
                     ] as! [Any]
                 let materials = sides.map { (side) -> SCNMaterial in
@@ -381,9 +380,8 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
                 startingNode = destinationNode
             }else if sender.state == .changed{
                 if destinationNode == startingNode{
-                    
                 } else if !startingNode.outputIsConnected! && (!destinationNode.inputIsConnected! || destinationNode.allowsMultipleInputs!){
-                    var linkIdentifier = "Link \(i)"
+                    let linkIdentifier = "Link \(i)"
                     self.drawLineBetweenNodes(identifier: linkIdentifier,startingNode: startingNode, destinationNode: destinationNode)
                     i = i + 1
                 } else {

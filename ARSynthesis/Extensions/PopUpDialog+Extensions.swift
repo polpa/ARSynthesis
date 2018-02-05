@@ -9,7 +9,7 @@
 import Foundation
 import PopupDialog
 extension PopupDialog {
-    convenience init(identifier: String) {
+    public convenience init(identifier: String) {
         var message = ""
         var title = ""
         switch identifier {
@@ -20,6 +20,7 @@ extension PopupDialog {
         default:
             break
         }
+        
         self.init(title: title,
                   message: message,
                   buttonAlignment: .horizontal,

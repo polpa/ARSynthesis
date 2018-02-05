@@ -2,9 +2,11 @@
 import ObjectiveC
 import UIKit
 import Foundation
+import ARKit
+import AudioKit
 
 // MARK: - This file extends the functionality of NSNodes from ARKit to include some key parameters for interconnection.
-extension NSObject{
+extension SCNNode{
     private struct audioNodeProperties{
         static var allowsMultipleInputs:Bool = true //oscillators don't allow inputs
         static var outputIsConnected:Bool = false
@@ -12,6 +14,34 @@ extension NSObject{
         static var nodeDescription: String = ""
         static var isConnectedTo: String = ""
         static var isLinkedBy: String = ""
+        static var audioNodeContained: AKNode = AKNode()
+    }
+    
+    func removeAllLinks(scene: ARSCNView) {
+        scene.scene.rootNode.enumerateChildNodes { (node, stop) in
+            let keyStringPath = "Link"
+            if(node.name != nil){
+                let currentName = node.name
+                if (currentName?.containsIgnoringCase(find: keyStringPath))! && (currentName?.containsIgnoringCase(find: self.name!))! {
+                    node.removeFromParentNode()
+                }
+            }
+           
+        }
+    }
+    
+    var audioNodeContained: AKNode? {
+        get{
+            return objc_getAssociatedObject(self, &audioNodeProperties.audioNodeContained) as? AKNode ?? AKNode()
+        }
+        set{
+            if let unwrappedValue = newValue {
+                objc_setAssociatedObject(self,
+                                         &audioNodeProperties.audioNodeContained,
+                                         unwrappedValue as AKNode?,
+                                         .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            }
+        }
     }
     var isConnectedTo: String? {
         get{
@@ -95,5 +125,6 @@ extension NSObject{
             }
         }
     }
+
     
 }

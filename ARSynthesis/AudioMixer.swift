@@ -26,21 +26,16 @@ class AudioMixer{
     /// This function adds an oscillator to the oscillator array.
     ///
     /// - Parameter index: Current oscillator array's index.
-    open func appendOscillator(index: Int){
-        oscillatorArray.append(AKOscillator(waveform: AKTable(.sine)))
-        oscillatorArray[index].start()
-        oscillatorArray[index].play()
-        for oscillator in oscillatorArray{
-            oscillator.connect(to: mixer)
-        }
+    open func appendOscillator(oscillator: AKOscillator){
+        oscillator.start()
+        oscillator.amplitude = 0.5
+        oscillator.connect(to: mixer)
     }
     /// This function removes an oscillator from the array.
     ///
     /// - Parameter index: Current oscillator array's index.
-    open func removeOscillator(index: Int){
-        print(index)
-        oscillatorArray[index].stop()
-        oscillatorArray.remove(at: index)
+    open func removeOscillator(oscillator: AKOscillator){
+        oscillator.stop()
     }
     /// This function scales the amplitude of an oscillator whenever, called with the pinchGestureRecognizer.
     ///
@@ -49,6 +44,11 @@ class AudioMixer{
     ///   - scalingFactor: Amplitude Scaling Factor.
     open func scaleOscillatorAmplitude(index: Int, scalingFactor: Double){
         oscillatorArray[index].amplitude = oscillatorArray[index].amplitude * scalingFactor
+    }
+    open func appendReverb(reverb: AKReverb){
+        reverb.start()
+        reverb.dryWetMix = 0.7
+        reverb.loadFactoryPreset(.cathedral)
     }
     /// This function adds an effect to the effects array.
     ///

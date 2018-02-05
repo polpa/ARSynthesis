@@ -16,7 +16,6 @@ class LineNode: SCNNode
         super.init()
         let  height1 = self.distanceBetweenPoints2(A: v1, B: v2) as CGFloat //v1.distance(v2)
         self.name = name
-        print(self.name)
         position = v1
         
         let ndV2 = SCNNode()
@@ -43,7 +42,11 @@ class LineNode: SCNNode
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-        
+    
+    open func removeLink(){
+        self.removeFromParentNode()
+    }
+    
     func distanceBetweenPoints2(A: SCNVector3, B: SCNVector3) -> CGFloat {
         let l = sqrt(
             (A.x - B.x) * (A.x - B.x)
