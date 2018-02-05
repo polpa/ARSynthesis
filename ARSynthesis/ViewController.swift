@@ -23,8 +23,9 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
     @IBOutlet weak var sceneView: ARSCNView!
     let configuration = ARWorldTrackingConfiguration()
     var selectedItem: String?
-    var node = SCNNode()
-    var storedNode = SCNNode()
+    var destinationNode = SCNNode()
+    var startingNode = SCNNode()
+    var i = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         mixer = AudioMixer()
@@ -174,15 +175,17 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
         }
     }
     
-    func drawLineBetweenNodes (name: String, node1: SCNNode, node2: SCNNode){
+    func drawLineBetweenNodes (identifier: String, startingNode: SCNNode, destinationNode: SCNNode){
         let material = SCNMaterial()
         material.diffuse.contents = UIColor.white
         material.specular.contents = UIColor.white
-        let v1 = node1.position
-        let v2 = node2.position
-        node1.inputIsConnected = true
-        node2.inputIsConnected = true
-        let lineNode = LineNode(name: name, v1: v1, v2: v2, material: [material])
+        let v1 = startingNode.position
+        let v2 = destinationNode.position
+        startingNode.outputIsConnected = true
+        startingNode.isConnectedTo = destinationNode.name
+        destinationNode.inputIsConnected = true
+        destinationNode.isConnectedTo = startingNode.name
+        let lineNode = LineNode(name: identifier, v1: v1, v2: v2, material: [material])
         self.sceneView.scene.rootNode.addChildNode(lineNode)
         
     }
@@ -227,6 +230,8 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
                     material.locksAmbientWithDiffuse = true
                     return material
                 }
+                node.inputIsConnected = false
+                node.outputIsConnected = false
                 node.allowsMultipleInputs = false
                 node.geometry?.materials = materials
                 nodeArray.insert(node, at: currentIndex)
@@ -239,6 +244,8 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
                 break
             case "reverb":
                 node.allowsMultipleInputs = true
+                node.inputIsConnected = false
+                node.outputIsConnected = false
                 effectArray.insert(node, at: effectIndex)
                 self.sceneView.scene.rootNode.addChildNode(effectArray[effectIndex])
                 for node in effectArray{
@@ -361,30 +368,34 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
         let holdLocation = sender.location(in: sceneView)
         let hitTest = sceneView.hitTest(holdLocation)
         if !hitTest.isEmpty {
-            node = (hitTest.first?.node)!
-            if(node.eulerAngles.y >= (2 * .pi))
+            destinationNode = (hitTest.first?.node)!
+            if(destinationNode.eulerAngles.y >= (2 * .pi))
             {
-                node.eulerAngles.y = 0
+                destinationNode.eulerAngles.y = 0
             }
-            decodeEulerAngles(angleValues: node.eulerAngles.y)
+            decodeEulerAngles(angleValues: destinationNode.eulerAngles.y)
             if sender.state == .began {
                 let rotation = SCNAction.rotateBy(x: 0, y: CGFloat(360.degreesToRadians), z: 0, duration: 5)
                 let forever = SCNAction.repeatForever(rotation)
-                node.runAction(forever)
-                storedNode = node
+                destinationNode.runAction(forever)
+                startingNode = destinationNode
             }else if sender.state == .changed{
-                if node == storedNode{
+                if destinationNode == startingNode{
                     
-                } else if !node.inputIsConnected! {
-                    self.drawLineBetweenNodes(name: node.name!,node1: node, node2: storedNode)
+                } else if !startingNode.outputIsConnected! && (!destinationNode.inputIsConnected! || destinationNode.allowsMultipleInputs!){
+                    var linkIdentifier = "Link \(i)"
+                    self.drawLineBetweenNodes(identifier: linkIdentifier,startingNode: startingNode, destinationNode: destinationNode)
+                    i = i + 1
+                } else {
+                    print("You cannot connect this anymore!")
                 }
             } else if sender.state == .ended {
-                node.removeAllActions()
+                destinationNode.removeAllActions()
             } else if sender.state == .failed{
-                node.removeAllActions()
+                destinationNode.removeAllActions()
             }
         } else {
-            node.removeAllActions()
+            destinationNode.removeAllActions()
         }
     }
     

@@ -10,6 +10,35 @@ extension NSObject{
         static var outputIsConnected:Bool = false
         static var inputIsConnected:Bool = false
         static var nodeDescription: String = ""
+        static var isConnectedTo: String = ""
+        static var isLinkedBy: String = ""
+    }
+    var isConnectedTo: String? {
+        get{
+            return objc_getAssociatedObject(self, &audioNodeProperties.isConnectedTo) as? String ?? ""
+        }
+        set{
+            if let unwrappedValue = newValue {
+                objc_setAssociatedObject(self,
+                                         &audioNodeProperties.isConnectedTo,
+                                         unwrappedValue as NSString?,
+                                         .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            }
+        }
+    }
+    
+    var isLinkedBy: String? {
+        get{
+            return objc_getAssociatedObject(self, &audioNodeProperties.isLinkedBy) as? String ?? ""
+        }
+        set{
+            if let unwrappedValue = newValue {
+                objc_setAssociatedObject(self,
+                                         &audioNodeProperties.isLinkedBy,
+                                         unwrappedValue as NSString?,
+                                         .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            }
+        }
     }
     
     var nodeDescription: String? {
