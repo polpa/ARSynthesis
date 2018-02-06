@@ -8,6 +8,7 @@
 
 import Foundation
 import AudioKit
+import ARKit
 
 /// This is the core Audio Processing class.
 class AudioMixer{
@@ -31,10 +32,15 @@ class AudioMixer{
         oscillator.amplitude = 0.5
         oscillator.connect(to: mixer)
     }
+    
+    open func conect(fromOutput: SCNNode, toInput: SCNNode){
+        fromOutput.audioNodeContained?.disconnectOutput()
+    }
     /// This function removes an oscillator from the array.
     ///
     /// - Parameter index: Current oscillator array's index.
     open func removeOscillator(oscillator: AKOscillator){
+        oscillator.disconnectOutput()
         oscillator.stop()
     }
     /// This function scales the amplitude of an oscillator whenever, called with the pinchGestureRecognizer.
@@ -42,8 +48,15 @@ class AudioMixer{
     /// - Parameters:
     ///   - index: Current oscillator array's index.
     ///   - scalingFactor: Amplitude Scaling Factor.
-    open func scaleOscillatorAmplitude(index: Int, scalingFactor: Double){
-        oscillatorArray[index].amplitude = oscillatorArray[index].amplitude * scalingFactor
+    open func scaleOscillatorAmplitude(osc: AKOscillator, scalingFactor: Double){
+        osc.amplitude = osc.amplitude * scalingFactor
+    }
+    
+    open func connectToReverb(startingNode: SCNNode, destinationNode: SCNNode){
+        startingNode.audioNodeContained?.disconnectOutput()
+        let destinationNodeReverb = destinationNode.audioNodeContained as! AKReverb
+        startingNode.audioNodeContained?.connect(to: destinationNodeReverb)
+        destinationNodeReverb.connect(to: mixer)
     }
     open func appendReverb(reverb: AKReverb){
         reverb.start()

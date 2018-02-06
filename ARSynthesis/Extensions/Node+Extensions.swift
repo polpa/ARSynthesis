@@ -15,6 +15,8 @@ extension SCNNode{
         static var isConnectedTo: String = ""
         static var isLinkedBy: String = ""
         static var audioNodeContained: AKNode = AKNode()
+        static var overallAmplitude: CGFloat = 1.0
+        static var sides: [Any?] = []
     }
     
     func removeAllLinks(scene: ARSCNView) {
@@ -27,6 +29,34 @@ extension SCNNode{
                 }
             }
            
+        }
+    }
+    
+    var sides: [Any]? {
+        get{
+            return objc_getAssociatedObject(self, &audioNodeProperties.sides) as? [Any] ?? [SCNMaterial()]
+        }
+        set{
+            if let unwrappedValue = newValue {
+                objc_setAssociatedObject(self,
+                                         &audioNodeProperties.sides,
+                                         unwrappedValue as [Any]?,
+                                         .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            }
+        }
+    }
+    
+    var overallAmplitude: CGFloat? {
+        get{
+            return objc_getAssociatedObject(self, &audioNodeProperties.overallAmplitude) as? CGFloat ?? 1.0
+        }
+        set{
+            if let unwrappedValue = newValue {
+                objc_setAssociatedObject(self,
+                                         &audioNodeProperties.overallAmplitude,
+                                         unwrappedValue as CGFloat?,
+                                         .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            }
         }
     }
     

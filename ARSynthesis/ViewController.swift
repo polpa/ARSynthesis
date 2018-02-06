@@ -15,6 +15,7 @@ import SVProgressHUD
 /// This class handles the main user interface.
 class ViewController: UIViewController, UICollectionViewDataSource , UICollectionViewDelegate, ARSCNViewDelegate{
     var mixer: AudioMixer!
+    var overAllScale: CGFloat = 1
     let itemsArray: [String] = ["oscillator", "reverb", "mixer"]
     var collectionCells: [UICollectionViewCell] = []
     var nodeArray: [SCNNode] = []
@@ -53,7 +54,14 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
         }
         popup.addButtons([cancelButton])
         self.present(popup, animated: animated, completion: nil)
-
+    }
+    
+    func showFaultyConnectionDialog(animated: Bool = true) {
+        let popup = PopupDialog(identifier: "Faulty Connection")
+        let cancelButton = CancelButton(title: "OK") {
+        }
+        popup.addButtons([cancelButton])
+        self.present(popup, animated: animated, completion: nil)
     }
     
     /// This function registers all of the gesture recognizers, initializes them and adds them to the augmented reality scene.
@@ -112,13 +120,19 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
         let sceneView = sender.view as! ARSCNView
         let pinchLocation = sender.location(in: sceneView)
         let hitTest = sceneView.hitTest(pinchLocation)
-        if !hitTest.isEmpty {
+        if !hitTest.isEmpty && !(hitTest.first?.node.nodeDescription?.elementsEqual("basePlane"))! {
             let results = hitTest.first!
             let node = results.node
-            let nodeIndex = nodeArray.index(of: node)
-            let pinchAction = SCNAction.scale(by: sender.scale, duration: 0)
-            node.runAction(pinchAction)
-            mixer.scaleOscillatorAmplitude(index: nodeIndex!, scalingFactor: Double(sender.scale))
+            if(node.overallAmplitude! >= CGFloat(1.0) && sender.scale > 1){
+                
+            } else {
+                let pinchAction = SCNAction.scale(by: sender.scale, duration: 0)
+                node.runAction(pinchAction)
+                node.overallAmplitude = sender.scale * node.overallAmplitude!
+                mixer.scaleOscillatorAmplitude(osc: node.audioNodeContained as! AKOscillator, scalingFactor: Double(sender.scale))
+            }
+
+            
             sender.scale = 1.0
         }
     }
@@ -141,7 +155,7 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
         let hitTest = sceneView.hitTest(tapLocation, types: .existingPlaneUsingExtent)
         let hitTestItems = sceneView.hitTest(tapLocation)
        if !hitTest.isEmpty{
-        if hitTestItems.isEmpty {
+        if hitTestItems.isEmpty || (hitTestItems.first?.node.nodeDescription?.elementsEqual("basePlane"))! {
             self.addItem(hitTestResult: hitTest.first!)
         } else if (!hitTestItems.isEmpty) {
             var modulusArray: [Double] = []
@@ -153,7 +167,6 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
                     modulusArray.append(deltaModulusCalculation(relative:positionNode1, anchor: positionNode2!))
                     node.name = String(deltaModulusCalculation(relative:  positionNode1, anchor: positionNode2!))
                     if deltaModulusCalculation(relative:  positionNode1, anchor: positionNode2!) > 0 {
-                        
                     }
 
                 }
@@ -175,13 +188,23 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
         material.specular.contents = UIColor.white
         let v1 = startingNode.position
         let v2 = destinationNode.position
-        startingNode.outputIsConnected = true
-        startingNode.isConnectedTo = destinationNode.name
-        destinationNode.inputIsConnected = true
-        destinationNode.isConnectedTo = startingNode.name
-        let linkName = "Link \(startingNode.name ?? "") | \(destinationNode.name ?? "")"
-        let lineNode = LineNode(name: linkName, v1: v1, v2: v2, material: [material])
-        self.sceneView.scene.rootNode.addChildNode(lineNode)
+        switch destinationNode.nodeDescription! {
+        case "oscillator":
+            self.showFaultyConnectionDialog()
+            break
+        case "reverb":
+            startingNode.outputIsConnected = true
+            startingNode.isConnectedTo = destinationNode.name
+            destinationNode.inputIsConnected = true
+            destinationNode.isConnectedTo = startingNode.name
+            let linkName = "Link \(startingNode.name ?? "") | \(destinationNode.name ?? "")"
+            let lineNode = LineNode(name: linkName, v1: v1, v2: v2, material: [material])
+            self.sceneView.scene.rootNode.addChildNode(lineNode)
+            mixer.connectToReverb(startingNode: startingNode, destinationNode: destinationNode)
+            break
+        default:
+            break
+        }
         
     }
     /// Calculates the modulus of the horizontal distance between two nodes (audio modules) and returns a Double. This can then be used to find the nearest neighbor.
@@ -206,7 +229,7 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
             node.name = "\(selectedItem)"
             let transform = hitTestResult.worldTransform
             let thirdColumn = transform.columns.3
-            node.position = SCNVector3(thirdColumn.x, thirdColumn.y, thirdColumn.z)
+            node.position = SCNVector3(thirdColumn.x, thirdColumn.y + 0.05, thirdColumn.z)
             let effectIndex = effectArray.count
             let currentIndex = nodeArray.count
             switch selectedItem {
@@ -225,6 +248,7 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
                     material.locksAmbientWithDiffuse = true
                     return material
                 }
+                node.nodeDescription = "oscillator"
                 node.inputIsConnected = false
                 node.outputIsConnected = false
                 node.allowsMultipleInputs = false
@@ -234,12 +258,12 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
                 for node in nodeArray{
                     node.name = String("\(nodeArray.index(of: node)!)")
                 }
-                print(currentIndex)
                 let osc = AKOscillator(waveform: AKTable(.sawtooth))
                 node.audioNodeContained = osc
                 mixer.appendOscillator(oscillator: node.audioNodeContained! as! AKOscillator)
                 break
             case "reverb":
+                node.nodeDescription = "reverb"
                 node.allowsMultipleInputs = true
                 node.inputIsConnected = false
                 node.outputIsConnected = false
@@ -329,10 +353,12 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
     ///   - node: Plane added
     ///   - anchor: Anchor for the plane
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
-        guard anchor is ARPlaneAnchor else {return}
+        guard let planeAnchor = anchor as? ARPlaneAnchor else {return}
+        node.addChildNode(planeAnchor.addPlaneDebugging())
         DispatchQueue.main.async{
-            SVProgressHUD.dismiss()
+           SVProgressHUD.dismiss()
         }
+
     }
     /// This renderer calls this function every time an already detected plane is updated
     ///
@@ -341,7 +367,8 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
     ///   - node: Plane being updated
     ///   - anchor: Anchor for the plane
     func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor){
-        guard anchor is ARPlaneAnchor else {return}
+        guard let planeAnchor = anchor as? ARPlaneAnchor else {return}
+        node.addChildNode(planeAnchor.updatePlaneDebugging(parentNode: node))
     }
     /// This renderer calls this function every time an already detected plane is removed
     ///
@@ -366,7 +393,7 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
         let sceneView = sender.view as! ARSCNView
         let holdLocation = sender.location(in: sceneView)
         let hitTest = sceneView.hitTest(holdLocation)
-        if !hitTest.isEmpty {
+        if !hitTest.isEmpty && !(hitTest.first?.node.nodeDescription?.elementsEqual("basePlane"))! {
             destinationNode = (hitTest.first?.node)!
             if(destinationNode.eulerAngles.y >= (2 * .pi))
             {

@@ -15,6 +15,7 @@
 		0B05EE401F47166600E6F8F4 /* itemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B05EE3F1F47166600E6F8F4 /* itemCell.swift */; };
 		0BC46DE41F7490A600C231F6 /* Models.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 0BC46DE31F7490A600C231F6 /* Models.scnassets */; };
 		29D95D18BDB0505641A9B854 /* Pods_ARSynthesis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59DCF4F0B3D1F3E3CE40A458 /* Pods_ARSynthesis.framework */; };
+		2B1DE0AD202A502F00760129 /* ARPlane+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1DE0AC202A502F00760129 /* ARPlane+Extensions.swift */; };
 		2B2DED942028FD1800CB423A /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B2DED932028FD1800CB423A /* String+Extensions.swift */; };
 		2B967DF82028B923009FBB48 /* Node+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B967DF72028B923009FBB48 /* Node+Extensions.swift */; };
 		2B967DFB2028CADF009FBB48 /* PopUpDialog+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B967DFA2028CADF009FBB48 /* PopUpDialog+Extensions.swift */; };
@@ -44,6 +45,7 @@
 		0B05EE371F47134D00E6F8F4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0B05EE3F1F47166600E6F8F4 /* itemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = itemCell.swift; sourceTree = "<group>"; };
 		0BC46DE31F7490A600C231F6 /* Models.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = Models.scnassets; sourceTree = "<group>"; };
+		2B1DE0AC202A502F00760129 /* ARPlane+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARPlane+Extensions.swift"; sourceTree = "<group>"; };
 		2B2DED932028FD1800CB423A /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		2B967DF72028B923009FBB48 /* Node+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Node+Extensions.swift"; sourceTree = "<group>"; };
 		2B967DFA2028CADF009FBB48 /* PopUpDialog+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PopUpDialog+Extensions.swift"; sourceTree = "<group>"; };
@@ -91,8 +93,8 @@
 				2B967DF92028B92B009FBB48 /* Extensions */,
 				0B05EE2D1F47134D00E6F8F4 /* AppDelegate.swift */,
 				0B05EE2F1F47134D00E6F8F4 /* ViewController.swift */,
-				2BE50A2620263A06002685E5 /* LineNode.swift */,
 				2B9BFCD8201A15D600F52D1A /* AudioMixer.swift */,
+				2BE50A2620263A06002685E5 /* LineNode.swift */,
 				0B05EE311F47134D00E6F8F4 /* Main.storyboard */,
 				0B05EE341F47134D00E6F8F4 /* Assets.xcassets */,
 				0B05EE361F47134D00E6F8F4 /* LaunchScreen.storyboard */,
@@ -109,6 +111,7 @@
 				2B967DF72028B923009FBB48 /* Node+Extensions.swift */,
 				2B2DED932028FD1800CB423A /* String+Extensions.swift */,
 				2B967DFA2028CADF009FBB48 /* PopUpDialog+Extensions.swift */,
+				2B1DE0AC202A502F00760129 /* ARPlane+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -274,6 +277,7 @@
 				2BE50A2720263A06002685E5 /* LineNode.swift in Sources */,
 				2B9BFCD9201A15D600F52D1A /* AudioMixer.swift in Sources */,
 				0B05EE401F47166600E6F8F4 /* itemCell.swift in Sources */,
+				2B1DE0AD202A502F00760129 /* ARPlane+Extensions.swift in Sources */,
 				2B2DED942028FD1800CB423A /* String+Extensions.swift in Sources */,
 				0B05EE2E1F47134D00E6F8F4 /* AppDelegate.swift in Sources */,
 				2B967DF82028B923009FBB48 /* Node+Extensions.swift in Sources */,

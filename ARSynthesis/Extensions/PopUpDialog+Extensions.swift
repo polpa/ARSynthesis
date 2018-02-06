@@ -17,6 +17,10 @@ extension PopupDialog {
             title = "WELCOME TO ARSYNTHESIS"
             message = "Please be aware that, for a good and safe AR experience, one must always watch its environment and not use it while conducting potentially hazardous situations"
             break
+        case "Faulty Connection":
+            title = "Connection not made!"
+            message = "An oscillator can't be connected to another oscillator. Try another connection. Hint: Could connect it to an effect."
+            break
         default:
             break
         }

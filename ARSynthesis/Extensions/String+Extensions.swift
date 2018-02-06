@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import ARKit
 extension String {
     func contains(find: String) -> Bool{
         return self.range(of: find) != nil
@@ -15,3 +16,4 @@ extension String {
         return self.range(of: find, options: .caseInsensitive) != nil
     }
 }
+
