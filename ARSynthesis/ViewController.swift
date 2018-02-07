@@ -14,35 +14,55 @@ import SVProgressHUD
 
 /// This class handles the main user interface.
 class ViewController: UIViewController, UICollectionViewDataSource , UICollectionViewDelegate, ARSCNViewDelegate{
+    //These are only initialised once!!!
+    var nodeArray: [SCNNode]!
+    
     var mixer: AudioMixer!
+    var firstTime: Bool = true
     var overAllScale: CGFloat = 1
     let itemsArray: [String] = ["oscillator", "reverb", "mixer"]
     var collectionCells: [UICollectionViewCell] = []
-    var nodeArray: [SCNNode] = []
-    var effectArray: [SCNNode] = []
     @IBOutlet weak var itemsCollectionView: UICollectionView!
     @IBOutlet weak var sceneView: ARSCNView!
     let configuration = ARWorldTrackingConfiguration()
     var selectedItem: String?
     var destinationNode = SCNNode()
     var startingNode = SCNNode()
+    var passSession: ARSession!
     override func viewDidLoad() {
+        if (firstTime){
+            nodeArray = []
+        }
         super.viewDidLoad()
         mixer = AudioMixer()
         self.configuration.planeDetection = .horizontal
         self.sceneView.session.run(configuration)
+        passSession = self.sceneView.session
         self.itemsCollectionView.dataSource = self
         self.itemsCollectionView.delegate = self
         self.sceneView.delegate = self
         self.registerGestureRecognizers()
         self.sceneView.autoenablesDefaultLighting = true
+        print("Hey luv")
+    }
+    override func viewDidDisappear(_ animated: Bool) {
     }
 
     override func viewDidAppear(_ animated: Bool) {
-        DispatchQueue.main.async{
-            self.showStandardDialog()
+        if(firstTime){
+            DispatchQueue.main.async{
+                self.showStandardDialog()
+            }
+        } else{
+                SVProgressHUD.show(withStatus: "Trying to detect plane, please and move around to find a horizontal surface")
+            for node in nodeArray{
+                print(node.nodeDescription!)
+                self.sceneView.scene.rootNode.addChildNode(node)
+            }
+            }
         }
-    }
+
+    
     /// Presents a warning pop up dialogue whenever this function is called.
     /// This is using a pod called PopupDialog, and the code has been inspired from the documentation examples.
     /// - Parameter animated: True to allow the presentation animation.
@@ -105,7 +125,7 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
                         node.removeFromParentNode()
                         break
                     case "reverb":
-                        self.effectArray.remove(at: effectArray.index(of: node)!)
+                        nodeArray.remove(at: nodeArray.index(of: node)!)
                         node.removeFromParentNode()
                         let reverbCell = collectionCells[1]
                         reverbCell.isUserInteractionEnabled = true
@@ -162,7 +182,7 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
         let tapLocation = sender.location(in: sceneView)
         let hitTest = sceneView.hitTest(tapLocation, types: .existingPlaneUsingExtent)
         let hitTestItems = sceneView.hitTest(tapLocation)
-       if !hitTest.isEmpty{
+       if !hitTest.isEmpty {
         if !hitTestItems.isEmpty && (hitTestItems.first?.node.nodeDescription?.elementsEqual("basePlane"))! {
             self.addItem(hitTestResult: hitTest.first!)
         } else if (!hitTestItems.isEmpty && !(hitTestItems.first?.node.nodeDescription?.elementsEqual("basePlane"))!) {
@@ -239,7 +259,6 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
             let transform = hitTestResult.worldTransform
             let thirdColumn = transform.columns.3
             node.position = SCNVector3(thirdColumn.x, thirdColumn.y + 0.05, thirdColumn.z)
-            let effectIndex = effectArray.count
             let currentIndex = nodeArray.count
             switch selectedItem {
             case "oscillator":
@@ -276,10 +295,10 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
                 node.allowsMultipleInputs = true
                 node.inputIsConnected = false
                 node.outputIsConnected = false
-                effectArray.insert(node, at: effectIndex)
-                self.sceneView.scene.rootNode.addChildNode(effectArray[effectIndex])
-                for node in effectArray{
-                    node.name = String("\(effectArray.index(of: node)!)")
+                nodeArray.insert(node, at: currentIndex)
+                self.sceneView.scene.rootNode.addChildNode(nodeArray[currentIndex])
+                for node in nodeArray{
+                    node.name = String("\(nodeArray.index(of: node)!)")
                 }
                 let reverb = AKReverb()
                 node.audioNodeContained = reverb
@@ -448,16 +467,23 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        //sceneView.session.pause()
         var stringArray: [String] = []
         if segue.destination is SettingsViewController
         {
+            nodeArray.removeAll()
             let vc = segue.destination as? SettingsViewController
             self.sceneView.scene.rootNode.enumerateChildNodes { (node, stop) in
                 if !(node.nodeDescription?.elementsEqual(""))!{
+                    print(node.nodeDescription!)
                     stringArray.append(node.nodeDescription!)
+                    nodeArray.append(node)
                 }
            }
+           passSession = self.sceneView.session
+           vc?.passSession = self.passSession
            vc?.mainMenuTest = stringArray
+           vc?.nodeArray = self.nodeArray
         }
     }
     

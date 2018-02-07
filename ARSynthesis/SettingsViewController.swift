@@ -7,11 +7,15 @@
 //
 
 import UIKit
+import ARKit
 
 class SettingsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     @IBOutlet var settingsCollectionView: UICollectionView!
     let mainMenu = ["osc", "reverb", "delay",]
     var mainMenuTest: [String] = []
+    var nodeArray: [SCNNode]!
+    var sceneView = ARSCNView()
+    var passSession = ARSession()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +39,19 @@ class SettingsViewController: UIViewController, UICollectionViewDelegate, UIColl
         cell.settingsCellImage.setImage(UIImage(named: mainMenuTest[indexPath.row]), for: UIControlState.normal)
         cell.settingsCellLabel.text = mainMenuTest[indexPath.row].capitalized
         return cell
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+        if segue.destination is ViewController
+        {
+            let vc = segue.destination as? ViewController
+            vc?.passSession = self.passSession
+            vc?.firstTime = false
+            vc?.nodeArray = self.nodeArray
+      
+        }
     }
 
 

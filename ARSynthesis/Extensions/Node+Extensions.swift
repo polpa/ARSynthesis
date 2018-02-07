@@ -25,6 +25,7 @@ extension SCNNode{
             if(node.name != nil){
                 let currentName = node.name
                 if (currentName?.containsIgnoringCase(find: keyStringPath))! && (currentName?.containsIgnoringCase(find: self.name!))! {
+                    print("Here")
                     node.removeFromParentNode()
                 }
             }
