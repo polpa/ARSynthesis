@@ -18,7 +18,7 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
     var nodeArray: [SCNNode]!
     
     var mixer: AudioMixer!
-    var firstTime: Bool = true
+    var firstTime: Bool!
     var overAllScale: CGFloat = 1
     let itemsArray: [String] = ["oscillator", "reverb", "mixer"]
     var collectionCells: [UICollectionViewCell] = []
@@ -30,6 +30,7 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
     var startingNode = SCNNode()
     var passSession: ARSession!
     override func viewDidLoad() {
+        firstTime = true
         if (firstTime){
             nodeArray = []
         }
@@ -43,22 +44,16 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
         self.sceneView.delegate = self
         self.registerGestureRecognizers()
         self.sceneView.autoenablesDefaultLighting = true
-        print("Hey luv")
-    }
-    override func viewDidDisappear(_ animated: Bool) {
     }
 
     override func viewDidAppear(_ animated: Bool) {
         if(firstTime){
+            firstTime = false
             DispatchQueue.main.async{
                 self.showStandardDialog()
             }
         } else{
-                SVProgressHUD.show(withStatus: "Trying to detect plane, please and move around to find a horizontal surface")
-            for node in nodeArray{
-                print(node.nodeDescription!)
-                self.sceneView.scene.rootNode.addChildNode(node)
-            }
+         
             }
         }
 

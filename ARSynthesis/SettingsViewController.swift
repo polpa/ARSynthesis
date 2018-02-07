@@ -16,7 +16,7 @@ class SettingsViewController: UIViewController, UICollectionViewDelegate, UIColl
     var nodeArray: [SCNNode]!
     var sceneView = ARSCNView()
     var passSession = ARSession()
-    
+    @IBOutlet var popUpView: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
         if(mainMenuTest.isEmpty){
@@ -28,6 +28,11 @@ class SettingsViewController: UIViewController, UICollectionViewDelegate, UIColl
         settingsCollectionView.dataSource = self
         // Do any additional setup after loading the view.
     }
+    
+    @IBAction func closePopUp(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
+    }
+    
 
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -40,19 +45,4 @@ class SettingsViewController: UIViewController, UICollectionViewDelegate, UIColl
         cell.settingsCellLabel.text = mainMenuTest[indexPath.row].capitalized
         return cell
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-        if segue.destination is ViewController
-        {
-            let vc = segue.destination as? ViewController
-            vc?.passSession = self.passSession
-            vc?.firstTime = false
-            vc?.nodeArray = self.nodeArray
-      
-        }
-    }
-
-
 }

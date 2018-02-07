@@ -68,7 +68,9 @@
                                 </constraints>
                                 <state key="normal" image="Plug"/>
                                 <connections>
-                                    <segue destination="WgX-aA-tE3" kind="show" id="qBV-7R-4zn"/>
+                                    <segue destination="WgX-aA-tE3" kind="popoverPresentation" popoverAnchorView="Qwv-46-4ch" id="qBV-7R-4zn">
+                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                    </segue>
                                 </connections>
                             </button>
                         </subviews>
@@ -98,7 +100,7 @@
         <!--Settings View Controller-->
         <scene sceneID="Pw2-DF-GDq">
             <objects>
-                <viewController id="WgX-aA-tE3" customClass="SettingsViewController" customModule="ARSynthesis" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalTransitionStyle="crossDissolve" modalPresentationStyle="currentContext" id="WgX-aA-tE3" customClass="SettingsViewController" customModule="ARSynthesis" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jyO-MG-duH">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -114,7 +116,7 @@
                                         </constraints>
                                         <state key="normal" image="back"/>
                                         <connections>
-                                            <segue destination="BYZ-38-t0r" kind="show" id="dpV-zT-eq7"/>
+                                            <action selector="closePopUp:" destination="WgX-aA-tE3" eventType="touchUpInside" id="S1t-Gi-ue8"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Settings" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="plX-VI-jQU">
@@ -209,6 +211,7 @@
                         <viewLayoutGuide key="safeArea" id="ffM-SK-Ow1"/>
                     </view>
                     <connections>
+                        <outlet property="popUpView" destination="jyO-MG-duH" id="jTo-O2-HVU"/>
                         <outlet property="settingsCollectionView" destination="D28-tb-9J9" id="gRh-Um-acn"/>
                     </connections>
                 </viewController>
