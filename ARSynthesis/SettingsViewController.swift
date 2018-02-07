@@ -11,28 +11,29 @@ import UIKit
 class SettingsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     @IBOutlet var settingsCollectionView: UICollectionView!
     let mainMenu = ["osc", "reverb", "delay",]
-    let mainMenuTest: [String] = []
+    var mainMenuTest: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if(mainMenuTest.isEmpty){
+            mainMenuTest.append("empty")
+        } else {
+            //It is not empty
+        }
         settingsCollectionView.delegate = self
         settingsCollectionView.dataSource = self
         // Do any additional setup after loading the view.
     }
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return mainMenu.count
+        return mainMenuTest.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "customCell", for: indexPath) as! modifiedCollectionViewCell
-        cell.settingsCellImage.setImage(UIImage(named: mainMenu[indexPath.row]), for: UIControlState.normal)
-        cell.settingsCellLabel.text = mainMenu[indexPath.row].capitalized
+        cell.settingsCellImage.setImage(UIImage(named: mainMenuTest[indexPath.row]), for: UIControlState.normal)
+        cell.settingsCellLabel.text = mainMenuTest[indexPath.row].capitalized
         return cell
     }
 

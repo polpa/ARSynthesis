@@ -94,18 +94,17 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
         let tapLocation = sender.location(in: sceneView)
         let hitTest = sceneView.hitTest(tapLocation)
         if !hitTest.isEmpty && !(hitTest.first?.node.nodeDescription?.elementsEqual("basePlane"))!{
-            hitTest.first?.node.removeAllLinks(scene: sceneView)
             self.sceneView.scene.rootNode.enumerateChildNodes { (node, stop) in
                 if node == hitTest.first?.node {
-                    let caseName = node.geometry?.name!
-                    switch caseName! {
-                    case "box":
+                    print(node.nodeDescription!)
+                    switch node.nodeDescription! {
+                    case "oscillator":
                         mixer.removeOscillator(oscillator: node.audioNodeContained! as! AKOscillator)
                         node.removeAllLinks(scene: sceneView)
                         self.nodeArray.remove(at: nodeArray.index(of: node)!)
                         node.removeFromParentNode()
                         break
-                    case "pyramid":
+                    case "reverb":
                         self.effectArray.remove(at: effectArray.index(of: node)!)
                         node.removeFromParentNode()
                         let reverbCell = collectionCells[1]
@@ -208,6 +207,7 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
             destinationNode.isConnectedTo = startingNode.name
             let linkName = "Link \(startingNode.name ?? "") | \(destinationNode.name ?? "")"
             let lineNode = LineNode(name: linkName, v1: v1, v2: v2, material: [material])
+            lineNode.nodeDescription = "line"
             self.sceneView.scene.rootNode.addChildNode(lineNode)
             mixer.connectToReverb(startingNode: startingNode, destinationNode: destinationNode)
             break
@@ -248,7 +248,7 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
                     UIColor.black,        // Right
                     UIColor.black,        // Back
                     UIColor.black,        // Left
-                    #imageLiteral(resourceName: "Oscillator"),        // Top
+                    #imageLiteral(resourceName: "oscillator"),        // Top
                     UIColor.black         // Bottom
                     ] as! [Any]
                 let materials = sides.map { (side) -> SCNMaterial in
@@ -445,6 +445,22 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
             print("WAVEFORM 4")
         }
     }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+        var stringArray: [String] = []
+        if segue.destination is SettingsViewController
+        {
+            let vc = segue.destination as? SettingsViewController
+            self.sceneView.scene.rootNode.enumerateChildNodes { (node, stop) in
+                if !(node.nodeDescription?.elementsEqual(""))!{
+                    stringArray.append(node.nodeDescription!)
+                }
+           }
+           vc?.mainMenuTest = stringArray
+        }
+    }
+    
 }
 
 

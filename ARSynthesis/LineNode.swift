@@ -16,8 +16,8 @@ class LineNode: SCNNode
         super.init()
         let  height1 = self.distanceBetweenPoints2(A: v1, B: v2) as CGFloat //v1.distance(v2)
         self.name = name
+        self.nodeDescription = "line"
         position = v1
-        
         let ndV2 = SCNNode()
         
         ndV2.position = v2
