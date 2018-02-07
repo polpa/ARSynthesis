@@ -20,6 +20,8 @@
 		2B967DF82028B923009FBB48 /* Node+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B967DF72028B923009FBB48 /* Node+Extensions.swift */; };
 		2B967DFB2028CADF009FBB48 /* PopUpDialog+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B967DFA2028CADF009FBB48 /* PopUpDialog+Extensions.swift */; };
 		2B9BFCD9201A15D600F52D1A /* AudioMixer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B9BFCD8201A15D600F52D1A /* AudioMixer.swift */; };
+		2BDA89B4202B559700D1989E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDA89B3202B559700D1989E /* SettingsViewController.swift */; };
+		2BDA89B6202B55F000D1989E /* modifiedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDA89B5202B55F000D1989E /* modifiedCollectionViewCell.swift */; };
 		2BE50A2720263A06002685E5 /* LineNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE50A2620263A06002685E5 /* LineNode.swift */; };
 /* End PBXBuildFile section */
 
@@ -51,6 +53,8 @@
 		2B967DFA2028CADF009FBB48 /* PopUpDialog+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PopUpDialog+Extensions.swift"; sourceTree = "<group>"; };
 		2B97A271201B536A0066B600 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2B9BFCD8201A15D600F52D1A /* AudioMixer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMixer.swift; sourceTree = "<group>"; };
+		2BDA89B3202B559700D1989E /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		2BDA89B5202B55F000D1989E /* modifiedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = modifiedCollectionViewCell.swift; sourceTree = "<group>"; };
 		2BE50A2620263A06002685E5 /* LineNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineNode.swift; sourceTree = "<group>"; };
 		59DCF4F0B3D1F3E3CE40A458 /* Pods_ARSynthesis.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ARSynthesis.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A868C110EC61EF958EAE711B /* Pods-ARSynthesis.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ARSynthesis.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ARSynthesis/Pods-ARSynthesis.debug.xcconfig"; sourceTree = "<group>"; };
@@ -93,8 +97,10 @@
 				2B967DF92028B92B009FBB48 /* Extensions */,
 				0B05EE2D1F47134D00E6F8F4 /* AppDelegate.swift */,
 				0B05EE2F1F47134D00E6F8F4 /* ViewController.swift */,
-				2B9BFCD8201A15D600F52D1A /* AudioMixer.swift */,
 				2BE50A2620263A06002685E5 /* LineNode.swift */,
+				2B9BFCD8201A15D600F52D1A /* AudioMixer.swift */,
+				2BDA89B3202B559700D1989E /* SettingsViewController.swift */,
+				2BDA89B5202B55F000D1989E /* modifiedCollectionViewCell.swift */,
 				0B05EE311F47134D00E6F8F4 /* Main.storyboard */,
 				0B05EE341F47134D00E6F8F4 /* Assets.xcassets */,
 				0B05EE361F47134D00E6F8F4 /* LaunchScreen.storyboard */,
@@ -276,9 +282,11 @@
 				0B05EE301F47134D00E6F8F4 /* ViewController.swift in Sources */,
 				2BE50A2720263A06002685E5 /* LineNode.swift in Sources */,
 				2B9BFCD9201A15D600F52D1A /* AudioMixer.swift in Sources */,
+				2BDA89B4202B559700D1989E /* SettingsViewController.swift in Sources */,
 				0B05EE401F47166600E6F8F4 /* itemCell.swift in Sources */,
 				2B1DE0AD202A502F00760129 /* ARPlane+Extensions.swift in Sources */,
 				2B2DED942028FD1800CB423A /* String+Extensions.swift in Sources */,
+				2BDA89B6202B55F000D1989E /* modifiedCollectionViewCell.swift in Sources */,
 				0B05EE2E1F47134D00E6F8F4 /* AppDelegate.swift in Sources */,
 				2B967DF82028B923009FBB48 /* Node+Extensions.swift in Sources */,
 				2B967DFB2028CADF009FBB48 /* PopUpDialog+Extensions.swift in Sources */,

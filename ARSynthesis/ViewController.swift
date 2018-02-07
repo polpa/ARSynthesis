@@ -26,7 +26,6 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
     var selectedItem: String?
     var destinationNode = SCNNode()
     var startingNode = SCNNode()
-    var i = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         mixer = AudioMixer()
@@ -64,6 +63,14 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
         self.present(popup, animated: animated, completion: nil)
     }
     
+    func showMisplacementDialog(animated: Bool = true){
+        let popup = PopupDialog(identifier: "misplaced")
+        let cancelButton = CancelButton(title: "OK") {
+        }
+        popup.addButtons([cancelButton])
+        self.present(popup, animated: animated, completion: nil)
+    }
+    
     /// This function registers all of the gesture recognizers, initializes them and adds them to the augmented reality scene.
     func registerGestureRecognizers() {
         let oneTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapped))
@@ -86,7 +93,7 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
         let sceneView = sender.view as! ARSCNView
         let tapLocation = sender.location(in: sceneView)
         let hitTest = sceneView.hitTest(tapLocation)
-        if !hitTest.isEmpty{
+        if !hitTest.isEmpty && !(hitTest.first?.node.nodeDescription?.elementsEqual("basePlane"))!{
             hitTest.first?.node.removeAllLinks(scene: sceneView)
             self.sceneView.scene.rootNode.enumerateChildNodes { (node, stop) in
                 if node == hitTest.first?.node {
@@ -124,7 +131,7 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
             let results = hitTest.first!
             let node = results.node
             if(node.overallAmplitude! >= CGFloat(1.0) && sender.scale > 1){
-                
+
             } else {
                 let pinchAction = SCNAction.scale(by: sender.scale, duration: 0)
                 node.runAction(pinchAction)
@@ -134,6 +141,8 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
 
             
             sender.scale = 1.0
+        } else {
+            
         }
     }
     /// Calculates the volume, with three input dimensions
@@ -155,9 +164,9 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
         let hitTest = sceneView.hitTest(tapLocation, types: .existingPlaneUsingExtent)
         let hitTestItems = sceneView.hitTest(tapLocation)
        if !hitTest.isEmpty{
-        if hitTestItems.isEmpty || (hitTestItems.first?.node.nodeDescription?.elementsEqual("basePlane"))! {
+        if !hitTestItems.isEmpty && (hitTestItems.first?.node.nodeDescription?.elementsEqual("basePlane"))! {
             self.addItem(hitTestResult: hitTest.first!)
-        } else if (!hitTestItems.isEmpty) {
+        } else if (!hitTestItems.isEmpty && !(hitTestItems.first?.node.nodeDescription?.elementsEqual("basePlane"))!) {
             var modulusArray: [Double] = []
             sceneView.scene.rootNode.enumerateChildNodes { (node, stop) in
                 if node.name != nil && node.name != (hitTestItems.first?.node.name){
@@ -175,14 +184,14 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
                 let minimum = String(describing: modulusArray.min()!)
                 let closestNode = self.sceneView.scene.rootNode.childNode(withName: minimum, recursively: true)
                 closestNode?.geometry?.firstMaterial?.diffuse.contents = UIColor.yellow
-                
+                drawLineBetweenNodes(startingNode: (hitTestItems.first?.node)!, destinationNode: closestNode!)
             }
 
             }
         }
     }
     
-    func drawLineBetweenNodes (identifier: String, startingNode: SCNNode, destinationNode: SCNNode){
+    func drawLineBetweenNodes (startingNode: SCNNode, destinationNode: SCNNode){
         let material = SCNMaterial()
         material.diffuse.contents = UIColor.white
         material.specular.contents = UIColor.white
@@ -408,9 +417,7 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
             }else if sender.state == .changed{
                 if destinationNode == startingNode{
                 } else if !startingNode.outputIsConnected! && (!destinationNode.inputIsConnected! || destinationNode.allowsMultipleInputs!){
-                    let linkIdentifier = "Link \(i)"
-                    self.drawLineBetweenNodes(identifier: linkIdentifier,startingNode: startingNode, destinationNode: destinationNode)
-                    i = i + 1
+                    self.drawLineBetweenNodes(startingNode: startingNode, destinationNode: destinationNode)
                 } else {
                     print("You cannot connect this anymore!")
                 }

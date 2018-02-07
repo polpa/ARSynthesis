@@ -21,6 +21,10 @@ extension PopupDialog {
             title = "Connection not made!"
             message = "An oscillator can't be connected to another oscillator. Try another connection. Hint: Could connect it to an effect."
             break
+        case "misplaced":
+            title = "Nodes must be placed on a plane."
+            message = "Please ensure the node is placed on a plane before attempting another connection."
+            break
         default:
             break
         }
