@@ -10,7 +10,8 @@ import UIKit
 
 class SettingsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     @IBOutlet var settingsCollectionView: UICollectionView!
-    let mainMenu = ["oscillator", "reverb", "delay", "mate", "lad"]
+    let mainMenu = ["osc", "reverb", "delay",]
+    let mainMenuTest: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +31,7 @@ class SettingsViewController: UIViewController, UICollectionViewDelegate, UIColl
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "customCell", for: indexPath) as! modifiedCollectionViewCell
-        cell.settingsCellImage.setImage(UIImage(named: "RoundedImage"), for: UIControlState.normal)
+        cell.settingsCellImage.setImage(UIImage(named: mainMenu[indexPath.row]), for: UIControlState.normal)
         cell.settingsCellLabel.text = mainMenu[indexPath.row].capitalized
         return cell
     }

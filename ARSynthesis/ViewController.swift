@@ -446,6 +446,8 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
         }
     }
 }
+
+
 // MARK: - This is a list of extension functions to avoid magic numbers and handle some of the functionality.
 extension Int {
     var degreesToRadians: Double { return Double(self) * .pi/180}
