@@ -422,7 +422,6 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
             {
                 destinationNode.eulerAngles.y = 0
             }
-            decodeEulerAngles(angleValues: destinationNode.eulerAngles.y)
             if sender.state == .began {
                 let rotation = SCNAction.rotateBy(x: 0, y: CGFloat(360.degreesToRadians), z: 0, duration: 5)
                 let forever = SCNAction.repeatForever(rotation)
@@ -444,21 +443,7 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
             destinationNode.removeAllActions()
         }
     }
-    
-    /// This function decodes the node's euler angle values to be used as input data to the sound processing class.
-    ///
-    /// - Parameter angleValues: Euler angle values to be further decoded.
-    func decodeEulerAngles(angleValues: Float){
-        if (angleValues <= .pi/2){
-            print("WAVEFORM 1")
-        } else if (angleValues > (.pi/2) && angleValues <= .pi){
-            print("WAVEFORM 2")
-        } else if (angleValues > .pi && angleValues <= ((3 * .pi)/2)){
-            print("WAVEFORM 3")
-        } else if (angleValues > ((3 * .pi)/2) && angleValues <= 2 * .pi) {
-            print("WAVEFORM 4")
-        }
-    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
@@ -475,9 +460,7 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
                     nodeArray.append(node)
                 }
            }
-           passSession = self.sceneView.session
-           vc?.passSession = self.passSession
-           vc?.mainMenuTest = stringArray
+           vc?.mainMenu = stringArray
            vc?.nodeArray = self.nodeArray
         }
     }

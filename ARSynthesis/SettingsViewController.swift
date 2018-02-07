@@ -11,22 +11,41 @@ import ARKit
 
 class SettingsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     @IBOutlet var settingsCollectionView: UICollectionView!
-    let mainMenu = ["osc", "reverb", "delay",]
-    var mainMenuTest: [String] = []
+    var mainMenu: [String] = []
     var nodeArray: [SCNNode]!
-    var sceneView = ARSCNView()
-    var passSession = ARSession()
     @IBOutlet var popUpView: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        if(mainMenuTest.isEmpty){
-            mainMenuTest.append("empty")
+        if(mainMenu.isEmpty){
+            mainMenu.append("empty")
         } else {
             //It is not empty
         }
         settingsCollectionView.delegate = self
         settingsCollectionView.dataSource = self
         // Do any additional setup after loading the view.
+    }
+    @IBAction func showActionSheet(_ sender: UIButton) {
+        let actionSheet = UIAlertController(title: "My title", message: "my message", preferredStyle: .actionSheet)
+        let cancelButton = UIAlertAction(title: "Cancel Button", style: .cancel){(action) in
+            print("Cancel Button")
+        }
+        let emailButton = UIAlertAction(title: "Email me for support!", style: .default){(action) in
+            let email = "info@polpiellamusic.com"
+            if let url = URL(string: "mailto:\(email)") {
+                UIApplication.shared.open(url)
+            }
+        }
+        let feedbackButton = UIAlertAction(title: "Give some feedback!", style: .default){(action) in
+            let webpage = "https://www.surveymonkey.co.uk/r/GJK5CNR"
+            if let url = URL(string: webpage) {
+                UIApplication.shared.open(url)
+            }
+        }
+        actionSheet.addAction(feedbackButton)
+        actionSheet.addAction(cancelButton)
+        actionSheet.addAction(emailButton)
+        present(actionSheet,animated: true,completion: nil)
     }
     
     @IBAction func closePopUp(_ sender: UIButton) {
@@ -36,13 +55,13 @@ class SettingsViewController: UIViewController, UICollectionViewDelegate, UIColl
 
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return mainMenuTest.count
+        return mainMenu.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "customCell", for: indexPath) as! modifiedCollectionViewCell
-        cell.settingsCellImage.setImage(UIImage(named: mainMenuTest[indexPath.row]), for: UIControlState.normal)
-        cell.settingsCellLabel.text = mainMenuTest[indexPath.row].capitalized
+        cell.settingsCellImage.setImage(UIImage(named: mainMenu[indexPath.row]), for: UIControlState.normal)
+        cell.settingsCellLabel.text = mainMenu[indexPath.row].capitalized
         return cell
     }
 }
