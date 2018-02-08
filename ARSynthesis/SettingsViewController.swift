@@ -26,6 +26,7 @@ class SettingsViewController: UIViewController, UICollectionViewDelegate, UIColl
         // Do any additional setup after loading the view.
     }
     
+    
     @IBAction func showActionSheet(_ sender: UIButton) {
         let actionSheet = UIAlertController(title: "ARSynthesizer",
                                             message: "If you need support you can either email-us or fill in one of the feedback forms",
@@ -62,6 +63,7 @@ class SettingsViewController: UIViewController, UICollectionViewDelegate, UIColl
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "customCell", for: indexPath) as! modifiedCollectionViewCell
         cell.settingsCellImage.setImage(UIImage(named: mainMenu[indexPath.row]), for: UIControlState.normal)
+        cell.settingsCellImage.tag = indexPath.row
         cell.settingsCellLabel.text = mainMenu[indexPath.row].capitalized
         return cell
     }

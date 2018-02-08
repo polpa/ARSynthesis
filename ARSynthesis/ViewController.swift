@@ -20,7 +20,7 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
     var mixer: AudioMixer!
     var firstTime: Bool!
     var overAllScale: CGFloat = 1
-    let itemsArray: [String] = ["oscillator", "reverb", "delay", "mixer"]
+    let itemsArray: [String] = ["oscillator", "reverb", "delay"]
     var collectionCells: [UICollectionViewCell] = []
     @IBOutlet weak var itemsCollectionView: UICollectionView!
     @IBOutlet weak var sceneView: ARSCNView!
@@ -111,32 +111,16 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
             self.sceneView.scene.rootNode.enumerateChildNodes { (node, stop) in
                 if node == hitTest.first?.node {
                     print(node.nodeDescription!)
-                    switch node.nodeDescription! {
-                    case "oscillator":
-                        //mixer.removeOscillator(oscillator: node.audioNodeContained! as! AKOscillator)
-                        node.removeAllLinks(scene: sceneView)
-                        self.nodeArray.remove(at: nodeArray.index(of: node)!)
-                        node.removeFromParentNode()
-                        break
-                    case "reverb":
-                        nodeArray.remove(at: nodeArray.index(of: node)!)
-                        node.removeAllLinks(scene: sceneView)
-                        node.removeFromParentNode()
-                        let reverbCell = collectionCells[1]
-                        reverbCell.isUserInteractionEnabled = true
-                        reverbCell.backgroundColor = UIColor.black
-                        break
-                    case "delay":
-                        nodeArray.remove(at: nodeArray.index(of: node)!)
-                        node.removeAllLinks(scene: sceneView)
-                        node.removeFromParentNode()
-                        let delayCell = collectionCells[2]
-                        delayCell.isUserInteractionEnabled = true
-                        delayCell.backgroundColor = UIColor.black
-                        break
-                    default:
-                        break
+                    node.removeAllLinks(scene: sceneView)
+                    self.nodeArray.remove(at: nodeArray.index(of: node)!)
+                    if node.isEffect! {
+                        let index = itemsArray.index(of: node.nodeDescription!)
+                        let cell = collectionCells[index!]
+                        cell.isUserInteractionEnabled = true
+                        cell.backgroundColor = UIColor.black
                     }
+                    mixer.remove(node: node)
+                    node.removeFromParentNode()
                 }
             }
         }
@@ -161,23 +145,12 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
                 mixer.scaleValue(of: node)
                 //mixer.scaleOscillatorAmplitude(osc: node.audioNodeContained as! AKOscillator, scalingFactor: Double(sender.scale))
             }
-
-            
             sender.scale = 1.0
         } else {
             
         }
     }
-    /// Calculates the volume, with three input dimensions
-    ///
-    /// - Parameters:
-    ///   - x: Width
-    ///   - y: Height
-    ///   - z: Depth
-    /// - Returns: Volume of the node.
-    open func volume (x: CGFloat, y: CGFloat, z: CGFloat) -> Double{
-        return Double(x*y*z)
-    }
+
     /// This function deals with all of the single tapping in the ARSCNView.
     ///
     /// - Parameter sender: This is the tap gesture recognizer
@@ -232,6 +205,7 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
             let lineNode = LineNode(name: linkName, v1: v1, v2: v2, material: [material])
             lineNode.nodeDescription = "line"
             self.sceneView.scene.rootNode.addChildNode(lineNode)
+            mixer.connect(fromOutput: startingNode, toInput: destinationNode)
             //mixer.connectToReverb(startingNode: startingNode, destinationNode: destinationNode)
             break
         default:
@@ -278,6 +252,7 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
                 for node in nodeArray{
                     node.name = String("\(nodeArray.index(of: node)!)")
                 }
+                mixer.append(node: node)
                 if node.isEffect!{
                     let cellIndex = itemsArray.index(of: selectedItem)
                     let cell = collectionCells[cellIndex!]

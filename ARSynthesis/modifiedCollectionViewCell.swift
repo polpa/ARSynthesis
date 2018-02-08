@@ -11,4 +11,12 @@ import UIKit
 class modifiedCollectionViewCell: UICollectionViewCell {
     @IBOutlet var settingsCellImage: UIButton!
     @IBOutlet var settingsCellLabel: UILabel!
+    
+    @IBAction func pressedButton(_ sender: UIButton) {
+        print(sender.tag)
+    }
+    
+    
+    
+    
 }

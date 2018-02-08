@@ -35,10 +35,21 @@ class AudioMixer{
         oscillator.start()
         oscillator.amplitude = 0.5
         oscillator.connect(to: mixer)
+    
     }
     
-    open func conect(fromOutput: SCNNode, toInput: SCNNode){
-        fromOutput.audioNodeContained?.disconnectOutput()
+    open func connect(fromOutput: SCNNode, toInput: SCNNode){
+        switch toInput.nodeDescription! {
+        case "reverb":
+            fromOutput.audioNodeContained?.connect(to: toInput.audioNodeContained as! AKReverb)
+            break
+        case "delay":
+            fromOutput.audioNodeContained?.connect(to: toInput.audioNodeContained as! AKDelay)
+            break
+        default:
+            break
+        }
+        //fromOutput.audioNodeContained?.connect(to: t)
     }
     /// This function removes an oscillator from the array.
     ///
@@ -46,6 +57,41 @@ class AudioMixer{
     open func removeOscillator(oscillator: AKOscillator){
         oscillator.disconnectOutput()
         oscillator.stop()
+    }
+    open func append(node: SCNNode){
+        switch node.nodeDescription! {
+        case "oscillator":
+            let oscillator = AKOscillator(waveform: AKTable(.sawtooth))
+            oscillator.start()
+            oscillator.amplitude = 0.5
+            oscillator.connect(to: mixer)
+            node.audioNodeContained = oscillator
+            break
+        case "reverb":
+            let reverb = AKReverb()
+            reverb.start()
+            reverb.dryWetMix = 1
+            reverb.connect(to: mixer)
+            node.audioNodeContained = reverb
+            break
+        case "delay":
+            let delay = AKDelay()
+            delay.start()
+            delay.dryWetMix = 1
+            delay.time = 0.3
+            delay.feedback = 0.5
+            delay.connect(to: mixer)
+            node.audioNodeContained = delay
+            break
+        default:
+            break
+        }
+        
+    }
+
+    
+    open func remove(node: SCNNode){
+            node.audioNodeContained?.disconnectOutput()
     }
     /// This function scales the amplitude of an oscillator whenever, called with the pinchGestureRecognizer.
     ///
