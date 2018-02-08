@@ -101,11 +101,11 @@
 				2B9BFCD8201A15D600F52D1A /* AudioMixer.swift */,
 				2BDA89B3202B559700D1989E /* SettingsViewController.swift */,
 				2BDA89B5202B55F000D1989E /* modifiedCollectionViewCell.swift */,
+				0B05EE3F1F47166600E6F8F4 /* itemCell.swift */,
 				0B05EE311F47134D00E6F8F4 /* Main.storyboard */,
 				0B05EE341F47134D00E6F8F4 /* Assets.xcassets */,
 				0B05EE361F47134D00E6F8F4 /* LaunchScreen.storyboard */,
 				2B97A271201B536A0066B600 /* Info.plist */,
-				0B05EE3F1F47166600E6F8F4 /* itemCell.swift */,
 				0BC46DE31F7490A600C231F6 /* Models.scnassets */,
 			);
 			path = ARSynthesis;
