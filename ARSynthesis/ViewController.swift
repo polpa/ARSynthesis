@@ -20,7 +20,7 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
     var mixer: AudioMixer!
     var firstTime: Bool!
     var overAllScale: CGFloat = 1
-    let itemsArray: [String] = ["oscillator", "reverb", "mixer"]
+    let itemsArray: [String] = ["oscillator", "reverb", "delay", "mixer"]
     var collectionCells: [UICollectionViewCell] = []
     @IBOutlet weak var itemsCollectionView: UICollectionView!
     @IBOutlet weak var sceneView: ARSCNView!
@@ -30,15 +30,14 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
     var startingNode = SCNNode()
     var passSession: ARSession!
     override func viewDidLoad() {
+        super.viewDidLoad()
         firstTime = true
         if (firstTime){
             nodeArray = []
         }
-        super.viewDidLoad()
         mixer = AudioMixer()
         self.configuration.planeDetection = .horizontal
         self.sceneView.session.run(configuration)
-        passSession = self.sceneView.session
         self.itemsCollectionView.dataSource = self
         self.itemsCollectionView.delegate = self
         self.sceneView.delegate = self
@@ -114,17 +113,26 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
                     print(node.nodeDescription!)
                     switch node.nodeDescription! {
                     case "oscillator":
-                        mixer.removeOscillator(oscillator: node.audioNodeContained! as! AKOscillator)
+                        //mixer.removeOscillator(oscillator: node.audioNodeContained! as! AKOscillator)
                         node.removeAllLinks(scene: sceneView)
                         self.nodeArray.remove(at: nodeArray.index(of: node)!)
                         node.removeFromParentNode()
                         break
                     case "reverb":
                         nodeArray.remove(at: nodeArray.index(of: node)!)
+                        node.removeAllLinks(scene: sceneView)
                         node.removeFromParentNode()
                         let reverbCell = collectionCells[1]
                         reverbCell.isUserInteractionEnabled = true
                         reverbCell.backgroundColor = UIColor.black
+                        break
+                    case "delay":
+                        nodeArray.remove(at: nodeArray.index(of: node)!)
+                        node.removeAllLinks(scene: sceneView)
+                        node.removeFromParentNode()
+                        let delayCell = collectionCells[2]
+                        delayCell.isUserInteractionEnabled = true
+                        delayCell.backgroundColor = UIColor.black
                         break
                     default:
                         break
@@ -150,7 +158,8 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
                 let pinchAction = SCNAction.scale(by: sender.scale, duration: 0)
                 node.runAction(pinchAction)
                 node.overallAmplitude = sender.scale * node.overallAmplitude!
-                mixer.scaleOscillatorAmplitude(osc: node.audioNodeContained as! AKOscillator, scalingFactor: Double(sender.scale))
+                mixer.scaleValue(of: node)
+                //mixer.scaleOscillatorAmplitude(osc: node.audioNodeContained as! AKOscillator, scalingFactor: Double(sender.scale))
             }
 
             
@@ -200,7 +209,6 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
                 closestNode?.geometry?.firstMaterial?.diffuse.contents = UIColor.yellow
                 drawLineBetweenNodes(startingNode: (hitTestItems.first?.node)!, destinationNode: closestNode!)
             }
-
             }
         }
     }
@@ -215,7 +223,7 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
         case "oscillator":
             self.showFaultyConnectionDialog()
             break
-        case "reverb":
+        case "reverb", "delay":
             startingNode.outputIsConnected = true
             startingNode.isConnectedTo = destinationNode.name
             destinationNode.inputIsConnected = true
@@ -224,7 +232,7 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
             let lineNode = LineNode(name: linkName, v1: v1, v2: v2, material: [material])
             lineNode.nodeDescription = "line"
             self.sceneView.scene.rootNode.addChildNode(lineNode)
-            mixer.connectToReverb(startingNode: startingNode, destinationNode: destinationNode)
+            //mixer.connectToReverb(startingNode: startingNode, destinationNode: destinationNode)
             break
         default:
             break
@@ -248,82 +256,36 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
     /// - Parameter hitTestResult: This is the result array when a touch is detected.
     func addItem(hitTestResult: ARHitTestResult) {
         if let selectedItem = self.selectedItem {
-            let scene = SCNScene(named: "Models.scnassets/\(selectedItem).scn")
-            let node = (scene?.rootNode.childNode(withName: selectedItem, recursively: false))!
+            let scene = SCNScene(named: "Models.scnassets/itemShape.scn")
+            let node = (scene?.rootNode.childNode(withName: "itemShape", recursively: false))!
             node.name = "\(selectedItem)"
             let transform = hitTestResult.worldTransform
             let thirdColumn = transform.columns.3
             node.position = SCNVector3(thirdColumn.x, thirdColumn.y + 0.05, thirdColumn.z)
             let currentIndex = nodeArray.count
-            switch selectedItem {
-            case "oscillator":
-                let sides = [
-                    UIColor.black,          // Front
-                    UIColor.black,        // Right
-                    UIColor.black,        // Back
-                    UIColor.black,        // Left
-                    #imageLiteral(resourceName: "oscillator"),        // Top
-                    UIColor.black         // Bottom
-                    ] as! [Any]
-                let materials = sides.map { (side) -> SCNMaterial in
+            let sides = [UIColor.black,UIColor.black,UIColor.black,UIColor.black,UIImage(named:"\(selectedItem).png"),UIColor.black] as [Any]
+            let materials = sides.map { (side) -> SCNMaterial in
                     let material = SCNMaterial()
                     material.diffuse.contents = side
                     material.locksAmbientWithDiffuse = true
                     return material
                 }
-                node.nodeDescription = "oscillator"
-                node.inputIsConnected = false
-                node.outputIsConnected = false
-                node.allowsMultipleInputs = false
+                node.nodeDescription = selectedItem
                 node.geometry?.materials = materials
+                node.initialiseParameters()
                 nodeArray.insert(node, at: currentIndex)
                 self.sceneView.scene.rootNode.addChildNode(nodeArray[currentIndex])
                 for node in nodeArray{
                     node.name = String("\(nodeArray.index(of: node)!)")
                 }
-                let osc = AKOscillator(waveform: AKTable(.sawtooth))
-                node.audioNodeContained = osc
-                mixer.appendOscillator(oscillator: node.audioNodeContained! as! AKOscillator)
-                break
-            case "reverb":
-                node.nodeDescription = "reverb"
-                node.allowsMultipleInputs = true
-                node.inputIsConnected = false
-                node.outputIsConnected = false
-                nodeArray.insert(node, at: currentIndex)
-                self.sceneView.scene.rootNode.addChildNode(nodeArray[currentIndex])
-                for node in nodeArray{
-                    node.name = String("\(nodeArray.index(of: node)!)")
+                if node.isEffect!{
+                    let cellIndex = itemsArray.index(of: selectedItem)
+                    let cell = collectionCells[cellIndex!]
+                    cell.isUserInteractionEnabled = false
+                    cell.isSelected = false
+                    cell.backgroundColor = UIColor.red
+                    self.selectedItem = "oscillator"
                 }
-                let reverb = AKReverb()
-                node.audioNodeContained = reverb
-                mixer.appendReverb(reverb: node.audioNodeContained as! AKReverb)
-                let reverbCell = collectionCells[1]
-                reverbCell.isUserInteractionEnabled = false
-                reverbCell.isSelected = false
-                reverbCell.backgroundColor = UIColor.red
-                self.selectedItem = "oscillator"
-                break
-            case "mixer":
-                let sides = [
-                    UIColor.white,        // Front
-                    UIColor.white,        // Right
-                    UIColor.white,        // Back
-                    UIColor.white,        // Left
-                    #imageLiteral(resourceName: "mixer"),                   // Top
-                    UIColor.white         // Bottom
-                    ] as! [Any]
-                let materials = sides.map { (side) -> SCNMaterial in
-                    let material = SCNMaterial()
-                    material.diffuse.contents = side
-                    material.locksAmbientWithDiffuse = true
-                    return material
-                }
-                node.geometry?.materials = materials
-                self.sceneView.scene.rootNode.addChildNode(node)
-            default:
-                break
-            }
         }
     }
     /// This function defines the number of items in the collection view when it is loaded.

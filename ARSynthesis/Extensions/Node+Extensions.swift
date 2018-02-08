@@ -11,6 +11,7 @@ extension SCNNode{
         static var allowsMultipleInputs:Bool = true //oscillators don't allow inputs
         static var outputIsConnected:Bool = false
         static var inputIsConnected:Bool = false
+        static var isEffect:Bool = false
         static var nodeDescription: String = ""
         static var isConnectedTo: String = ""
         static var isLinkedBy: String = ""
@@ -24,6 +25,7 @@ extension SCNNode{
             let keyStringPath = "Link"
             if(node.name != nil){
                 let currentName = node.name
+                //removeAllLinksContainingTheName
                 if (currentName?.containsIgnoringCase(find: keyStringPath))! && (currentName?.containsIgnoringCase(find: self.name!))! {
                     print("Here")
                     node.removeFromParentNode()
@@ -31,6 +33,26 @@ extension SCNNode{
             }
            
         }
+    }
+    
+    func initialiseParameters() {
+        switch self.nodeDescription! {
+        case "reverb", "delay":
+            self.inputIsConnected = false
+            self.allowsMultipleInputs = true
+            self.outputIsConnected = false
+            self.isEffect = true
+            break
+        case "oscillator":
+            self.inputIsConnected = false
+            self.outputIsConnected = false
+            self.allowsMultipleInputs = false
+            self.isEffect = false
+            break
+        default:
+            break
+        }
+        
     }
     
     var sides: [Any]? {
@@ -60,6 +82,8 @@ extension SCNNode{
             }
         }
     }
+    
+    
     
     var audioNodeContained: AKNode? {
         get{
@@ -124,6 +148,19 @@ extension SCNNode{
             if let unwrappedValue = newValue {
                 objc_setAssociatedObject(self,
                                          &audioNodeProperties.allowsMultipleInputs,
+                                         unwrappedValue as Bool?,
+                                         .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            }
+        }
+    }
+    var isEffect: Bool? {
+        get{
+            return objc_getAssociatedObject(self, &audioNodeProperties.isEffect) as? Bool ?? false
+        }
+        set{
+            if let unwrappedValue = newValue {
+                objc_setAssociatedObject(self,
+                                         &audioNodeProperties.isEffect,
                                          unwrappedValue as Bool?,
                                          .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             }

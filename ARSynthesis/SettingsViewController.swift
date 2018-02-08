@@ -25,9 +25,12 @@ class SettingsViewController: UIViewController, UICollectionViewDelegate, UIColl
         settingsCollectionView.dataSource = self
         // Do any additional setup after loading the view.
     }
+    
     @IBAction func showActionSheet(_ sender: UIButton) {
-        let actionSheet = UIAlertController(title: "My title", message: "my message", preferredStyle: .actionSheet)
-        let cancelButton = UIAlertAction(title: "Cancel Button", style: .cancel){(action) in
+        let actionSheet = UIAlertController(title: "ARSynthesizer",
+                                            message: "If you need support you can either email-us or fill in one of the feedback forms",
+                                            preferredStyle: .actionSheet)
+        let cancelButton = UIAlertAction(title: "Cancel", style: .cancel){(action) in
             print("Cancel Button")
         }
         let emailButton = UIAlertAction(title: "Email me for support!", style: .default){(action) in
@@ -51,8 +54,6 @@ class SettingsViewController: UIViewController, UICollectionViewDelegate, UIColl
     @IBAction func closePopUp(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
-    
-
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return mainMenu.count

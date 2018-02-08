@@ -24,6 +24,10 @@ class AudioMixer{
         AudioKit.output = mixer
         AudioKit.start()
     }
+    open func scaleValue(of: SCNNode){
+        
+        
+    }
     /// This function adds an oscillator to the oscillator array.
     ///
     /// - Parameter index: Current oscillator array's index.
