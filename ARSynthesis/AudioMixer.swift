@@ -41,6 +41,7 @@ class AudioMixer{
     open func connect(fromOutput: SCNNode, toInput: SCNNode){
         switch toInput.nodeDescription! {
         case "reverb":
+            fromOutput.audioNodeContained?.disconnectOutput()
             fromOutput.audioNodeContained?.connect(to: toInput.audioNodeContained as! AKReverb)
             break
         case "delay":
@@ -71,6 +72,7 @@ class AudioMixer{
             let reverb = AKReverb()
             reverb.start()
             reverb.dryWetMix = 1
+            reverb.loadFactoryPreset(.cathedral)
             reverb.connect(to: mixer)
             node.audioNodeContained = reverb
             break

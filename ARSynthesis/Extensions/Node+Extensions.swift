@@ -13,8 +13,8 @@ extension SCNNode{
         static var inputIsConnected:Bool = false
         static var isEffect:Bool = false
         static var nodeDescription: String = ""
-        static var isConnectedTo: String = ""
         static var isLinkedBy: String = ""
+        static var isConnectedTo: SCNNode = SCNNode()
         static var audioNodeContained: AKNode = AKNode()
         static var overallAmplitude: CGFloat = 1.0
         static var sides: [Any?] = []
@@ -99,19 +99,21 @@ extension SCNNode{
             }
         }
     }
-    var isConnectedTo: String? {
+    
+    var isConnectedTo: SCNNode? {
         get{
-            return objc_getAssociatedObject(self, &audioNodeProperties.isConnectedTo) as? String ?? ""
+            return objc_getAssociatedObject(self, &audioNodeProperties.isConnectedTo) as? SCNNode ?? SCNNode()
         }
         set{
             if let unwrappedValue = newValue {
                 objc_setAssociatedObject(self,
                                          &audioNodeProperties.isConnectedTo,
-                                         unwrappedValue as NSString?,
+                                         unwrappedValue as SCNNode?,
                                          .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             }
         }
     }
+
     
     var isLinkedBy: String? {
         get{

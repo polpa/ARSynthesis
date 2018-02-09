@@ -427,7 +427,7 @@
 			baseConfigurationReference = A868C110EC61EF958EAE711B /* Pods-ARSynthesis.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = K9HC9F9A9T;
+				DEVELOPMENT_TEAM = J7P2NVGC6W;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -446,7 +446,7 @@
 			baseConfigurationReference = B3DF46C423AA82397E578AF1 /* Pods-ARSynthesis.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = K9HC9F9A9T;
+				DEVELOPMENT_TEAM = J7P2NVGC6W;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",

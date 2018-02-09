@@ -198,9 +198,7 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
             break
         case "reverb", "delay":
             startingNode.outputIsConnected = true
-            startingNode.isConnectedTo = destinationNode.name
             destinationNode.inputIsConnected = true
-            destinationNode.isConnectedTo = startingNode.name
             let linkName = "Link \(startingNode.name ?? "") | \(destinationNode.name ?? "")"
             let lineNode = LineNode(name: linkName, v1: v1, v2: v2, material: [material])
             lineNode.nodeDescription = "line"
