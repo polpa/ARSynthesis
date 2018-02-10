@@ -14,8 +14,9 @@ extension SCNNode{
         static var isEffect:Bool = false
         static var nodeDescription: String = ""
         static var isLinkedBy: String = ""
-        static var isConnectedTo: SCNNode = SCNNode()
-        static var audioNodeContained: AKNode = AKNode()
+        static var inputConnection: SCNNode = SCNNode()
+        static var outputConnection: SCNNode = SCNNode()
+        static var audioNodeContained: [AKNode] = []
         static var overallAmplitude: CGFloat = 1.0
         static var sides: [Any?] = []
     }
@@ -27,7 +28,6 @@ extension SCNNode{
                 let currentName = node.name
                 //removeAllLinksContainingTheName
                 if (currentName?.containsIgnoringCase(find: keyStringPath))! && (currentName?.containsIgnoringCase(find: self.name!))! {
-                    print("Here")
                     node.removeFromParentNode()
                 }
             }
@@ -100,21 +100,32 @@ extension SCNNode{
         }
     }
     
-    var isConnectedTo: SCNNode? {
+    var inputConnection: [SCNNode]? {
         get{
-            return objc_getAssociatedObject(self, &audioNodeProperties.isConnectedTo) as? SCNNode ?? SCNNode()
+            return objc_getAssociatedObject(self, &audioNodeProperties.inputConnection) as? [SCNNode] ?? []
         }
         set{
             if let unwrappedValue = newValue {
                 objc_setAssociatedObject(self,
-                                         &audioNodeProperties.isConnectedTo,
+                                         &audioNodeProperties.inputConnection,
+                                         unwrappedValue as [SCNNode]?,
+                                         .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            }
+        }
+    }
+    var outputConnection: SCNNode? {
+        get{
+            return objc_getAssociatedObject(self, &audioNodeProperties.outputConnection) as? SCNNode ?? nil
+        }
+        set{
+            if let unwrappedValue = newValue {
+                objc_setAssociatedObject(self,
+                                         &audioNodeProperties.outputConnection,
                                          unwrappedValue as SCNNode?,
                                          .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             }
         }
     }
-
-    
     var isLinkedBy: String? {
         get{
             return objc_getAssociatedObject(self, &audioNodeProperties.isLinkedBy) as? String ?? ""

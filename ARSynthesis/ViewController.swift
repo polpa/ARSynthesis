@@ -110,14 +110,22 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
         if !hitTest.isEmpty && !(hitTest.first?.node.nodeDescription?.elementsEqual("basePlane"))!{
             self.sceneView.scene.rootNode.enumerateChildNodes { (node, stop) in
                 if node == hitTest.first?.node {
-                    print(node.nodeDescription!)
                     node.removeAllLinks(scene: sceneView)
                     self.nodeArray.remove(at: nodeArray.index(of: node)!)
                     if node.isEffect! {
+                        //This array value will be useful to check if nodes exist in the scene
                         let index = itemsArray.index(of: node.nodeDescription!)
                         let cell = collectionCells[index!]
                         cell.isUserInteractionEnabled = true
                         cell.backgroundColor = UIColor.black
+                    }
+                    if((node.inputConnection?.isNotEmpty)! && node.outputConnection != nil && nodeArray.contains(node.outputConnection!)){
+                        for input in node.inputConnection!{
+                            drawLineBetweenNodes(startingNode: input, destinationNode: node.outputConnection!)
+                            mixer.connect(fromOutput: input, toInput: node.outputConnection!)
+                        }
+                    } else{
+                        
                     }
                     mixer.remove(node: node)
                     node.removeFromParentNode()
@@ -142,7 +150,7 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
                 let pinchAction = SCNAction.scale(by: sender.scale, duration: 0)
                 node.runAction(pinchAction)
                 node.overallAmplitude = sender.scale * node.overallAmplitude!
-                mixer.scaleValue(of: node)
+                mixer.scaleValue(of: node, scaleValue: Double(sender.scale))
                 //mixer.scaleOscillatorAmplitude(osc: node.audioNodeContained as! AKOscillator, scalingFactor: Double(sender.scale))
             }
             sender.scale = 1.0
@@ -163,25 +171,24 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
         if !hitTestItems.isEmpty && (hitTestItems.first?.node.nodeDescription?.elementsEqual("basePlane"))! {
             self.addItem(hitTestResult: hitTest.first!)
         } else if (!hitTestItems.isEmpty && !(hitTestItems.first?.node.nodeDescription?.elementsEqual("basePlane"))!) {
-            var modulusArray: [Double] = []
-            sceneView.scene.rootNode.enumerateChildNodes { (node, stop) in
-                if node.name != nil && node.name != (hitTestItems.first?.node.name){
-                    //When pressing on a node, the closest neighbor is found.
-                    let positionNode1 = node.position
-                    let positionNode2 = hitTestItems.first?.node.position
-                    modulusArray.append(deltaModulusCalculation(relative:positionNode1, anchor: positionNode2!))
-                    node.name = String(deltaModulusCalculation(relative:  positionNode1, anchor: positionNode2!))
-                    if deltaModulusCalculation(relative:  positionNode1, anchor: positionNode2!) > 0 {
-                    }
-
-                }
-            }
-            if !modulusArray.isEmpty{
-                let minimum = String(describing: modulusArray.min()!)
-                let closestNode = self.sceneView.scene.rootNode.childNode(withName: minimum, recursively: true)
-                closestNode?.geometry?.firstMaterial?.diffuse.contents = UIColor.yellow
-                drawLineBetweenNodes(startingNode: (hitTestItems.first?.node)!, destinationNode: closestNode!)
-            }
+            var _: [Double] = []
+//                if node.name != nil && node.name != (hitTestItems.first?.node.name){
+//                    //When pressing on a node, the closest neighbor is found.
+//                    let positionNode1 = node.position
+//                    let positionNode2 = hitTestItems.first?.node.position
+//                    modulusArray.append(deltaModulusCalculation(relative:positionNode1, anchor: positionNode2!))
+//                    node.name = String(deltaModulusCalculation(relative:  positionNode1, anchor: positionNode2!))
+//                    if deltaModulusCalculation(relative:  positionNode1, anchor: positionNode2!) > 0 {
+//                    }
+//
+//                }
+//            }
+//            if !modulusArray.isEmpty{
+//                let minimum = String(describing: modulusArray.min()!)
+//                let closestNode = self.sceneView.scene.rootNode.childNode(withName: minimum, recursively: true)
+//                closestNode?.geometry?.firstMaterial?.diffuse.contents = UIColor.yellow
+//                drawLineBetweenNodes(startingNode: (hitTestItems.first?.node)!, destinationNode: closestNode!)
+//            }
             }
         }
     }
@@ -203,6 +210,8 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
             let lineNode = LineNode(name: linkName, v1: v1, v2: v2, material: [material])
             lineNode.nodeDescription = "line"
             self.sceneView.scene.rootNode.addChildNode(lineNode)
+            destinationNode.inputConnection?.append(startingNode)
+            startingNode.outputConnection = destinationNode
             mixer.connect(fromOutput: startingNode, toInput: destinationNode)
             //mixer.connectToReverb(startingNode: startingNode, destinationNode: destinationNode)
             break
@@ -367,7 +376,6 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
                 } else if !startingNode.outputIsConnected! && (!destinationNode.inputIsConnected! || destinationNode.allowsMultipleInputs!){
                     self.drawLineBetweenNodes(startingNode: startingNode, destinationNode: destinationNode)
                 } else {
-                    print("You cannot connect this anymore!")
                 }
             } else if sender.state == .ended {
                 destinationNode.removeAllActions()
@@ -390,7 +398,6 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
             let vc = segue.destination as? SettingsViewController
             self.sceneView.scene.rootNode.enumerateChildNodes { (node, stop) in
                 if !(node.nodeDescription?.elementsEqual(""))!{
-                    print(node.nodeDescription!)
                     stringArray.append(node.nodeDescription!)
                     nodeArray.append(node)
                 }

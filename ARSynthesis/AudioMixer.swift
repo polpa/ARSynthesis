@@ -24,7 +24,23 @@ class AudioMixer{
         AudioKit.output = mixer
         AudioKit.start()
     }
-    open func scaleValue(of: SCNNode){
+    open func scaleValue(of: SCNNode, scaleValue: Double){
+        switch of.nodeDescription! {
+        case "reverb":
+            let reverb = of.audioNodeContained as! AKReverb
+            reverb.dryWetMix = reverb.dryWetMix * scaleValue
+            break
+        case "oscillator":
+            let osc = of.audioNodeContained as! AKOscillator
+            osc.amplitude = osc.amplitude * scaleValue
+            break
+        case "delay":
+            let delay = of.audioNodeContained as! AKDelay
+            delay.dryWetMix = delay.dryWetMix * scaleValue
+            break
+        default:
+            break
+        }
         
         
     }
@@ -42,10 +58,11 @@ class AudioMixer{
         switch toInput.nodeDescription! {
         case "reverb":
             fromOutput.audioNodeContained?.disconnectOutput()
-            fromOutput.audioNodeContained?.connect(to: toInput.audioNodeContained as! AKReverb)
+            fromOutput.audioNodeContained?.connect(to: (toInput.audioNodeContained?.attachedMixer)!)
             break
         case "delay":
-            fromOutput.audioNodeContained?.connect(to: toInput.audioNodeContained as! AKDelay)
+            fromOutput.audioNodeContained?.disconnectOutput()
+            fromOutput.audioNodeContained?.connect(to: (toInput.audioNodeContained?.attachedMixer)!)
             break
         default:
             break
@@ -69,14 +86,18 @@ class AudioMixer{
             node.audioNodeContained = oscillator
             break
         case "reverb":
+            let effectInputMixer = AKMixer()
             let reverb = AKReverb()
             reverb.start()
             reverb.dryWetMix = 1
             reverb.loadFactoryPreset(.cathedral)
             reverb.connect(to: mixer)
             node.audioNodeContained = reverb
+            node.audioNodeContained?.attachedMixer = effectInputMixer
+            node.audioNodeContained?.attachedMixer?.connect(to: reverb)
             break
         case "delay":
+            let effectInputMixer = AKMixer()
             let delay = AKDelay()
             delay.start()
             delay.dryWetMix = 1
@@ -84,6 +105,8 @@ class AudioMixer{
             delay.feedback = 0.5
             delay.connect(to: mixer)
             node.audioNodeContained = delay
+            node.audioNodeContained?.attachedMixer = effectInputMixer
+            node.audioNodeContained?.attachedMixer?.connect(to: delay)
             break
         default:
             break
