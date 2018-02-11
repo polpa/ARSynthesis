@@ -190,7 +190,7 @@
                                                     </constraints>
                                                     <state key="normal" image="RoundedImage"/>
                                                     <connections>
-                                                        <action selector="pressedButton:" destination="iDj-wb-c5F" eventType="touchUpInside" id="hgL-ov-pNa"/>
+                                                        <action selector="showNodeActions:" destination="WgX-aA-tE3" eventType="touchUpInside" id="QJg-US-265"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -234,6 +234,66 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YTr-Ng-x6h" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="892" y="139"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="I7r-S9-fXa">
+            <objects>
+                <viewController modalTransitionStyle="crossDissolve" modalPresentationStyle="currentContext" id="TPv-tK-NRD" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="qJe-jH-KFb">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Oya-x6-HRV">
+                                <rect key="frame" x="0.0" y="78" width="375" height="589"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pqn-1P-SuL">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Advanced Settings" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d1p-oM-1ql">
+                                        <rect key="frame" x="115" y="5.5" width="144" height="60"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="zKm-0w-0rk"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="buA-6I-4vg">
+                                        <rect key="frame" x="0.0" y="15" width="40" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="d2z-iT-60G"/>
+                                            <constraint firstAttribute="width" constant="40" id="obC-JM-x4J"/>
+                                        </constraints>
+                                        <state key="normal" image="back"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="buA-6I-4vg" firstAttribute="centerY" secondItem="Pqn-1P-SuL" secondAttribute="centerY" id="3pG-7b-aUX"/>
+                                    <constraint firstAttribute="height" constant="70" id="Eja-W1-GxM"/>
+                                    <constraint firstItem="buA-6I-4vg" firstAttribute="leading" secondItem="Pqn-1P-SuL" secondAttribute="leading" id="Ojq-Wo-U0P"/>
+                                    <constraint firstItem="d1p-oM-1ql" firstAttribute="centerX" secondItem="Pqn-1P-SuL" secondAttribute="centerX" id="euq-lv-fwi"/>
+                                    <constraint firstItem="d1p-oM-1ql" firstAttribute="centerY" secondItem="Pqn-1P-SuL" secondAttribute="centerY" id="fjo-go-2Ok"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Oya-x6-HRV" firstAttribute="bottom" secondItem="B5g-ud-waJ" secondAttribute="bottom" id="0tn-de-m8G"/>
+                            <constraint firstItem="Oya-x6-HRV" firstAttribute="leading" secondItem="B5g-ud-waJ" secondAttribute="leading" id="2LY-mj-FbA"/>
+                            <constraint firstItem="Oya-x6-HRV" firstAttribute="top" secondItem="Pqn-1P-SuL" secondAttribute="bottom" constant="8" id="SWz-Cw-OrS"/>
+                            <constraint firstItem="Oya-x6-HRV" firstAttribute="trailing" secondItem="B5g-ud-waJ" secondAttribute="trailing" id="V7U-BI-0LY"/>
+                            <constraint firstItem="Pqn-1P-SuL" firstAttribute="top" secondItem="qJe-jH-KFb" secondAttribute="top" id="YBa-dU-V54"/>
+                            <constraint firstItem="Pqn-1P-SuL" firstAttribute="leading" secondItem="B5g-ud-waJ" secondAttribute="leading" id="lXi-Zo-Fwh"/>
+                            <constraint firstItem="Pqn-1P-SuL" firstAttribute="trailing" secondItem="B5g-ud-waJ" secondAttribute="trailing" id="y2V-kh-4U6"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="B5g-ud-waJ"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PVu-U9-68k" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="535" y="-537"/>
         </scene>
     </scenes>
     <resources>
