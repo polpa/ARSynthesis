@@ -18,13 +18,15 @@ class AudioMixer{
     var effectsMixer = AKMixer()
     var strung: String = ""
     /// Class initializer
-    init(){
+    private init(){}
+    static let singletonMixer = AudioMixer()
+
+    func initialize(){
         mixer.start()
         effectsMixer.start()
         AudioKit.output = mixer
         AudioKit.start()
     }
-    
     open func scaleValue(of: SCNNode, scaleValue: Double){
         switch of.nodeDescription! {
         case "reverb":

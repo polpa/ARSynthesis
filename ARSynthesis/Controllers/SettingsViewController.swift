@@ -19,11 +19,30 @@ class SettingsViewController: UIViewController {
         if(mainMenu.isEmpty && nodeArray.isEmpty){
             mainMenu.append("empty")
         } else {
-            //It is not empty
         }
         settingsCollectionView.delegate = self
         settingsCollectionView.dataSource = self
         // Do any additional setup after loading the view.
+    }
+    
+    @IBAction func showNodeActions(_ sender: UIButton) {
+        let actionSheet = UIAlertController(title: nodeArray[sender.tag].nodeDescription!,
+                                            message: "Chose one of these two actions",
+                                            preferredStyle: .actionSheet)
+        let cancelButton = UIAlertAction(title: "Cancel", style: .cancel){(action) in
+            print("Cancel Button")
+        }
+        let nodeParametersButton = UIAlertAction(title: "Extra Parameters", style: .default){(action) in
+            print("Parameters!")
+        }
+        let removeNodeButton = UIAlertAction(title: "Remove Node", style: .default){(action) in
+            self.nodeArray.remove(at: sender.tag)
+        }
+        actionSheet.addAction(cancelButton)
+        actionSheet.addAction(nodeParametersButton)
+        actionSheet.addAction(removeNodeButton)
+        present(actionSheet,animated: true,completion: nil)
+        
     }
     
     
