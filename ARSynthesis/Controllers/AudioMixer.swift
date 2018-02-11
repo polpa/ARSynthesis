@@ -24,6 +24,7 @@ class AudioMixer{
         AudioKit.output = mixer
         AudioKit.start()
     }
+    
     open func scaleValue(of: SCNNode, scaleValue: Double){
         switch of.nodeDescription! {
         case "reverb":
@@ -113,52 +114,8 @@ class AudioMixer{
         }
         
     }
-
-    
     open func remove(node: SCNNode){
             node.audioNodeContained?.disconnectOutput()
-    }
-    /// This function scales the amplitude of an oscillator whenever, called with the pinchGestureRecognizer.
-    ///
-    /// - Parameters:
-    ///   - index: Current oscillator array's index.
-    ///   - scalingFactor: Amplitude Scaling Factor.
-    open func scaleOscillatorAmplitude(osc: AKOscillator, scalingFactor: Double){
-        osc.amplitude = osc.amplitude * scalingFactor
-    }
-    
-    open func connectToReverb(startingNode: SCNNode, destinationNode: SCNNode){
-        startingNode.audioNodeContained?.disconnectOutput()
-        let destinationNodeReverb = destinationNode.audioNodeContained as! AKReverb
-        startingNode.audioNodeContained?.connect(to: destinationNodeReverb)
-        destinationNodeReverb.connect(to: mixer)
-    }
-    open func appendReverb(reverb: AKReverb){
-        reverb.start()
-        reverb.dryWetMix = 0.7
-        reverb.loadFactoryPreset(.cathedral)
-    }
-    /// This function adds an effect to the effects array.
-    ///
-    /// - Parameters:
-    ///   - effectName: Effect Type
-    ///   - index: Current effect array's index.
-    open func appendEffect(effectName: String, index: Int){
-        switch effectName {
-        case "Reverb":
-            let reverb = AKReverb()
-            reverb.start()
-            reverb.dryWetMix = 1
-            reverb.loadFactoryPreset(.cathedral)
-            mixer.disconnectOutput()
-            mixer.connect(to: reverb)
-            effectsMixer.disconnectInput()
-            reverb.connect(to: effectsMixer)
-            AudioKit.output = effectsMixer
-            break
-        default:
-            break
-        }
     }
 }
 

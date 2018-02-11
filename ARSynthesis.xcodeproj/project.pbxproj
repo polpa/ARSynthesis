@@ -96,18 +96,10 @@
 		0B05EE2C1F47134D00E6F8F4 /* ARSynthesis */ = {
 			isa = PBXGroup;
 			children = (
-				2B967DF92028B92B009FBB48 /* Extensions */,
-				0B05EE2D1F47134D00E6F8F4 /* AppDelegate.swift */,
-				0B05EE2F1F47134D00E6F8F4 /* ViewController.swift */,
-				2BE50A2620263A06002685E5 /* LineNode.swift */,
-				2B9BFCD8201A15D600F52D1A /* AudioMixer.swift */,
-				2BDA89B3202B559700D1989E /* SettingsViewController.swift */,
-				2BDA89B5202B55F000D1989E /* modifiedCollectionViewCell.swift */,
-				0B05EE3F1F47166600E6F8F4 /* itemCell.swift */,
-				0B05EE311F47134D00E6F8F4 /* Main.storyboard */,
-				0B05EE341F47134D00E6F8F4 /* Assets.xcassets */,
-				0B05EE361F47134D00E6F8F4 /* LaunchScreen.storyboard */,
 				2B97A271201B536A0066B600 /* Info.plist */,
+				2BE25A962030BA0400BBC7E1 /* Views */,
+				2BE25A972030BA2E00BBC7E1 /* Controllers */,
+				2B967DF92028B92B009FBB48 /* Extensions */,
 				0BC46DE31F7490A600C231F6 /* Models.scnassets */,
 			);
 			path = ARSynthesis;
@@ -123,6 +115,30 @@
 				2B262385202F76EF00F1C108 /* AudioNodes+ConvenienceExtensions.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		2BE25A962030BA0400BBC7E1 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0B05EE3F1F47166600E6F8F4 /* itemCell.swift */,
+				2BDA89B5202B55F000D1989E /* modifiedCollectionViewCell.swift */,
+				2BE50A2620263A06002685E5 /* LineNode.swift */,
+				0B05EE311F47134D00E6F8F4 /* Main.storyboard */,
+				0B05EE341F47134D00E6F8F4 /* Assets.xcassets */,
+				0B05EE361F47134D00E6F8F4 /* LaunchScreen.storyboard */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		2BE25A972030BA2E00BBC7E1 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				0B05EE2D1F47134D00E6F8F4 /* AppDelegate.swift */,
+				0B05EE2F1F47134D00E6F8F4 /* ViewController.swift */,
+				2B9BFCD8201A15D600F52D1A /* AudioMixer.swift */,
+				2BDA89B3202B559700D1989E /* SettingsViewController.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		E541201C7DEB3CC2C32EAAE1 /* Pods */ = {

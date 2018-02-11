@@ -7,13 +7,17 @@
 //
 
 import UIKit
+import ARKit
 
 class modifiedCollectionViewCell: UICollectionViewCell {
     @IBOutlet var settingsCellImage: UIButton!
     @IBOutlet var settingsCellLabel: UILabel!
+    var nodeContained: SCNNode = SCNNode()
     
     @IBAction func pressedButton(_ sender: UIButton) {
-        print(sender.tag)
+        print(nodeContained.nodeDescription!)
+        nodeContained.audioNodeContained?.disconnectOutput()
+        
     }
     
     

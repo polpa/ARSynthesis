@@ -9,14 +9,14 @@
 import UIKit
 import ARKit
 
-class SettingsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class SettingsViewController: UIViewController {
     @IBOutlet var settingsCollectionView: UICollectionView!
     var mainMenu: [String] = []
-    var nodeArray: [SCNNode]!
+    var nodeArray: [SCNNode] = []
     @IBOutlet var popUpView: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        if(mainMenu.isEmpty){
+        if(mainMenu.isEmpty && nodeArray.isEmpty){
             mainMenu.append("empty")
         } else {
             //It is not empty
@@ -56,15 +56,18 @@ class SettingsViewController: UIViewController, UICollectionViewDelegate, UIColl
         dismiss(animated: true, completion: nil)
     }
     
+
+}
+extension SettingsViewController: UICollectionViewDelegate, UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return mainMenu.count
     }
-    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "customCell", for: indexPath) as! modifiedCollectionViewCell
         cell.settingsCellImage.setImage(UIImage(named: mainMenu[indexPath.row]), for: UIControlState.normal)
         cell.settingsCellImage.tag = indexPath.row
         cell.settingsCellLabel.text = mainMenu[indexPath.row].capitalized
+        cell.nodeContained = nodeArray[indexPath.row]
         return cell
     }
 }

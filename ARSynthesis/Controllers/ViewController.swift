@@ -13,22 +13,22 @@ import PopupDialog
 import SVProgressHUD
 
 /// This class handles the main user interface.
-class ViewController: UIViewController, UICollectionViewDataSource , UICollectionViewDelegate, ARSCNViewDelegate{
-    //These are only initialised once!!!
-    var nodeArray: [SCNNode]!
+class ViewController: UIViewController{
+    @IBOutlet weak var itemsCollectionView: UICollectionView!
+    @IBOutlet weak var sceneView: ARSCNView!
     
+    var nodeArray: [SCNNode]!
     var mixer: AudioMixer!
     var firstTime: Bool!
     var overAllScale: CGFloat = 1
-    let itemsArray: [String] = ["oscillator", "reverb", "delay"]
+    let itemsArray: [String] = ["oscillator", "reverb", "delay", "keyboard","fxPad"]
     var collectionCells: [UICollectionViewCell] = []
-    @IBOutlet weak var itemsCollectionView: UICollectionView!
-    @IBOutlet weak var sceneView: ARSCNView!
     let configuration = ARWorldTrackingConfiguration()
     var selectedItem: String?
     var destinationNode = SCNNode()
     var startingNode = SCNNode()
     var passSession: ARSession!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         firstTime = true
@@ -56,7 +56,6 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
             }
         }
 
-    
     /// Presents a warning pop up dialogue whenever this function is called.
     /// This is using a pod called PopupDialog, and the code has been inspired from the documentation examples.
     /// - Parameter animated: True to allow the presentation animation.
@@ -88,13 +87,14 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
     /// This function registers all of the gesture recognizers, initializes them and adds them to the augmented reality scene.
     func registerGestureRecognizers() {
         let oneTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapped))
-        let doubleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(doubleTapped))
+        let doubleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(removeNode))
         oneTapGestureRecognizer.numberOfTapsRequired = 1
         doubleTapGestureRecognizer.numberOfTapsRequired = 2
         oneTapGestureRecognizer.require(toFail: doubleTapGestureRecognizer)
-        let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(pinch))
+        let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(scaleNode))
         let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPress))
         longPressGestureRecognizer.minimumPressDuration = 0.1
+        
         self.sceneView.addGestureRecognizer(longPressGestureRecognizer)
         self.sceneView.addGestureRecognizer(pinchGestureRecognizer)
         self.sceneView.addGestureRecognizer(oneTapGestureRecognizer)
@@ -103,7 +103,7 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
     /// This function handles double tap gestures in the augmented reality scene.
     ///
     /// - Parameter sender: Double tap gesture recognizer.
-    @objc func doubleTapped(sender: UITapGestureRecognizer){
+    @objc func removeNode(sender: UITapGestureRecognizer){
         let sceneView = sender.view as! ARSCNView
         let tapLocation = sender.location(in: sceneView)
         let hitTest = sceneView.hitTest(tapLocation)
@@ -137,7 +137,7 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
     /// This function detects any node being pinched and scales it accordingly
     ///
     /// - Parameter sender: Pinch Gesture Recognizer
-    @objc func pinch(sender: UIPinchGestureRecognizer) {
+    @objc func scaleNode(sender: UIPinchGestureRecognizer) {
         let sceneView = sender.view as! ARSCNView
         let pinchLocation = sender.location(in: sceneView)
         let hitTest = sceneView.hitTest(pinchLocation)
@@ -270,89 +270,10 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
                 }
         }
     }
-    /// This function defines the number of items in the collection view when it is loaded.
-    /// - Parameters:
-    ///   - collectionView: Main view handling all items.
-    ///   - section: Number of items in the collection view.
-    /// - Returns: Number of values in the collection view.
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return itemsArray.count
-    }
-    /// This function handles all of cell functions, such as label, background, etc.
-    ///
-    /// - Parameters:
-    ///   - collectionView: View that holds all of the items.
-    ///   - indexPath: Index for each row/column
-    /// - Returns: It returns the cell and sets the label
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "item", for: indexPath) as! itemCell
-        cell.itemLabel.text = self.itemsArray[indexPath.row]
-        collectionCells.append(cell)
-        return cell
-    }
-    /// This function is called whenever an item in the collection view is selected.
-    ///
-    /// - Parameters:
-    ///   - collectionView: View that holds the collection of cells.
-    ///   - indexPath: Index for each row/column
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath)
-        self.selectedItem = itemsArray[indexPath.row]
-        cell?.backgroundColor = UIColor.purple
-    }
-    /// This function is called whenever an item in the collection view is deselected.
-    ///
-    /// - Parameters:
-    ///   - collectionView: View that holds the collection of cells.
-    ///   - indexPath: Index for each row/column
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath)
-        if (cell?.isUserInteractionEnabled)!{
-            cell?.backgroundColor = UIColor.black
-        } else {
-            cell?.backgroundColor = UIColor.red
-        }
-    }
-    /// This renderer calls this function every time a plane is detected and added.
-    ///
-    /// - Parameters:
-    ///   - renderer: Scene Renderer
-    ///   - node: Plane added
-    ///   - anchor: Anchor for the plane
-    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
-        guard let planeAnchor = anchor as? ARPlaneAnchor else {return}
-        node.addChildNode(planeAnchor.addPlaneDebugging())
-        DispatchQueue.main.async{
-           SVProgressHUD.dismiss()
-        }
 
-    }
-    /// This renderer calls this function every time an already detected plane is updated
-    ///
-    /// - Parameters:
-    ///   - renderer: Scene Renderer
-    ///   - node: Plane being updated
-    ///   - anchor: Anchor for the plane
-    func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor){
-        guard let planeAnchor = anchor as? ARPlaneAnchor else {return}
-        node.addChildNode(planeAnchor.updatePlaneDebugging(parentNode: node))
-    }
-    /// This renderer calls this function every time an already detected plane is removed
-    ///
-    /// - Parameters:
-    ///   - renderer: Scene Renderer
-    ///   - node: Plane being removed
-    ///   - anchor: Anchor for the plane
-    func renderer(_ renderer: SCNSceneRenderer, didRemove node: SCNNode, for anchor: ARAnchor){
-        guard anchor is ARPlaneAnchor else {return}
-    }
-    /// This renderer calls this function at a rate of frames per second (60).
-    ///
-    /// - Parameters:
-    ///   - renderer: Scene Renderer
-    ///   - time: Frames Per Second (times this function is called every second. (60)
-    func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
-    }
+
+
+
     
     /// When a long press is detected, the pressed node rotates (360 degrees), within 10 seconds. If the press ends, the node stops rotating.
     /// - Parameter sender: Gesture recognizer to handle long presses.
@@ -387,6 +308,7 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
         }
     }
 
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
@@ -409,10 +331,95 @@ class ViewController: UIViewController, UICollectionViewDataSource , UICollectio
     
 }
 
-
 // MARK: - This is a list of extension functions to avoid magic numbers and handle some of the functionality.
 extension Int {
     var degreesToRadians: Double { return Double(self) * .pi/180}
+}
+extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, ARSCNViewDelegate{
+    /// This function is called whenever an item in the collection view is deselected.
+    ///
+    /// - Parameters:
+    ///   - collectionView: View that holds the collection of cells.
+    ///   - indexPath: Index for each row/column
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath)
+        if (cell?.isUserInteractionEnabled)!{
+            cell?.backgroundColor = UIColor.black
+        } else {
+            cell?.backgroundColor = UIColor.red
+        }
+    }
+    /// This function is called whenever an item in the collection view is selected.
+    ///
+    /// - Parameters:
+    ///   - collectionView: View that holds the collection of cells.
+    ///   - indexPath: Index for each row/column
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath)
+        self.selectedItem = itemsArray[indexPath.row]
+        cell?.backgroundColor = UIColor.purple
+    }
+    
+    /// This function defines the number of items in the collection view when it is loaded.
+    /// - Parameters:
+    ///   - collectionView: Main view handling all items.
+    ///   - section: Number of items in the collection view.
+    /// - Returns: Number of values in the collection view.
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return itemsArray.count
+    }
+    /// This function handles all of cell functions, such as label, background, etc.
+    ///
+    /// - Parameters:
+    ///   - collectionView: View that holds all of the items.
+    ///   - indexPath: Index for each row/column
+    /// - Returns: It returns the cell and sets the label
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "item", for: indexPath) as! itemCell
+        cell.itemLabel.text = self.itemsArray[indexPath.row]
+        collectionCells.append(cell)
+        return cell
+    }
+    /// This renderer calls this function every time a plane is detected and added.
+    ///
+    /// - Parameters:
+    ///   - renderer: Scene Renderer
+    ///   - node: Plane added
+    ///   - anchor: Anchor for the plane
+    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
+        guard let planeAnchor = anchor as? ARPlaneAnchor else {return}
+        node.addChildNode(planeAnchor.addPlaneDebugging())
+        DispatchQueue.main.async{
+            SVProgressHUD.dismiss()
+        }
+        
+    }
+    /// This renderer calls this function every time an already detected plane is updated
+    ///
+    /// - Parameters:
+    ///   - renderer: Scene Renderer
+    ///   - node: Plane being updated
+    ///   - anchor: Anchor for the plane
+    func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor){
+        guard let planeAnchor = anchor as? ARPlaneAnchor else {return}
+        node.addChildNode(planeAnchor.updatePlaneDebugging(parentNode: node))
+    }
+    /// This renderer calls this function every time an already detected plane is removed
+    ///
+    /// - Parameters:
+    ///   - renderer: Scene Renderer
+    ///   - node: Plane being removed
+    ///   - anchor: Anchor for the plane
+    func renderer(_ renderer: SCNSceneRenderer, didRemove node: SCNNode, for anchor: ARAnchor){
+        guard anchor is ARPlaneAnchor else {return}
+    }
+    /// This renderer calls this function at a rate of frames per second (60).
+    ///
+    /// - Parameters:
+    ///   - renderer: Scene Renderer
+    ///   - time: Frames Per Second (times this function is called every second. (60)
+    func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
+    }
 }
 
 
