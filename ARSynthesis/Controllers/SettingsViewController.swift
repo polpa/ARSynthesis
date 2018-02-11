@@ -36,7 +36,7 @@ class SettingsViewController: UIViewController {
             print("Parameters!")
         }
         let removeNodeButton = UIAlertAction(title: "Remove Node", style: .default){(action) in
-            self.nodeArray.remove(at: sender.tag)
+            //ViewController.viewControllerSingleton.nodeRemove(with: self.nodeArray[sender.tag])
         }
         actionSheet.addAction(cancelButton)
         actionSheet.addAction(nodeParametersButton)

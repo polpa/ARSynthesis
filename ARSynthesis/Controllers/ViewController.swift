@@ -26,7 +26,6 @@ class ViewController: UIViewController{
     var selectedItem: String?
     var destinationNode = SCNNode()
     var startingNode = SCNNode()
-    var passSession: ARSession!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,9 +40,11 @@ class ViewController: UIViewController{
         self.sceneView.delegate = self
         self.registerGestureRecognizers()
         self.sceneView.autoenablesDefaultLighting = true
+        ARHandler.arHandler.arScene = self.sceneView
     }
 
     override func viewDidAppear(_ animated: Bool) {
+        ARHandler.arHandler.collectionCells = self.collectionCells
         if(firstTime){
             firstTime = false
             DispatchQueue.main.async{
@@ -106,30 +107,35 @@ class ViewController: UIViewController{
         let tapLocation = sender.location(in: sceneView)
         let hitTest = sceneView.hitTest(tapLocation)
         if !hitTest.isEmpty && !(hitTest.first?.node.nodeDescription?.elementsEqual("basePlane"))!{
-            self.sceneView.scene.rootNode.enumerateChildNodes { (node, stop) in
-                if node == hitTest.first?.node {
-                    node.removeAllLinks(scene: sceneView)
-                    self.nodeArray.remove(at: nodeArray.index(of: node)!)
-                    if node.isEffect! {
-                        //This array value will be useful to check if nodes exist in the scene
-                        let index = itemsArray.index(of: node.nodeDescription!)
-                        let cell = collectionCells[index!]
-                        cell.isUserInteractionEnabled = true
-                        cell.backgroundColor = UIColor.black
-                    }
-                    if((node.inputConnection?.isNotEmpty)! && node.outputConnection != nil && nodeArray.contains(node.outputConnection!)){
-                        for input in node.inputConnection!{
-                            drawLineBetweenNodes(startingNode: input, destinationNode: node.outputConnection!)
-                            AudioMixer.singletonMixer.connect(fromOutput: input, toInput: node.outputConnection!)
-                        }
-                    } else{
-                        
-                    }
-                    AudioMixer.singletonMixer.remove(node: node)
-                    node.removeFromParentNode()
+            nodeRemove(with: (hitTest.first?.node)!)
+        }
+    }
+    
+    func nodeRemove(with nodeToBeRemoved: SCNNode){
+        self.sceneView.scene.rootNode.enumerateChildNodes { (node, stop) in
+            if node == nodeToBeRemoved {
+                node.removeAllLinks(scene: sceneView)
+                self.nodeArray.remove(at: nodeArray.index(of: node)!)
+                if node.isEffect! {
+                    //This array value will be useful to check if nodes exist in the scene
+                    let index = itemsArray.index(of: node.nodeDescription!)
+                    let cell = collectionCells[index!]
+                    cell.isUserInteractionEnabled = true
+                    cell.backgroundColor = UIColor.black
                 }
+                if((node.inputConnection?.isNotEmpty)! && node.outputConnection != nil && nodeArray.contains(node.outputConnection!)){
+                    for input in node.inputConnection!{
+                        drawLineBetweenNodes(startingNode: input, destinationNode: node.outputConnection!)
+                        AudioMixer.singletonMixer.connect(fromOutput: input, toInput: node.outputConnection!)
+                    }
+                } else{
+                    
+                }
+                AudioMixer.singletonMixer.remove(node: node)
+                node.removeFromParentNode()
             }
         }
+        
     }
     
     /// This function detects any node being pinched and scales it accordingly

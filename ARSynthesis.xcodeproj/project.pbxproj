@@ -18,6 +18,7 @@
 		2B1DE0AD202A502F00760129 /* ARPlane+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1DE0AC202A502F00760129 /* ARPlane+Extensions.swift */; };
 		2B262386202F76EF00F1C108 /* AudioNodes+ConvenienceExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B262385202F76EF00F1C108 /* AudioNodes+ConvenienceExtensions.swift */; };
 		2B2DED942028FD1800CB423A /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B2DED932028FD1800CB423A /* String+Extensions.swift */; };
+		2B3F23652030D3210079EB72 /* ARHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3F23642030D3210079EB72 /* ARHandler.swift */; };
 		2B967DF82028B923009FBB48 /* Node+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B967DF72028B923009FBB48 /* Node+Extensions.swift */; };
 		2B967DFB2028CADF009FBB48 /* PopUpDialog+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B967DFA2028CADF009FBB48 /* PopUpDialog+Extensions.swift */; };
 		2B9BFCD9201A15D600F52D1A /* AudioMixer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B9BFCD8201A15D600F52D1A /* AudioMixer.swift */; };
@@ -51,6 +52,7 @@
 		2B1DE0AC202A502F00760129 /* ARPlane+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARPlane+Extensions.swift"; sourceTree = "<group>"; };
 		2B262385202F76EF00F1C108 /* AudioNodes+ConvenienceExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioNodes+ConvenienceExtensions.swift"; sourceTree = "<group>"; };
 		2B2DED932028FD1800CB423A /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
+		2B3F23642030D3210079EB72 /* ARHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARHandler.swift; sourceTree = "<group>"; };
 		2B967DF72028B923009FBB48 /* Node+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Node+Extensions.swift"; sourceTree = "<group>"; };
 		2B967DFA2028CADF009FBB48 /* PopUpDialog+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PopUpDialog+Extensions.swift"; sourceTree = "<group>"; };
 		2B97A271201B536A0066B600 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 			children = (
 				0B05EE2D1F47134D00E6F8F4 /* AppDelegate.swift */,
 				0B05EE2F1F47134D00E6F8F4 /* ViewController.swift */,
+				2B3F23642030D3210079EB72 /* ARHandler.swift */,
 				2B9BFCD8201A15D600F52D1A /* AudioMixer.swift */,
 				2BDA89B3202B559700D1989E /* SettingsViewController.swift */,
 			);
@@ -298,6 +301,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B3F23652030D3210079EB72 /* ARHandler.swift in Sources */,
 				2B262386202F76EF00F1C108 /* AudioNodes+ConvenienceExtensions.swift in Sources */,
 				0B05EE301F47134D00E6F8F4 /* ViewController.swift in Sources */,
 				2BE50A2720263A06002685E5 /* LineNode.swift in Sources */,
