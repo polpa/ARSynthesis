@@ -18,7 +18,6 @@ class ViewController: UIViewController{
     @IBOutlet weak var sceneView: ARSCNView!
     
     var nodeArray: [SCNNode]!
-    var mixer: AudioMixer!
     var firstTime: Bool!
     var overAllScale: CGFloat = 1
     let itemsArray: [String] = ["oscillator", "reverb", "delay", "keyboard","fxPad"]
@@ -35,7 +34,6 @@ class ViewController: UIViewController{
         if (firstTime){
             nodeArray = []
         }
-        mixer = AudioMixer()
         self.configuration.planeDetection = .horizontal
         self.sceneView.session.run(configuration)
         self.itemsCollectionView.dataSource = self
@@ -122,12 +120,12 @@ class ViewController: UIViewController{
                     if((node.inputConnection?.isNotEmpty)! && node.outputConnection != nil && nodeArray.contains(node.outputConnection!)){
                         for input in node.inputConnection!{
                             drawLineBetweenNodes(startingNode: input, destinationNode: node.outputConnection!)
-                            mixer.connect(fromOutput: input, toInput: node.outputConnection!)
+                            AudioMixer.singletonMixer.connect(fromOutput: input, toInput: node.outputConnection!)
                         }
                     } else{
                         
                     }
-                    mixer.remove(node: node)
+                    AudioMixer.singletonMixer.remove(node: node)
                     node.removeFromParentNode()
                 }
             }
@@ -150,8 +148,8 @@ class ViewController: UIViewController{
                 let pinchAction = SCNAction.scale(by: sender.scale, duration: 0)
                 node.runAction(pinchAction)
                 node.overallAmplitude = sender.scale * node.overallAmplitude!
-                mixer.scaleValue(of: node, scaleValue: Double(sender.scale))
-                //mixer.scaleOscillatorAmplitude(osc: node.audioNodeContained as! AKOscillator, scalingFactor: Double(sender.scale))
+                AudioMixer.singletonMixer.scaleValue(of: node, scaleValue: Double(sender.scale))
+                //AudioMixer.singletonMixer.scaleOscillatorAmplitude(osc: node.audioNodeContained as! AKOscillator, scalingFactor: Double(sender.scale))
             }
             sender.scale = 1.0
         } else {
@@ -212,8 +210,8 @@ class ViewController: UIViewController{
             self.sceneView.scene.rootNode.addChildNode(lineNode)
             destinationNode.inputConnection?.append(startingNode)
             startingNode.outputConnection = destinationNode
-            mixer.connect(fromOutput: startingNode, toInput: destinationNode)
-            //mixer.connectToReverb(startingNode: startingNode, destinationNode: destinationNode)
+            AudioMixer.singletonMixer.connect(fromOutput: startingNode, toInput: destinationNode)
+            //AudioMixer.singletonMixer.connectToReverb(startingNode: startingNode, destinationNode: destinationNode)
             break
         default:
             break
@@ -259,7 +257,7 @@ class ViewController: UIViewController{
                 for node in nodeArray{
                     node.name = String("\(nodeArray.index(of: node)!)")
                 }
-                mixer.append(node: node)
+                AudioMixer.singletonMixer.append(node: node)
                 if node.isEffect!{
                     let cellIndex = itemsArray.index(of: selectedItem)
                     let cell = collectionCells[cellIndex!]
