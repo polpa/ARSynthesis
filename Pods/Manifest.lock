@@ -1,35 +1,3 @@
-PODS:
-  - AudioKit (4.0.4):
-    - AudioKit/UI (= 4.0.4)
-  - AudioKit/UI (4.0.4)
-  - DynamicBlurView (2.0.2)
-  - DZNEmptyDataSet (1.8.1)
-  - PopupDialog (0.7.0):
-    - DynamicBlurView (~> 2.0)
-  - SVProgressHUD (2.2.2)
-
-DEPENDENCIES:
-  - AudioKit (~> 4.0.4)
-  - DZNEmptyDataSet
-  - PopupDialog (~> 0.6)
-  - SVProgressHUD (from `https://github.com/SVProgressHUD/SVProgressHUD.git`)
-
-EXTERNAL SOURCES:
-  SVProgressHUD:
-    :git: https://github.com/SVProgressHUD/SVProgressHUD.git
-
-CHECKOUT OPTIONS:
-  SVProgressHUD:
-    :commit: 950e0857d3eed9276409e2e661cdd32a7e39bc6a
-    :git: https://github.com/SVProgressHUD/SVProgressHUD.git
-
-SPEC CHECKSUMS:
-  AudioKit: 647145c0462dc9dc8a8582998cd6db5f2e1ea848
-  DynamicBlurView: aa6db4defc6e537eb86fc5e58dd3991666178399
-  DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
-  PopupDialog: 4abc6db5b22b7c8029e2162bde8891ee6aa4b6c8
-  SVProgressHUD: 59b2d3dabacbd051576d21d32293ca7228dc18b0
-
-PODFILE CHECKSUM: 30cf3c01c52ec73e4acf5f9c95e82a3839ae7813
-
-COCOAPODS: 1.4.0
+version https://git-lfs.github.com/spec/v1
+oid sha256:354ddda87b2b056833a3cf273bdfc26ee8371ff070f0c3d7a0865f69a494a914
+size 1010

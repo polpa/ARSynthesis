@@ -1,15 +1,3 @@
-//
-//  AKLowPassButterworthFilterAudioUnit.h
-//  AudioKit
-//
-//  Created by Aurelius Prochazka, revision history on Github.
-//  Copyright © 2017 Aurelius Prochazka. All rights reserved.
-//
-
-#pragma once
-#import "AKAudioUnit.h"
-
-@interface AKLowPassButterworthFilterAudioUnit : AKAudioUnit
-@property (nonatomic) float cutoffFrequency;
-@end
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:9e3a79b564df4eb0b0af31b6101fa532163517514b04c3ab22f4c9be8b3414f6
+size 341

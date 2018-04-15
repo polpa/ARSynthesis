@@ -1,20 +1,3 @@
-//
-//  AKPluckedStringAudioUnit.h
-//  AudioKit
-//
-//  Created by Aurelius Prochazka, revision history on Github.
-//  Copyright © 2017 Aurelius Prochazka. All rights reserved.
-//
-
-#pragma once
-
-#import "AKAudioUnit.h"
-
-@interface AKPluckedStringAudioUnit : AKAudioUnit
-@property (nonatomic) float frequency;
-@property (nonatomic) float amplitude;
-
-- (void)triggerFrequency:(float)frequency amplitude:(float)amplitude;
-
-@end
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:581e844f55e617a87451dd048342ea2e4b1bf3adbfcf71837ec5b183fc076602
+size 425

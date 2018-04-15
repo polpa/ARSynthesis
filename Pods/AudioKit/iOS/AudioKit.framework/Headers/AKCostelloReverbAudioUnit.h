@@ -1,16 +1,3 @@
-//
-//  AKCostelloReverbAudioUnit.h
-//  AudioKit
-//
-//  Created by Aurelius Prochazka, revision history on Github.
-//  Copyright © 2017 Aurelius Prochazka. All rights reserved.
-//
-
-#pragma once
-#import "AKAudioUnit.h"
-
-@interface AKCostelloReverbAudioUnit : AKAudioUnit
-@property (nonatomic) float feedback;
-@property (nonatomic) float cutoffFrequency;
-@end
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:6cc434a3056b5b02e826eae47616e12ca71dcc3befd1e6eb7a03d67abfa7c685
+size 359

@@ -1,17 +1,3 @@
-//
-//  AKBalancerAudioUnit.h
-//  AudioKit
-//
-//  Created by Aurelius Prochazka, revision history on Github.
-//  Copyright © 2017 Aurelius Prochazka. All rights reserved.
-//
-
-#pragma once
-#import <AudioToolbox/AudioToolbox.h>
-
-@interface AKBalancerAudioUnit : AUAudioUnit
-- (void)start;
-- (void)stop;
-- (BOOL)isPlaying;
-@end
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:f7123413fb5c2e5e39a025ba36286e695b093556aa92d77d0e008213d02b9e69
+size 326

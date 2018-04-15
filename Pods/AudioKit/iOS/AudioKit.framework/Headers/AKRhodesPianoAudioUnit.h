@@ -1,19 +1,3 @@
-//
-//  AKRhodesPianoAudioUnit.h
-//  AudioKit
-//
-//  Created by Aurelius Prochazka, revision history on Github.
-//  Copyright © 2017 Aurelius Prochazka. All rights reserved.
-//
-
-#pragma once
-#import "AKAudioUnit.h"
-
-@interface AKRhodesPianoAudioUnit : AKAudioUnit
-@property (nonatomic) float frequency;
-@property (nonatomic) float amplitude;
-
-- (void)triggerFrequency:(float)frequency amplitude:(float)amplitude;
-
-@end
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:533370c2e655b9a1f93acf236d28b3432c8e9b349d1a217b3ca7ac9961317c5c
+size 420

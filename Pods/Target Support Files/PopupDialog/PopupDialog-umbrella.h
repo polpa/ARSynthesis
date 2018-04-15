@@ -1,16 +1,3 @@
-#ifdef __OBJC__
-#import <UIKit/UIKit.h>
-#else
-#ifndef FOUNDATION_EXPORT
-#if defined(__cplusplus)
-#define FOUNDATION_EXPORT extern "C"
-#else
-#define FOUNDATION_EXPORT extern
-#endif
-#endif
-#endif
-
-
-FOUNDATION_EXPORT double PopupDialogVersionNumber;
-FOUNDATION_EXPORT const unsigned char PopupDialogVersionString[];
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:9e6acf4f84fd4a33528dca25a311f0bd3b2544c1621d49d5b0ffdb4be91f97b0
+size 314

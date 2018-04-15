@@ -1,20 +1,3 @@
-//
-//  AKPWMOscillatorAudioUnit.h
-//  AudioKit
-//
-//  Created by Aurelius Prochazka, revision history on Github.
-//  Copyright © 2017 Aurelius Prochazka. All rights reserved.
-//
-
-#pragma once
-#import "AKAudioUnit.h"
-
-@interface AKPWMOscillatorAudioUnit : AKAudioUnit
-@property (nonatomic) float frequency;
-@property (nonatomic) float amplitude;
-@property (nonatomic) float pulseWidth;
-@property (nonatomic) float detuningOffset;
-@property (nonatomic) float detuningMultiplier;
-@end
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:0c3803c1198dd510a46a35e8058f7499ed5c0e327877f602b7cd75e0bb12e27b
+size 485

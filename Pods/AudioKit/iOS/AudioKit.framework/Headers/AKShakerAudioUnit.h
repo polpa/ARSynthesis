@@ -1,19 +1,3 @@
-//
-//  AKShakerAudioUnit.h
-//  AudioKit
-//
-//  Created by Aurelius Prochazka, revision history on Github.
-//  Copyright © 2017 Aurelius Prochazka. All rights reserved.
-//
-
-#pragma once
-#import "AKAudioUnit.h"
-
-@interface AKShakerAudioUnit : AKAudioUnit
-
-@property (nonatomic) UInt8 type;
-@property (nonatomic) float amplitude;
-
-- (void)triggerType:(UInt8)type Amplitude:(float)amplitude;
-
-@end
+version https://git-lfs.github.com/spec/v1
+oid sha256:e228c3183370be89bc6854eac60a8cc44eef9f872d327b0a67c0bb9ae827bbfa
+size 395

@@ -1,24 +1,3 @@
-//
-//  AKPhaseDistortionOscillatorAudioUnit.h
-//  AudioKit
-//
-//  Created by Aurelius Prochazka, revision history on Github.
-//  Copyright © 2017 Aurelius Prochazka. All rights reserved.
-//
-
-#pragma once
-
-#import "AKAudioUnit.h"
-
-@interface AKPhaseDistortionOscillatorAudioUnit : AKAudioUnit
-@property (nonatomic) float frequency;
-@property (nonatomic) float amplitude;
-@property (nonatomic) float phaseDistortion;
-@property (nonatomic) float detuningOffset;
-@property (nonatomic) float detuningMultiplier;
-
-- (void)setupWaveform:(int)size;
-- (void)setWaveformValue:(float)value atIndex:(UInt32)index;
-
-@end
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:0cea2ad04d5cfe3d439df0a5ca63b71290868ddc2e8dedf00803e46b86c89939
+size 610

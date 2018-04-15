@@ -1,19 +1,3 @@
-//
-//  AKAmplitudeEnvelopeAudioUnit.h
-//  AudioKit
-//
-//  Created by Aurelius Prochazka, revision history on Github.
-//  Copyright © 2017 Aurelius Prochazka. All rights reserved.
-//
-
-#pragma once
-#import "AKAudioUnit.h"
-
-@interface AKAmplitudeEnvelopeAudioUnit : AKAudioUnit
-@property (nonatomic) float attackDuration;
-@property (nonatomic) float decayDuration;
-@property (nonatomic) float sustainLevel;
-@property (nonatomic) float releaseDuration;
-@end
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:3c7f4f78998bdf130ed2b8ca7058d9e4bf93d420194ffa180e07c20a0efef34f
+size 457

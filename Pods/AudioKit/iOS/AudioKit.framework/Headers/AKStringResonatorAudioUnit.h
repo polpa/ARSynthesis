@@ -1,16 +1,3 @@
-//
-//  AKStringResonatorAudioUnit.h
-//  AudioKit
-//
-//  Created by Aurelius Prochazka, revision history on Github.
-//  Copyright © 2017 Aurelius Prochazka. All rights reserved.
-//
-
-#pragma once
-#import "AKAudioUnit.h"
-
-@interface AKStringResonatorAudioUnit : AKAudioUnit
-@property (nonatomic) float fundamentalFrequency;
-@property (nonatomic) float feedback;
-@end
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:fcac32d8ce665da5f47ee76e883b6702cce589420b14653808b5e13af9f3187b
+size 366

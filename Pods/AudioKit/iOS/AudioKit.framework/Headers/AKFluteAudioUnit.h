@@ -1,18 +1,3 @@
-//
-//  AKFluteAudioUnit.h
-//  AudioKit
-//
-//  Created by Aurelius Prochazka, revision history on Github.
-//  Copyright © 2017 Aurelius Prochazka. All rights reserved.
-//
-
-#pragma once
-#import "AKAudioUnit.h"
-
-@interface AKFluteAudioUnit : AKAudioUnit
-@property (nonatomic) float frequency;
-@property (nonatomic) float amplitude;
-
-- (void)triggerFrequency:(float)frequency amplitude:(float)amplitude;
-
-@end
+version https://git-lfs.github.com/spec/v1
+oid sha256:3912212bef6b47c05d77fdbaa2d205ee499574b613f2ad9a2b6dfb2661c134e6
+size 407

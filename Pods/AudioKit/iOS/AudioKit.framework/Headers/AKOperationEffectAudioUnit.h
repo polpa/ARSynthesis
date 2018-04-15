@@ -1,19 +1,3 @@
-//
-//  AKOperationEffectAudioUnit.h
-//  AudioKit
-//
-//  Created by Aurelius Prochazka, revision history on Github.
-//  Copyright © 2017 Aurelius Prochazka. All rights reserved.
-//
-
-#pragma once
-
-#import "AKAudioUnit.h"
-
-@class AKCustomUgen;
-
-@interface AKOperationEffectAudioUnit : AKAudioUnit
-@property (nonatomic) NSArray *parameters;
-- (void)setSporth:(NSString *)sporth;
-- (void)addCustomUgen:(AKCustomUgen *)ugen;
-@end
+version https://git-lfs.github.com/spec/v1
+oid sha256:0fc8dfd33543b99e5dd004fe2a5ca953bb5cfec2ed65cee7cde23b151bd4283d
+size 425

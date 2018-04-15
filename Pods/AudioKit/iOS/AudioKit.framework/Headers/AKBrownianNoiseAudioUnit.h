@@ -1,15 +1,3 @@
-//
-//  AKBrownianNoiseAudioUnit.h
-//  AudioKit
-//
-//  Created by Aurelius Prochazka, revision history on Github.
-//  Copyright © 2017 Aurelius Prochazka. All rights reserved.
-//
-
-#pragma once
-#import "AKAudioUnit.h"
-
-@interface AKBrownianNoiseAudioUnit : AKAudioUnit
-@property (nonatomic) float amplitude;
-@end
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:e9a8a55298b7ab3c4c2e4e5544e504663727b22a120a1e1e116c0f389ccde63c
+size 313

@@ -1,17 +1,3 @@
-//
-//  AKLowShelfParametricEqualizerFilterAudioUnit.h
-//  AudioKit
-//
-//  Created by Aurelius Prochazka, revision history on Github.
-//  Copyright © 2017 Aurelius Prochazka. All rights reserved.
-//
-
-#pragma once
-#import "AKAudioUnit.h"
-
-@interface AKLowShelfParametricEqualizerFilterAudioUnit : AKAudioUnit
-@property (nonatomic) float cornerFrequency;
-@property (nonatomic) float gain;
-@property (nonatomic) float q;
-@end
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:9aa3adbcb219872657a8a0ab919e793de673666b367c9fc2c2dcb65e971f1506
+size 424

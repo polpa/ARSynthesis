@@ -1,15 +1,3 @@
-//
-//  AKMoogLadderAudioUnit.h
-//  AudioKit
-//
-//  Created by Aurelius Prochazka, revision history on Github.
-//  Copyright © 2017 Aurelius Prochazka. All rights reserved.
-//
-
-#pragma once
-#import "AKAudioUnit.h"
-
-@interface AKMoogLadderAudioUnit : AKAudioUnit
-@property (nonatomic) float cutoffFrequency;
-@property (nonatomic) float resonance;
-@end
+version https://git-lfs.github.com/spec/v1
+oid sha256:916d95444daacd190030c1f40fc976f3ae455ce6557cfe96ce8490f22739f264
+size 351

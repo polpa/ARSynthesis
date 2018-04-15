@@ -1,15 +1,3 @@
-//
-//  AKModalResonanceFilterAudioUnit.h
-//  AudioKit
-//
-//  Created by Aurelius Prochazka, revision history on Github.
-//  Copyright © 2017 Aurelius Prochazka. All rights reserved.
-//
-
-#pragma once
-#import "AKAudioUnit.h"
-
-@interface AKModalResonanceFilterAudioUnit : AKAudioUnit
-@property (nonatomic) float frequency;
-@property (nonatomic) float qualityFactor;
-@end
+version https://git-lfs.github.com/spec/v1
+oid sha256:3646fb284f143367220f2a84b0086426c01f7370d7696995c2a5881b5df7ce52
+size 369

@@ -1,32 +1,3 @@
-//
-//  CaptureQuality.swift
-//  DynamicBlurView
-//
-//  Created by Kyohei Ito on 2017/08/17.
-//  Copyright © 2017年 kyohei_ito. All rights reserved.
-//
-
-public enum CaptureQuality {
-    case `default`
-    case low
-    case medium
-    case high
-
-    var imageScale: CGFloat {
-        switch self {
-        case .default, .high:
-            return 0
-        case .low, .medium:
-            return  1
-        }
-    }
-
-    var interpolationQuality: CGInterpolationQuality {
-        switch self {
-        case .default, .low:
-            return .none
-        case .medium, .high:
-            return .default
-        }
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:b5ff147ddbcf4de1e8c6be8c12c3a87d0d5fd9f5904ca99df081bb17f6c96cf6
+size 622

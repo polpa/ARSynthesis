@@ -1,15 +1,3 @@
-//
-//  AKVariableDelayAudioUnit.h
-//  AudioKit
-//
-//  Created by Aurelius Prochazka, revision history on Github.
-//  Copyright © 2017 Aurelius Prochazka. All rights reserved.
-//
-
-#pragma once
-#import "AKAudioUnit.h"
-
-@interface AKVariableDelayAudioUnit : AKAudioUnit
-@property (nonatomic) float time;
-@property (nonatomic) float feedback;
-@end
+version https://git-lfs.github.com/spec/v1
+oid sha256:e40821fe37f7897e9b2f674beba35eed17bac95efd7faa4eadb63d4cc266940d
+size 345

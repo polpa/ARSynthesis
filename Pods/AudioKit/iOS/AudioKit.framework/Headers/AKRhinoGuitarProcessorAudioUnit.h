@@ -1,20 +1,3 @@
-//
-//  AKRhinoGuitarProcessorAudioUnit.h
-//  AudioKit
-//
-//  Created by Mike Gazzaruso, revision history on Github.
-//  Copyright © 2017 Mike Gazzaruso, Devoloop Srls. All rights reserved.
-//
-
-#pragma once
-#import "AKAudioUnit.h"
-
-@interface AKRhinoGuitarProcessorAudioUnit : AKAudioUnit
-@property (nonatomic) float preGain;
-@property (nonatomic) float postGain;
-@property (nonatomic) float lowGain;
-@property (nonatomic) float midGain;
-@property (nonatomic) float highGain;
-@property (nonatomic) float distType;
-@property (nonatomic) float distAmount;
-@end
+version https://git-lfs.github.com/spec/v1
+oid sha256:52520ca7dfb67baee2134f86b3425407ec8d3a266b4904a0f62a753226b0c240
+size 559

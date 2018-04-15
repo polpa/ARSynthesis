@@ -1,31 +1,3 @@
-//
-//  AKSamplePlayerAudioUnit.h
-//  AudioKit
-//
-//  Created by Aurelius Prochazka, revision history on Github.
-//  Copyright © 2017 Aurelius Prochazka. All rights reserved.
-//
-
-#pragma once
-#import "AKAudioUnit.h"
-
-typedef void (^AKCCallback)(void);
-
-@interface AKSamplePlayerAudioUnit : AKAudioUnit
-@property (nonatomic) float startPoint;
-@property (nonatomic) float endPoint;
-@property (nonatomic) float rate;
-@property (nonatomic) float volume;
-@property (nonatomic) BOOL loop;
-@property (nonatomic) float loopStartPoint;
-@property (nonatomic) float loopEndPoint;
-@property (nonatomic) AKCCallback completionHandler;
-
-- (void)setupAudioFileTable:(UInt32)size;
-- (void)loadAudioData:(float *)data size:(UInt32)size;
-- (int)size;
-- (float)position;
-
-@end
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:23478ee0712bbacf8423dd996bcacbc5c8f04d187a3251a16523b09402418c19
+size 760

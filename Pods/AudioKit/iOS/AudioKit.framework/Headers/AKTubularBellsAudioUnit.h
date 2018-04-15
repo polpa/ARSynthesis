@@ -1,19 +1,3 @@
-//
-//  AKTubularBellsAudioUnit.h
-//  AudioKit
-//
-//  Created by Aurelius Prochazka, revision history on Github.
-//  Copyright © 2017 Aurelius Prochazka. All rights reserved.
-//
-
-#pragma once
-#import "AKAudioUnit.h"
-
-@interface AKTubularBellsAudioUnit : AKAudioUnit
-@property (nonatomic) float frequency;
-@property (nonatomic) float amplitude;
-
-- (void)triggerFrequency:(float)frequency amplitude:(float)amplitude;
-
-@end
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:03e982493b35ce23073b9310a2c0c19c4f1cf2696d2fd50054fdb68796b1afa2
+size 422

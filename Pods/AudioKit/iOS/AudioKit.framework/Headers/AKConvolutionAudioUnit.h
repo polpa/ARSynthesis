@@ -1,16 +1,3 @@
-//
-//  AKConvolutionAudioUnit.h
-//  AudioKit
-//
-//  Created by Aurelius Prochazka, revision history on Github.
-//  Copyright © 2017 Aurelius Prochazka. All rights reserved.
-//
-
-#pragma once
-#import "AKAudioUnit.h"
-
-@interface AKConvolutionAudioUnit : AKAudioUnit
-- (void)setupAudioFileTable:(float *)data size:(UInt32)size;
-- (void)setPartitionLength:(int)partitionLength;
-@end
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:4f9b97ddfded2b96fd12321ed405909a626809d420046037d9d355281fdc7ed5
+size 380

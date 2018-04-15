@@ -1,17 +1,3 @@
-//
-//  AKBoosterAudioUnit.h
-//  AudioKit
-//
-//  Created by Aurelius Prochazka, revision history on Github.
-//  Copyright © 2017 Aurelius Prochazka. All rights reserved.
-//
-
-#pragma once
-#import "AKAudioUnit.h"
-
-@interface AKBoosterAudioUnit : AKAudioUnit
-@property (nonatomic) float leftGain;
-@property (nonatomic) float rightGain;
-@end
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:c72a762018b50603e688bf779e1f51efdc579cfc7fc922e2b7898259446042ba
+size 340

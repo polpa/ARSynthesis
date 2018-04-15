@@ -1,16 +1,3 @@
-//
-//  AKPeakingParametricEqualizerFilterAudioUnit.h
-//  AudioKit
-//
-//  Created by Aurelius Prochazka, revision history on Github.
-//  Copyright © 2017 Aurelius Prochazka. All rights reserved.
-//
-
-#pragma once
-#import "AKAudioUnit.h"
-
-@interface AKPeakingParametricEqualizerFilterAudioUnit : AKAudioUnit
-@property (nonatomic) float centerFrequency;
-@property (nonatomic) float gain;
-@property (nonatomic) float q;
-@end
+version https://git-lfs.github.com/spec/v1
+oid sha256:3b9cb4ea7b6fd819b0ba9400d858fddb46e7f2bfb75807c6c43459a9c71102ed
+size 421

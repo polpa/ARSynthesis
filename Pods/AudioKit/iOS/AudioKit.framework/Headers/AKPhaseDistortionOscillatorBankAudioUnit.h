@@ -1,21 +1,3 @@
-//
-//  AKPhaseDistortionOscillatorBankAudioUnit.h
-//  AudioKit
-//
-//  Created by Aurelius Prochazka, revision history on Github.
-//  Copyright © 2017 Aurelius Prochazka. All rights reserved.
-//
-
-#pragma once
-
-#import "AKBankAudioUnit.h"
-
-@interface AKPhaseDistortionOscillatorBankAudioUnit : AKBankAudioUnit
-
-@property (nonatomic) float phaseDistortion;
-
-- (void)setupWaveform:(int)size;
-- (void)setWaveformValue:(float)value atIndex:(UInt32)index;
-
-@end
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:463a5a1c530b5ab4debb89689faa2b3b46d2644340736e2fab80385d558f2259
+size 457

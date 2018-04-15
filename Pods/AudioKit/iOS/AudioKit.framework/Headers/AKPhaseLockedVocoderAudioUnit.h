@@ -1,21 +1,3 @@
-//
-//  AKPhaseLockedVocoderAudioUnit.h
-//  AudioKit
-//
-//  Created by Aurelius Prochazka, revision history on Github.
-//  Copyright © 2017 Aurelius Prochazka. All rights reserved.
-//
-
-#pragma once
-#import "AKAudioUnit.h"
-
-@interface AKPhaseLockedVocoderAudioUnit : AKAudioUnit
-@property (nonatomic) float position;
-@property (nonatomic) float amplitude;
-@property (nonatomic) float pitchRatio;
-
-- (void)setupAudioFileTable:(float *)data size:(UInt32)size;
-
-@end
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:c9a5d5e0f9efe7a12c7ff950b360d9ac328a0e92d8424be7e4f883208b2dbb70
+size 465

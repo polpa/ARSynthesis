@@ -1,19 +1,3 @@
-//
-//  AKMicrophoneTrackerEngine.h
-//  AudioKit
-//
-//  Created by Aurelius Prochazka on 5/9/17.
-//  Copyright © 2017 AudioKit. All rights reserved.
-//
-
-#pragma once
-
-#import "EZAudio.h"
-
-@interface AKMicrophoneTrackerEngine : NSObject<EZMicrophoneDelegate>
-@property float amplitude;
-@property float frequency;
-
-- (void)start;
-- (void)stop;
-@end
+version https://git-lfs.github.com/spec/v1
+oid sha256:9708f5c72614bf57e22da4f8da4f7113dd301ebe3985a01a61ba11c77eb98c12
+size 347

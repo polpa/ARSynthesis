@@ -1,17 +1,3 @@
-#ifdef __OBJC__
-#import <UIKit/UIKit.h>
-#else
-#ifndef FOUNDATION_EXPORT
-#if defined(__cplusplus)
-#define FOUNDATION_EXPORT extern "C"
-#else
-#define FOUNDATION_EXPORT extern
-#endif
-#endif
-#endif
-
-#import "DynamicBlurView.h"
-
-FOUNDATION_EXPORT double DynamicBlurViewVersionNumber;
-FOUNDATION_EXPORT const unsigned char DynamicBlurViewVersionString[];
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:df348e0ff5767cc76e67931f682dfa3e730dff3804fa61ae2aadfc46b53d4189
+size 350

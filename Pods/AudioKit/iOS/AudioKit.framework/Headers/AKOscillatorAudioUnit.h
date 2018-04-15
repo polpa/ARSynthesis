@@ -1,23 +1,3 @@
-//
-//  AKOscillatorAudioUnit.h
-//  AudioKit
-//
-//  Created by Aurelius Prochazka, revision history on Github.
-//  Copyright © 2017 Aurelius Prochazka. All rights reserved.
-//
-
-#pragma once
-
-#import "AKAudioUnit.h"
-
-@interface AKOscillatorAudioUnit : AKAudioUnit
-@property (nonatomic) float frequency;
-@property (nonatomic) float amplitude;
-@property (nonatomic) float detuningOffset;
-@property (nonatomic) float detuningMultiplier;
-
-- (void)setupWaveform:(int)size;
-- (void)setWaveformValue:(float)value atIndex:(UInt32)index;
-
-@end
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:d3461b92bc47d7a1c944d44adb830947af32fb89137fffba049d31a828475700
+size 535

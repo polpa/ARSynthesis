@@ -1,23 +1,3 @@
-//
-//  AKOscillatorBankAudioUnit.h
-//  AudioKit
-//
-//  Created by Aurelius Prochazka, revision history on Github.
-//  Copyright © 2017 Aurelius Prochazka. All rights reserved.
-//
-
-#pragma once
-
-#import "AKBankAudioUnit.h"
-
-@interface AKOscillatorBankAudioUnit : AKBankAudioUnit
-
-- (void)setupWaveform:(int)size;
-- (void)setWaveformValue:(float)value atIndex:(UInt32)index;
-- (void)startNote:(uint8_t)note velocity:(uint8_t)velocity;
-- (void)startNote:(uint8_t)note velocity:(uint8_t)velocity frequency:(float)frequency;
-- (void)stopNote:(uint8_t)note;
-- (void)reset;
-
-@end
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:328de4b458cfeb8ef998451930f38dab8fbb1fb703a85da67e4b882fa68c1f94
+size 575

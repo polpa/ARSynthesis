@@ -1,21 +1,3 @@
-//
-//  AK4LinearParamRamp.hpp
-//  AudioKit
-//
-//  Created by Andrew Voelkel on 9/18/17.
-//  Copyright © 2017 AudioKit. All rights reserved.
-//
-
-#pragma once
-
-#import "AK4ParamRampBase.hpp"
-
-struct AK4LinearParamRamp : AK4ParamRampBase {
-
-    float computeValueAt(int64_t atSample) override {
-        float fract = (float)(atSample - _startSample) / _duration;
-        return _value = _value + (_target - _value) * fract;
-    }
-
-};
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:8d02bf69556228e727cd9fc56e1b911840bc56fedb0848003d53fe00147cba54
+size 433

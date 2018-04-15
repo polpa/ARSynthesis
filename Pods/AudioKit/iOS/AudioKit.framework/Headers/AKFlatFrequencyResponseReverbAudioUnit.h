@@ -1,16 +1,3 @@
-//
-//  AKFlatFrequencyResponseReverbAudioUnit.h
-//  AudioKit
-//
-//  Created by Aurelius Prochazka, revision history on Github.
-//  Copyright © 2017 Aurelius Prochazka. All rights reserved.
-//
-
-#pragma once
-#import "AKAudioUnit.h"
-
-@interface AKFlatFrequencyResponseReverbAudioUnit : AKAudioUnit
-@property (nonatomic) float reverbDuration;
-- (void)setLoopDuration:(float)duration;
-@end
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:51106fa90e1b78e8e65651fe03b4977348a6def9c0baf54e92edb52d11beef8d
+size 387

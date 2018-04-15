@@ -1,23 +1,3 @@
-//
-//  AKZitaReverbAudioUnit.h
-//  AudioKit
-//
-//  Created by Aurelius Prochazka, revision history on Github.
-//  Copyright © 2017 Aurelius Prochazka. All rights reserved.
-//
-
-#pragma once
-#import "AKAudioUnit.h"
-
-@interface AKZitaReverbAudioUnit : AKAudioUnit
-@property (nonatomic) float predelay;
-@property (nonatomic) float crossoverFrequency;
-@property (nonatomic) float lowReleaseTime;
-@property (nonatomic) float midReleaseTime;
-@property (nonatomic) float dampingFrequency;
-@property (nonatomic) float equalizerFrequency1;
-@property (nonatomic) float equalizerLevel1;
-@property (nonatomic) float equalizerFrequency2;
-@property (nonatomic) float equalizerLevel2;
-@property (nonatomic) float dryWetMix;
-@end
+version https://git-lfs.github.com/spec/v1
+oid sha256:0ddeb459bea26d42c9b50ed7f62c8220715a83c7a29aff23fe6791f04efc14b0
+size 714

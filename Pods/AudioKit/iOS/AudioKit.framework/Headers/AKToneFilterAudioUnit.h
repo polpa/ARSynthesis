@@ -1,15 +1,3 @@
-//
-//  AKToneFilterAudioUnit.h
-//  AudioKit
-//
-//  Created by Aurelius Prochazka, revision history on Github.
-//  Copyright © 2017 Aurelius Prochazka. All rights reserved.
-//
-
-#pragma once
-#import "AKAudioUnit.h"
-
-@interface AKToneFilterAudioUnit : AKAudioUnit
-@property (nonatomic) float halfPowerPoint;
-@end
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:2c24bca83b98dda53590086710655c30afc4a58e89e3fe1af250a0ce66fa15f9
+size 312

@@ -1,21 +1,3 @@
-//
-//  AKMorphingOscillatorBankAudioUnit.h
-//  AudioKit
-//
-//  Created by Aurelius Prochazka, revision history on Github.
-//  Copyright © 2017 Aurelius Prochazka. All rights reserved.
-//
-
-#pragma once
-#import "AKBankAudioUnit.h"
-
-@interface AKMorphingOscillatorBankAudioUnit : AKBankAudioUnit
-
-@property (nonatomic) float index;
-
-- (void)setupWaveform:(UInt32)waveform size:(int)size;
-- (void)setWaveform:(UInt32)waveform withValue:(float)value atIndex:(UInt32)index;
-- (void)reset;
-
-@end
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:977f4386c4d8e60eefc1b1c0e115da4c82d6971149e2cae301690c0c92e4cce1
+size 491

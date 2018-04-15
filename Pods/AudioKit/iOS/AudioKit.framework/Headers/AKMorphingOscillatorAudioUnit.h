@@ -1,24 +1,3 @@
-//
-//  AKMorphingOscillatorAudioUnit.h
-//  AudioKit
-//
-//  Created by Aurelius Prochazka, revision history on Github.
-//  Copyright © 2017 Aurelius Prochazka. All rights reserved.
-//
-
-#pragma once
-
-#import "AKAudioUnit.h"
-
-@interface AKMorphingOscillatorAudioUnit : AKAudioUnit
-@property (nonatomic) float frequency;
-@property (nonatomic) float amplitude;
-@property (nonatomic) float index;
-@property (nonatomic) float detuningOffset;
-@property (nonatomic) float detuningMultiplier;
-
-- (void)setupWaveform:(UInt32)waveform size:(int)size;
-- (void)setWaveform:(UInt32)waveform withValue:(float)value atIndex:(UInt32)index;
-
-@end
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:e7506a8e266841161717349f868b5ca06fa91a4d6ff777f1321a0cdb9350545b
+size 630
