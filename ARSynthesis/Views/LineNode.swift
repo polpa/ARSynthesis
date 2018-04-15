@@ -9,9 +9,9 @@ import ARKit
 class LineNode: SCNNode
 {
     init(name: String,
-        v1: SCNVector3,  // where line starts
-        v2: SCNVector3,  // where line ends
-        material: [SCNMaterial] )  // any material.
+        v1: SCNVector3,
+        v2: SCNVector3,
+        material: [SCNMaterial] )  
     {
         super.init()
         let  height1 = self.distanceBetweenPoints2(A: v1, B: v2) as CGFloat //v1.distance(v2)
@@ -19,19 +19,14 @@ class LineNode: SCNNode
         self.nodeDescription = "line"
         position = v1
         let ndV2 = SCNNode()
-        
         ndV2.position = v2
-        
         let ndZAlign = SCNNode()
         ndZAlign.eulerAngles.x = Float.pi/2
-        
         let cylgeo = SCNBox(width: 0.02, height: height1, length: 0.001, chamferRadius: 0)
         cylgeo.materials = material
-        
         let ndCylinder = SCNNode(geometry: cylgeo)
         ndCylinder.position.y = Float(-height1/2) + 0.001
         ndZAlign.addChildNode(ndCylinder)
-        
         addChildNode(ndZAlign)
         constraints = [SCNLookAtConstraint(target: ndV2)]
     }
@@ -39,6 +34,7 @@ class LineNode: SCNNode
     override init() {
         super.init()
     }
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }

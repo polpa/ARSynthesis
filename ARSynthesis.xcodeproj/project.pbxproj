@@ -8,24 +8,53 @@
 
 /* Begin PBXBuildFile section */
 		0B05EE2E1F47134D00E6F8F4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B05EE2D1F47134D00E6F8F4 /* AppDelegate.swift */; };
-		0B05EE301F47134D00E6F8F4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B05EE2F1F47134D00E6F8F4 /* ViewController.swift */; };
+		0B05EE301F47134D00E6F8F4 /* ARViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B05EE2F1F47134D00E6F8F4 /* ARViewController.swift */; };
 		0B05EE331F47134D00E6F8F4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B05EE311F47134D00E6F8F4 /* Main.storyboard */; };
 		0B05EE351F47134D00E6F8F4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B05EE341F47134D00E6F8F4 /* Assets.xcassets */; };
 		0B05EE381F47134D00E6F8F4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B05EE361F47134D00E6F8F4 /* LaunchScreen.storyboard */; };
-		0B05EE401F47166600E6F8F4 /* itemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B05EE3F1F47166600E6F8F4 /* itemCell.swift */; };
+		0B05EE401F47166600E6F8F4 /* CustomItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B05EE3F1F47166600E6F8F4 /* CustomItemCell.swift */; };
 		0BC46DE41F7490A600C231F6 /* Models.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 0BC46DE31F7490A600C231F6 /* Models.scnassets */; };
-		29D95D18BDB0505641A9B854 /* Pods_ARSynthesis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59DCF4F0B3D1F3E3CE40A458 /* Pods_ARSynthesis.framework */; };
+		2B0CFAE72036E9E200EBF9C5 /* AudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B0CFAE52036E9E100EBF9C5 /* AudioKit.framework */; };
+		2B0CFAE82036E9E200EBF9C5 /* AudioKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B0CFAE62036E9E200EBF9C5 /* AudioKitUI.framework */; };
 		2B1DE0AD202A502F00760129 /* ARPlane+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1DE0AC202A502F00760129 /* ARPlane+Extensions.swift */; };
 		2B262386202F76EF00F1C108 /* AudioNodes+ConvenienceExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B262385202F76EF00F1C108 /* AudioNodes+ConvenienceExtensions.swift */; };
 		2B2DED942028FD1800CB423A /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B2DED932028FD1800CB423A /* String+Extensions.swift */; };
+		2B392BA520680E9F00B60560 /* AddOnboardingInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B392BA420680E9F00B60560 /* AddOnboardingInfoView.swift */; };
+		2B3EA53D2063F87900E6EB84 /* CustomBannerColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3EA53C2063F87900E6EB84 /* CustomBannerColors.swift */; };
 		2B3F23652030D3210079EB72 /* ARHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3F23642030D3210079EB72 /* ARHandler.swift */; };
+		2B4B13C12044838B00513B9C /* DebuggerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4B13C02044838B00513B9C /* DebuggerService.swift */; };
+		2B59CECF204346D600C1CD9C /* OscillatorParametersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B59CECE204346D600C1CD9C /* OscillatorParametersViewController.swift */; };
 		2B967DF82028B923009FBB48 /* Node+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B967DF72028B923009FBB48 /* Node+Extensions.swift */; };
 		2B967DFB2028CADF009FBB48 /* PopUpDialog+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B967DFA2028CADF009FBB48 /* PopUpDialog+Extensions.swift */; };
-		2B9BFCD9201A15D600F52D1A /* AudioMixer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B9BFCD8201A15D600F52D1A /* AudioMixer.swift */; };
+		2B9BFCD9201A15D600F52D1A /* AudioInterfaceHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B9BFCD8201A15D600F52D1A /* AudioInterfaceHandler.swift */; };
+		2BA033982045BD610056F200 /* SettingsRoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA033972045BD610056F200 /* SettingsRoundedButton.swift */; };
+		2BA0339A2045C1A70056F200 /* RoundedBackgroundImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA033992045C1A70056F200 /* RoundedBackgroundImage.swift */; };
+		2BA2F4CF205081F700F81211 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA2F4CE205081F700F81211 /* Double+Extensions.swift */; };
+		2BBA5DBC2031F6CE00900054 /* RoundedPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5DBB2031F6CE00900054 /* RoundedPopUp.swift */; };
+		2BD87B8B2041B4BD00EDC63E /* ViewControllerTestClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD87B8A2041B4BD00EDC63E /* ViewControllerTestClass.swift */; };
 		2BDA89B4202B559700D1989E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDA89B3202B559700D1989E /* SettingsViewController.swift */; };
-		2BDA89B6202B55F000D1989E /* modifiedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDA89B5202B55F000D1989E /* modifiedCollectionViewCell.swift */; };
+		2BDA89B6202B55F000D1989E /* ModifiedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDA89B5202B55F000D1989E /* ModifiedCollectionViewCell.swift */; };
 		2BE50A2720263A06002685E5 /* LineNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE50A2620263A06002685E5 /* LineNode.swift */; };
+		2BF0CE70204562C8000E019C /* ARSynthesisUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF0CE6F204562C8000E019C /* ARSynthesisUITests.swift */; };
+		4BF11C066CF356B3E9C4E737 /* Pods_ARSynthesis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 403F3FC0ABB33E09A3567DEC /* Pods_ARSynthesis.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2BD87B852041AE5800EDC63E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0B05EE221F47134D00E6F8F4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0B05EE291F47134D00E6F8F4;
+			remoteInfo = ARSynthesis;
+		};
+		2BF0CE72204562C8000E019C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0B05EE221F47134D00E6F8F4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0B05EE291F47134D00E6F8F4;
+			remoteInfo = ARSynthesis;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		2BD8B3AC2020AAEC004CC5C4 /* Embed Frameworks */ = {
@@ -43,26 +72,42 @@
 /* Begin PBXFileReference section */
 		0B05EE2A1F47134D00E6F8F4 /* ARSynthesis.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARSynthesis.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B05EE2D1F47134D00E6F8F4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		0B05EE2F1F47134D00E6F8F4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		0B05EE2F1F47134D00E6F8F4 /* ARViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		0B05EE321F47134D00E6F8F4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0B05EE341F47134D00E6F8F4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0B05EE371F47134D00E6F8F4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		0B05EE3F1F47166600E6F8F4 /* itemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = itemCell.swift; sourceTree = "<group>"; };
+		0B05EE3F1F47166600E6F8F4 /* CustomItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomItemCell.swift; sourceTree = "<group>"; };
 		0BC46DE31F7490A600C231F6 /* Models.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = Models.scnassets; sourceTree = "<group>"; };
+		2B0CFAE52036E9E100EBF9C5 /* AudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AudioKit.framework; sourceTree = "<group>"; };
+		2B0CFAE62036E9E200EBF9C5 /* AudioKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AudioKitUI.framework; sourceTree = "<group>"; };
 		2B1DE0AC202A502F00760129 /* ARPlane+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARPlane+Extensions.swift"; sourceTree = "<group>"; };
 		2B262385202F76EF00F1C108 /* AudioNodes+ConvenienceExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioNodes+ConvenienceExtensions.swift"; sourceTree = "<group>"; };
 		2B2DED932028FD1800CB423A /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
+		2B392BA420680E9F00B60560 /* AddOnboardingInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddOnboardingInfoView.swift; sourceTree = "<group>"; };
+		2B3EA53C2063F87900E6EB84 /* CustomBannerColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBannerColors.swift; sourceTree = "<group>"; };
 		2B3F23642030D3210079EB72 /* ARHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARHandler.swift; sourceTree = "<group>"; };
+		2B4B13C02044838B00513B9C /* DebuggerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebuggerService.swift; sourceTree = "<group>"; };
+		2B59CECE204346D600C1CD9C /* OscillatorParametersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OscillatorParametersViewController.swift; sourceTree = "<group>"; };
 		2B967DF72028B923009FBB48 /* Node+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Node+Extensions.swift"; sourceTree = "<group>"; };
 		2B967DFA2028CADF009FBB48 /* PopUpDialog+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PopUpDialog+Extensions.swift"; sourceTree = "<group>"; };
 		2B97A271201B536A0066B600 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2B9BFCD8201A15D600F52D1A /* AudioMixer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMixer.swift; sourceTree = "<group>"; };
+		2B9BFCD8201A15D600F52D1A /* AudioInterfaceHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioInterfaceHandler.swift; sourceTree = "<group>"; };
+		2BA033972045BD610056F200 /* SettingsRoundedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRoundedButton.swift; sourceTree = "<group>"; };
+		2BA033992045C1A70056F200 /* RoundedBackgroundImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedBackgroundImage.swift; sourceTree = "<group>"; };
+		2BA2F4CE205081F700F81211 /* Double+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
+		2BBA5DBB2031F6CE00900054 /* RoundedPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedPopUp.swift; sourceTree = "<group>"; };
+		2BD87B802041AE5800EDC63E /* ARSynthesisTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ARSynthesisTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BD87B842041AE5800EDC63E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2BD87B8A2041B4BD00EDC63E /* ViewControllerTestClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerTestClass.swift; sourceTree = "<group>"; };
 		2BDA89B3202B559700D1989E /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		2BDA89B5202B55F000D1989E /* modifiedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = modifiedCollectionViewCell.swift; sourceTree = "<group>"; };
+		2BDA89B5202B55F000D1989E /* ModifiedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifiedCollectionViewCell.swift; sourceTree = "<group>"; };
 		2BE50A2620263A06002685E5 /* LineNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineNode.swift; sourceTree = "<group>"; };
-		59DCF4F0B3D1F3E3CE40A458 /* Pods_ARSynthesis.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ARSynthesis.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A868C110EC61EF958EAE711B /* Pods-ARSynthesis.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ARSynthesis.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ARSynthesis/Pods-ARSynthesis.debug.xcconfig"; sourceTree = "<group>"; };
-		B3DF46C423AA82397E578AF1 /* Pods-ARSynthesis.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ARSynthesis.release.xcconfig"; path = "Pods/Target Support Files/Pods-ARSynthesis/Pods-ARSynthesis.release.xcconfig"; sourceTree = "<group>"; };
+		2BF0CE6D204562C8000E019C /* ARSynthesisUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ARSynthesisUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BF0CE6F204562C8000E019C /* ARSynthesisUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARSynthesisUITests.swift; sourceTree = "<group>"; };
+		2BF0CE71204562C8000E019C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		403F3FC0ABB33E09A3567DEC /* Pods_ARSynthesis.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ARSynthesis.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8DBB72E967596D14FFC4A7BF /* Pods-ARSynthesis.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ARSynthesis.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ARSynthesis/Pods-ARSynthesis.debug.xcconfig"; sourceTree = "<group>"; };
+		EB4D816EDD0D46B58AB9F4A4 /* Pods-ARSynthesis.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ARSynthesis.release.xcconfig"; path = "Pods/Target Support Files/Pods-ARSynthesis/Pods-ARSynthesis.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,7 +115,23 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				29D95D18BDB0505641A9B854 /* Pods_ARSynthesis.framework in Frameworks */,
+				2B0CFAE82036E9E200EBF9C5 /* AudioKitUI.framework in Frameworks */,
+				2B0CFAE72036E9E200EBF9C5 /* AudioKit.framework in Frameworks */,
+				4BF11C066CF356B3E9C4E737 /* Pods_ARSynthesis.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2BD87B7D2041AE5800EDC63E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2BF0CE6A204562C8000E019C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,9 +142,11 @@
 			isa = PBXGroup;
 			children = (
 				0B05EE2C1F47134D00E6F8F4 /* ARSynthesis */,
+				2BD87B812041AE5800EDC63E /* ARSynthesisTests */,
+				2BF0CE6E204562C8000E019C /* ARSynthesisUITests */,
 				0B05EE2B1F47134D00E6F8F4 /* Products */,
 				FEC13416EE6FC3773C24A845 /* Frameworks */,
-				E541201C7DEB3CC2C32EAAE1 /* Pods */,
+				3372A2D47ED6B81938D94F32 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -91,6 +154,8 @@
 			isa = PBXGroup;
 			children = (
 				0B05EE2A1F47134D00E6F8F4 /* ARSynthesis.app */,
+				2BD87B802041AE5800EDC63E /* ARSynthesisTests.xctest */,
+				2BF0CE6D204562C8000E019C /* ARSynthesisUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -99,12 +164,25 @@
 			isa = PBXGroup;
 			children = (
 				2B97A271201B536A0066B600 /* Info.plist */,
+				2B7DB8D62035F116001A8656 /* Services */,
 				2BE25A962030BA0400BBC7E1 /* Views */,
 				2BE25A972030BA2E00BBC7E1 /* Controllers */,
 				2B967DF92028B92B009FBB48 /* Extensions */,
 				0BC46DE31F7490A600C231F6 /* Models.scnassets */,
 			);
 			path = ARSynthesis;
+			sourceTree = "<group>";
+		};
+		2B7DB8D62035F116001A8656 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				2B3F23642030D3210079EB72 /* ARHandler.swift */,
+				2B9BFCD8201A15D600F52D1A /* AudioInterfaceHandler.swift */,
+				2B4B13C02044838B00513B9C /* DebuggerService.swift */,
+				2B3EA53C2063F87900E6EB84 /* CustomBannerColors.swift */,
+				2B392BA420680E9F00B60560 /* AddOnboardingInfoView.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		2B967DF92028B92B009FBB48 /* Extensions */ = {
@@ -115,19 +193,32 @@
 				2B967DFA2028CADF009FBB48 /* PopUpDialog+Extensions.swift */,
 				2B1DE0AC202A502F00760129 /* ARPlane+Extensions.swift */,
 				2B262385202F76EF00F1C108 /* AudioNodes+ConvenienceExtensions.swift */,
+				2BA2F4CE205081F700F81211 /* Double+Extensions.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		2BD87B812041AE5800EDC63E /* ARSynthesisTests */ = {
+			isa = PBXGroup;
+			children = (
+				2BD87B842041AE5800EDC63E /* Info.plist */,
+				2BD87B8A2041B4BD00EDC63E /* ViewControllerTestClass.swift */,
+			);
+			path = ARSynthesisTests;
 			sourceTree = "<group>";
 		};
 		2BE25A962030BA0400BBC7E1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				0B05EE3F1F47166600E6F8F4 /* itemCell.swift */,
-				2BDA89B5202B55F000D1989E /* modifiedCollectionViewCell.swift */,
+				0B05EE3F1F47166600E6F8F4 /* CustomItemCell.swift */,
+				2BDA89B5202B55F000D1989E /* ModifiedCollectionViewCell.swift */,
 				2BE50A2620263A06002685E5 /* LineNode.swift */,
+				2BBA5DBB2031F6CE00900054 /* RoundedPopUp.swift */,
+				2BA033992045C1A70056F200 /* RoundedBackgroundImage.swift */,
+				2BA033972045BD610056F200 /* SettingsRoundedButton.swift */,
 				0B05EE311F47134D00E6F8F4 /* Main.storyboard */,
-				0B05EE341F47134D00E6F8F4 /* Assets.xcassets */,
 				0B05EE361F47134D00E6F8F4 /* LaunchScreen.storyboard */,
+				0B05EE341F47134D00E6F8F4 /* Assets.xcassets */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -136,19 +227,27 @@
 			isa = PBXGroup;
 			children = (
 				0B05EE2D1F47134D00E6F8F4 /* AppDelegate.swift */,
-				0B05EE2F1F47134D00E6F8F4 /* ViewController.swift */,
-				2B3F23642030D3210079EB72 /* ARHandler.swift */,
-				2B9BFCD8201A15D600F52D1A /* AudioMixer.swift */,
+				0B05EE2F1F47134D00E6F8F4 /* ARViewController.swift */,
 				2BDA89B3202B559700D1989E /* SettingsViewController.swift */,
+				2B59CECE204346D600C1CD9C /* OscillatorParametersViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
 		};
-		E541201C7DEB3CC2C32EAAE1 /* Pods */ = {
+		2BF0CE6E204562C8000E019C /* ARSynthesisUITests */ = {
 			isa = PBXGroup;
 			children = (
-				A868C110EC61EF958EAE711B /* Pods-ARSynthesis.debug.xcconfig */,
-				B3DF46C423AA82397E578AF1 /* Pods-ARSynthesis.release.xcconfig */,
+				2BF0CE6F204562C8000E019C /* ARSynthesisUITests.swift */,
+				2BF0CE71204562C8000E019C /* Info.plist */,
+			);
+			path = ARSynthesisUITests;
+			sourceTree = "<group>";
+		};
+		3372A2D47ED6B81938D94F32 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				8DBB72E967596D14FFC4A7BF /* Pods-ARSynthesis.debug.xcconfig */,
+				EB4D816EDD0D46B58AB9F4A4 /* Pods-ARSynthesis.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -156,7 +255,9 @@
 		FEC13416EE6FC3773C24A845 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				59DCF4F0B3D1F3E3CE40A458 /* Pods_ARSynthesis.framework */,
+				2B0CFAE52036E9E100EBF9C5 /* AudioKit.framework */,
+				2B0CFAE62036E9E200EBF9C5 /* AudioKitUI.framework */,
+				403F3FC0ABB33E09A3567DEC /* Pods_ARSynthesis.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -168,13 +269,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0B05EE3C1F47134D00E6F8F4 /* Build configuration list for PBXNativeTarget "ARSynthesis" */;
 			buildPhases = (
-				D610D85181250C2E73A844B4 /* [CP] Check Pods Manifest.lock */,
+				5E46959AC7E648052D46E423 /* [CP] Check Pods Manifest.lock */,
 				0B05EE261F47134D00E6F8F4 /* Sources */,
 				0B05EE271F47134D00E6F8F4 /* Frameworks */,
 				0B05EE281F47134D00E6F8F4 /* Resources */,
 				2BD8B3AC2020AAEC004CC5C4 /* Embed Frameworks */,
-				24F72CF015ED9C0180D5BC25 /* [CP] Embed Pods Frameworks */,
-				20F268F909F008E325214E8F /* [CP] Copy Pods Resources */,
+				5A7352FAEBF5FB34B39AB0DE /* [CP] Embed Pods Frameworks */,
+				D21AEE789D4E7B459EE14E1A /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -185,18 +286,70 @@
 			productReference = 0B05EE2A1F47134D00E6F8F4 /* ARSynthesis.app */;
 			productType = "com.apple.product-type.application";
 		};
+		2BD87B7F2041AE5800EDC63E /* ARSynthesisTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2BD87B892041AE5800EDC63E /* Build configuration list for PBXNativeTarget "ARSynthesisTests" */;
+			buildPhases = (
+				2BD87B7C2041AE5800EDC63E /* Sources */,
+				2BD87B7D2041AE5800EDC63E /* Frameworks */,
+				2BD87B7E2041AE5800EDC63E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2BD87B862041AE5800EDC63E /* PBXTargetDependency */,
+			);
+			name = ARSynthesisTests;
+			productName = ARSynthesisTests;
+			productReference = 2BD87B802041AE5800EDC63E /* ARSynthesisTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		2BF0CE6C204562C8000E019C /* ARSynthesisUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2BF0CE74204562C8000E019C /* Build configuration list for PBXNativeTarget "ARSynthesisUITests" */;
+			buildPhases = (
+				2BF0CE69204562C8000E019C /* Sources */,
+				2BF0CE6A204562C8000E019C /* Frameworks */,
+				2BF0CE6B204562C8000E019C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2BF0CE73204562C8000E019C /* PBXTargetDependency */,
+			);
+			name = ARSynthesisUITests;
+			productName = ARSynthesisUITests;
+			productReference = 2BF0CE6D204562C8000E019C /* ARSynthesisUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		0B05EE221F47134D00E6F8F4 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0900;
-				LastUpgradeCheck = 0920;
+				LastSwiftUpdateCheck = 0930;
+				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "Pol Piella";
 				TargetAttributes = {
 					0B05EE291F47134D00E6F8F4 = {
 						CreatedOnToolsVersion = 9.0;
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
+					};
+					2BD87B7F2041AE5800EDC63E = {
+						CreatedOnToolsVersion = 9.3;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 0B05EE291F47134D00E6F8F4;
+					};
+					2BF0CE6C204562C8000E019C = {
+						CreatedOnToolsVersion = 9.3;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 0B05EE291F47134D00E6F8F4;
 					};
 				};
 			};
@@ -214,6 +367,8 @@
 			projectRoot = "";
 			targets = (
 				0B05EE291F47134D00E6F8F4 /* ARSynthesis */,
+				2BD87B7F2041AE5800EDC63E /* ARSynthesisTests */,
+				2BF0CE6C204562C8000E019C /* ARSynthesisUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -230,53 +385,58 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-/* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		20F268F909F008E325214E8F /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
+		2BD87B7E2041AE5800EDC63E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2BF0CE6B204562C8000E019C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ARSynthesis/Pods-ARSynthesis-resources.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
-		24F72CF015ED9C0180D5BC25 /* [CP] Embed Pods Frameworks */ = {
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		5A7352FAEBF5FB34B39AB0DE /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-ARSynthesis/Pods-ARSynthesis-frameworks.sh",
-				"${PODS_ROOT}/AudioKit/iOS/AudioKit.framework",
-				"${PODS_ROOT}/AudioKit/iOS/AudioKitUI.framework",
 				"${BUILT_PRODUCTS_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework",
 				"${BUILT_PRODUCTS_DIR}/DynamicBlurView/DynamicBlurView.framework",
+				"${BUILT_PRODUCTS_DIR}/MarqueeLabel/MarqueeLabel.framework",
+				"${BUILT_PRODUCTS_DIR}/NotificationBannerSwift/NotificationBannerSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Onboard/Onboard.framework",
 				"${BUILT_PRODUCTS_DIR}/PopupDialog/PopupDialog.framework",
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyBeaver/SwiftyBeaver.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AudioKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AudioKitUI.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DZNEmptyDataSet.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DynamicBlurView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MarqueeLabel.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NotificationBannerSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Onboard.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PopupDialog.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyBeaver.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ARSynthesis/Pods-ARSynthesis-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D610D85181250C2E73A844B4 /* [CP] Check Pods Manifest.lock */ = {
+		5E46959AC7E648052D46E423 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -294,6 +454,21 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		D21AEE789D4E7B459EE14E1A /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ARSynthesis/Pods-ARSynthesis-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -303,21 +478,58 @@
 			files = (
 				2B3F23652030D3210079EB72 /* ARHandler.swift in Sources */,
 				2B262386202F76EF00F1C108 /* AudioNodes+ConvenienceExtensions.swift in Sources */,
-				0B05EE301F47134D00E6F8F4 /* ViewController.swift in Sources */,
+				0B05EE301F47134D00E6F8F4 /* ARViewController.swift in Sources */,
 				2BE50A2720263A06002685E5 /* LineNode.swift in Sources */,
-				2B9BFCD9201A15D600F52D1A /* AudioMixer.swift in Sources */,
+				2B9BFCD9201A15D600F52D1A /* AudioInterfaceHandler.swift in Sources */,
 				2BDA89B4202B559700D1989E /* SettingsViewController.swift in Sources */,
-				0B05EE401F47166600E6F8F4 /* itemCell.swift in Sources */,
+				2B4B13C12044838B00513B9C /* DebuggerService.swift in Sources */,
+				0B05EE401F47166600E6F8F4 /* CustomItemCell.swift in Sources */,
 				2B1DE0AD202A502F00760129 /* ARPlane+Extensions.swift in Sources */,
 				2B2DED942028FD1800CB423A /* String+Extensions.swift in Sources */,
-				2BDA89B6202B55F000D1989E /* modifiedCollectionViewCell.swift in Sources */,
+				2B3EA53D2063F87900E6EB84 /* CustomBannerColors.swift in Sources */,
+				2BA033982045BD610056F200 /* SettingsRoundedButton.swift in Sources */,
+				2BDA89B6202B55F000D1989E /* ModifiedCollectionViewCell.swift in Sources */,
+				2BBA5DBC2031F6CE00900054 /* RoundedPopUp.swift in Sources */,
+				2BA2F4CF205081F700F81211 /* Double+Extensions.swift in Sources */,
+				2B59CECF204346D600C1CD9C /* OscillatorParametersViewController.swift in Sources */,
 				0B05EE2E1F47134D00E6F8F4 /* AppDelegate.swift in Sources */,
 				2B967DF82028B923009FBB48 /* Node+Extensions.swift in Sources */,
 				2B967DFB2028CADF009FBB48 /* PopUpDialog+Extensions.swift in Sources */,
+				2B392BA520680E9F00B60560 /* AddOnboardingInfoView.swift in Sources */,
+				2BA0339A2045C1A70056F200 /* RoundedBackgroundImage.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2BD87B7C2041AE5800EDC63E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2BD87B8B2041B4BD00EDC63E /* ViewControllerTestClass.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2BF0CE69204562C8000E019C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2BF0CE70204562C8000E019C /* ARSynthesisUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2BD87B862041AE5800EDC63E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0B05EE291F47134D00E6F8F4 /* ARSynthesis */;
+			targetProxy = 2BD87B852041AE5800EDC63E /* PBXContainerItemProxy */;
+		};
+		2BF0CE73204562C8000E019C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0B05EE291F47134D00E6F8F4 /* ARSynthesis */;
+			targetProxy = 2BF0CE72204562C8000E019C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		0B05EE311F47134D00E6F8F4 /* Main.storyboard */ = {
@@ -353,6 +565,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -360,6 +573,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -410,6 +624,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -417,6 +632,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -448,39 +664,147 @@
 		};
 		0B05EE3D1F47134D00E6F8F4 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A868C110EC61EF958EAE711B /* Pods-ARSynthesis.debug.xcconfig */;
+			baseConfigurationReference = 8DBB72E967596D14FFC4A7BF /* Pods-ARSynthesis.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = J7P2NVGC6W;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/ARSynthesis/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.polpiellamusic.Ikea;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-lstdc++",
+					"-framework",
+					"\"DZNEmptyDataSet\"",
+					"-framework",
+					"\"DynamicBlurView\"",
+					"-framework",
+					"\"PopupDialog\"",
+					"-framework",
+					"\"SVProgressHUD\"",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.polpiellamusic.ARSynthesizer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
 		};
 		0B05EE3E1F47134D00E6F8F4 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B3DF46C423AA82397E578AF1 /* Pods-ARSynthesis.release.xcconfig */;
+			baseConfigurationReference = EB4D816EDD0D46B58AB9F4A4 /* Pods-ARSynthesis.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = J7P2NVGC6W;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/ARSynthesis/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.polpiellamusic.Ikea;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-lstdc++",
+					"-framework",
+					"\"DZNEmptyDataSet\"",
+					"-framework",
+					"\"DynamicBlurView\"",
+					"-framework",
+					"\"PopupDialog\"",
+					"-framework",
+					"\"SVProgressHUD\"",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.polpiellamusic.ARSynthesizer;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		2BD87B872041AE5800EDC63E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = J7P2NVGC6W;
+				INFOPLIST_FILE = ARSynthesisTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = polpiellamusic.ARSynthesisTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ARSynthesis.app/ARSynthesis";
+			};
+			name = Debug;
+		};
+		2BD87B882041AE5800EDC63E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = J7P2NVGC6W;
+				INFOPLIST_FILE = ARSynthesisTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = polpiellamusic.ARSynthesisTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ARSynthesis.app/ARSynthesis";
+			};
+			name = Release;
+		};
+		2BF0CE75204562C8000E019C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = J7P2NVGC6W;
+				INFOPLIST_FILE = ARSynthesisUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = polpiellamusic.ARSynthesisUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = ARSynthesis;
+			};
+			name = Debug;
+		};
+		2BF0CE76204562C8000E019C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = J7P2NVGC6W;
+				INFOPLIST_FILE = ARSynthesisUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = polpiellamusic.ARSynthesisUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = ARSynthesis;
 			};
 			name = Release;
 		};
@@ -501,6 +825,24 @@
 			buildConfigurations = (
 				0B05EE3D1F47134D00E6F8F4 /* Debug */,
 				0B05EE3E1F47134D00E6F8F4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2BD87B892041AE5800EDC63E /* Build configuration list for PBXNativeTarget "ARSynthesisTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2BD87B872041AE5800EDC63E /* Debug */,
+				2BD87B882041AE5800EDC63E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2BF0CE74204562C8000E019C /* Build configuration list for PBXNativeTarget "ARSynthesisUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2BF0CE75204562C8000E019C /* Debug */,
+				2BF0CE76204562C8000E019C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

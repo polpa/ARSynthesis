@@ -7,11 +7,13 @@ import AudioKit
 
 // MARK: - This file extends the functionality of NSNodes from ARKit to include some key parameters for interconnection.
 extension SCNNode{
+    
     private struct audioNodeProperties{
         static var allowsMultipleInputs:Bool = true //oscillators don't allow inputs
         static var outputIsConnected:Bool = false
         static var inputIsConnected:Bool = false
         static var isEffect:Bool = false
+        static var adsrIsVisible: Bool = false
         static var nodeDescription: String = ""
         static var isLinkedBy: String = ""
         static var inputConnection: SCNNode = SCNNode()
@@ -19,6 +21,10 @@ extension SCNNode{
         static var audioNodeContained: [AKNode] = []
         static var overallAmplitude: CGFloat = 1.0
         static var sides: [Any?] = []
+        static var isHandsFreeEnabled:Bool = false
+        static var width:CGFloat = 0.0
+        static var height: CGFloat = 0.0
+        static var mode: String = ""
     }
     
     func removeAllLinks(scene: ARSCNView) {
@@ -38,7 +44,7 @@ extension SCNNode{
     
     func initialiseParameters() {
         switch self.nodeDescription! {
-        case "reverb", "delay":
+        case "reverb", "delay", "lowPass", "flanger", "distortion":
             self.inputIsConnected = false
             self.allowsMultipleInputs = true
             self.outputIsConnected = false
@@ -54,6 +60,48 @@ extension SCNNode{
             break
         }
         
+    }
+    
+    var isHandsFreeEnabled: Bool? {
+        get{
+            return objc_getAssociatedObject(self, &audioNodeProperties.isHandsFreeEnabled) as? Bool ?? true
+        }
+        set{
+            if let unwrappedValue = newValue {
+                objc_setAssociatedObject(self,
+                                         &audioNodeProperties.isHandsFreeEnabled,
+                                         unwrappedValue as Bool?,
+                                         .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            }
+        }
+    }
+    
+    var adsrIsVisible: Bool? {
+        get{
+            return objc_getAssociatedObject(self, &audioNodeProperties.adsrIsVisible) as? Bool ?? false
+        }
+        set{
+            if let unwrappedValue = newValue {
+                objc_setAssociatedObject(self,
+                                         &audioNodeProperties.adsrIsVisible,
+                                         unwrappedValue as Bool?,
+                                         .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            }
+        }
+    }
+    
+    var mode: String? {
+        get{
+            return objc_getAssociatedObject(self, &audioNodeProperties.mode) as? String ?? "none"
+        }
+        set{
+            if let unwrappedValue = newValue {
+                objc_setAssociatedObject(self,
+                                         &audioNodeProperties.mode,
+                                         unwrappedValue as String?,
+                                         .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            }
+        }
     }
     
     var sides: [Any]? {
@@ -79,6 +127,32 @@ extension SCNNode{
                 objc_setAssociatedObject(self,
                                          &audioNodeProperties.overallAmplitude,
                                          unwrappedValue as CGFloat?,
+                                         .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            }
+        }
+    }
+    var width: Float? {
+        get{
+            return objc_getAssociatedObject(self, &audioNodeProperties.width) as? Float ?? 1.0
+        }
+        set{
+            if let unwrappedValue = newValue {
+                objc_setAssociatedObject(self,
+                                         &audioNodeProperties.width,
+                                         unwrappedValue as Float?,
+                                         .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            }
+        }
+    }
+    var height: Float? {
+        get{
+            return objc_getAssociatedObject(self, &audioNodeProperties.height) as? Float ?? 1.0
+        }
+        set{
+            if let unwrappedValue = newValue {
+                objc_setAssociatedObject(self,
+                                         &audioNodeProperties.height,
+                                         unwrappedValue as Float?,
                                          .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             }
         }

@@ -1,18 +1,25 @@
 PODS:
-  - AudioKit (4.0.4):
-    - AudioKit/UI (= 4.0.4)
-  - AudioKit/UI (4.0.4)
   - DynamicBlurView (2.0.2)
   - DZNEmptyDataSet (1.8.1)
+  - MarqueeLabel/Swift (3.1.4)
+  - NotificationBannerSwift (1.5.4):
+    - MarqueeLabel/Swift
+    - SnapKit (~> 4.0)
+  - Onboard (2.3.1)
   - PopupDialog (0.7.0):
     - DynamicBlurView (~> 2.0)
+  - SnapKit (4.0.0)
   - SVProgressHUD (2.2.2)
+  - SwiftyBeaver (1.5.1)
 
 DEPENDENCIES:
-  - AudioKit (~> 4.0.4)
+  - DynamicBlurView
   - DZNEmptyDataSet
+  - NotificationBannerSwift
+  - Onboard
   - PopupDialog (~> 0.6)
   - SVProgressHUD (from `https://github.com/SVProgressHUD/SVProgressHUD.git`)
+  - SwiftyBeaver
 
 EXTERNAL SOURCES:
   SVProgressHUD:
@@ -24,12 +31,16 @@ CHECKOUT OPTIONS:
     :git: https://github.com/SVProgressHUD/SVProgressHUD.git
 
 SPEC CHECKSUMS:
-  AudioKit: 647145c0462dc9dc8a8582998cd6db5f2e1ea848
   DynamicBlurView: aa6db4defc6e537eb86fc5e58dd3991666178399
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
+  MarqueeLabel: bf768455fe88d427f71476ebb23f9092b660f40b
+  NotificationBannerSwift: 4f6666c8421dcf11be0812dd1093d932c15921af
+  Onboard: b6871f25ac753175b2ab9a362fb2feb26a81a311
   PopupDialog: 4abc6db5b22b7c8029e2162bde8891ee6aa4b6c8
+  SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   SVProgressHUD: 59b2d3dabacbd051576d21d32293ca7228dc18b0
+  SwiftyBeaver: 4f74563624b2c1e821c522c54142b5dd5ebb0f30
 
-PODFILE CHECKSUM: 30cf3c01c52ec73e4acf5f9c95e82a3839ae7813
+PODFILE CHECKSUM: 06fdc9b2b540ef344030632de38b38fd3d019611
 
 COCOAPODS: 1.4.0

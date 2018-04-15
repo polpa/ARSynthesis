@@ -4,16 +4,18 @@
 //
 //  Created by Pol Piella on 07/02/2018.
 //  Copyright © 2018 Pol Piella. All rights reserved.
-//
+
 
 import UIKit
 import ARKit
 
 class SettingsViewController: UIViewController {
+    
+    @IBOutlet var popUpView: UIView!
     @IBOutlet var settingsCollectionView: UICollectionView!
     var mainMenu: [String] = []
     var nodeArray: [SCNNode] = []
-    @IBOutlet var popUpView: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         if(mainMenu.isEmpty && nodeArray.isEmpty){
@@ -32,14 +34,11 @@ class SettingsViewController: UIViewController {
         let cancelButton = UIAlertAction(title: "Cancel", style: .cancel){(action) in
             print("Cancel Button")
         }
-        let nodeParametersButton = UIAlertAction(title: "Extra Parameters", style: .default){(action) in
-            print("Parameters!")
-        }
+
         let removeNodeButton = UIAlertAction(title: "Remove Node", style: .default){(action) in
             //ViewController.viewControllerSingleton.nodeRemove(with: self.nodeArray[sender.tag])
         }
         actionSheet.addAction(cancelButton)
-        actionSheet.addAction(nodeParametersButton)
         actionSheet.addAction(removeNodeButton)
         present(actionSheet,animated: true,completion: nil)
         
@@ -72,7 +71,7 @@ class SettingsViewController: UIViewController {
     }
     
     @IBAction func closePopUp(_ sender: UIButton) {
-        dismiss(animated: true, completion: nil)
+        
     }
     
 
@@ -82,7 +81,7 @@ extension SettingsViewController: UICollectionViewDelegate, UICollectionViewData
         return mainMenu.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "customCell", for: indexPath) as! modifiedCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "customCell", for: indexPath) as! ModifiedCollectionViewCell
         cell.settingsCellImage.setImage(UIImage(named: mainMenu[indexPath.row]), for: UIControlState.normal)
         cell.settingsCellImage.tag = indexPath.row
         cell.settingsCellLabel.text = mainMenu[indexPath.row].capitalized

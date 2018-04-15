@@ -7,19 +7,40 @@
 //
 
 import UIKit
+import Onboard
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    
     var window: UIWindow?
-
-
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        AudioMixer.singletonMixer.initialize()
+        AudioInterfaceHandler.singletonMixer.initialize()
+        DebuggerService.singletonDebugger.initialise()
+        let defaults = UserDefaults.standard
+        let userHasOnboardedOnce = defaults.bool(forKey: "userHasOnboarded")
+        print("Hello")
+        print(userHasOnboardedOnce)
+        if userHasOnboardedOnce == true{
+            self.setupNormalRootViewController()
+       } else {
+            print("Hello")
+            self.window?.rootViewController = AddOnboardingInfoView.viewController.getViewController(with: "intro")
+        }
+        //let onboardingVC = OnboardingInfoViewController()
         // Override point for customization after application launch.
         return true
     }
-
+    
+    
+    func setupNormalRootViewController (){
+        let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let viewController = mainStoryboard.instantiateViewController(withIdentifier: "mainVC") 
+        UIApplication.shared.keyWindow?.rootViewController = viewController
+        let defaults = UserDefaults.standard
+        defaults.set(true, forKey: "userHasOnboarded")
+    }
+    
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
@@ -45,15 +66,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
-//USEFUL CODES
-//@IBAction func recogniseNodeLocations(_ sender: UIButton) {
-//    sceneView.scene.rootNode.enumerateChildNodes { (node, stop) in
-//    }
-//}
-//node.enumerateChildNodes { (childNode, _) in
-//    childNode.removeFromParentNode()
-//}
 
-//To find center of the plane
-//SCNVector3(planeAnchor.center.x,planeAnchor.center.y,planeAnchor.center.z)
 

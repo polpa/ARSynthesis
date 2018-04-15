@@ -6,8 +6,11 @@ target 'ARSynthesis' do
   use_frameworks!
 
   # Pods for ARSynthesis
+  pod 'DynamicBlurView'
+  pod 'NotificationBannerSwift'
+  pod 'Onboard'
   pod 'DZNEmptyDataSet'
-  pod 'SVProgressHUD', :git => 'https://github.com/SVProgressHUD/SVProgressHUD.git'
-  pod 'AudioKit', '~> 4.0.4'
+  pod 'SVProgressHUD', :git => 'https://github.com/SVProgressHUD/SVProgressHUD.git' #progress dialogs.
   pod 'PopupDialog', '~> 0.6' #This implements functionality for popUp Dialogues.
+  pod 'SwiftyBeaver' #This implements functionality for error logging.
 end

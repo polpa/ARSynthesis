@@ -1,2 +1,5 @@
 \Pods filter=lfs diff=lfs merge=lfs -text
 Pods/** filter=lfs diff=lfs merge=lfs -text
+fastlane/** filter=lfs diff=lfs merge=lfs -text
+AudioKit.framework/** filter=lfs diff=lfs merge=lfs -text
+AudioKitUI.framework/** filter=lfs diff=lfs merge=lfs -text
