@@ -87,7 +87,6 @@ class AudioInterfaceHandler {
     }
     
     open func connect(fromOutput: SCNNode, toInput: SCNNode){
-        log.verbose("I am here bro")
         log.verbose(!((fromOutput.nodeDescription?.isEmpty)!))
         log.verbose(!(fromOutput.nodeDescription?.contains(find: "plane"))!)
         log.verbose(!((toInput.nodeDescription?.isEmpty)!))
@@ -160,17 +159,17 @@ class AudioInterfaceHandler {
             node.audioNodeContained?.attachedMixer?.connect(to: reverb)
             break
         case "chorus":
-            let effectInputMixer = AKMixer()
-            let chorus = AKChorus()
-            chorus.start()
-            chorus.dryWetMix = 0.5
-            chorus.depth = 1
-            chorus.feedback = 0.6
-            chorus.frequency = 10
-            chorus.connect(to: mixer)
-            node.audioNodeContained = chorus
-            node.audioNodeContained?.attachedMixer = effectInputMixer
-            node.audioNodeContained?.attachedMixer?.connect(to: chorus)
+//            let effectInputMixer = AKMixer()
+//            let chorus = AKChorus()
+//            chorus.start()
+//            chorus.dryWetMix = 0.5
+//            chorus.depth = 1
+//            chorus.feedback = 0.6
+//            chorus.frequency = 10
+//            chorus.connect(to: mixer)
+//            node.audioNodeContained = chorus
+//            node.audioNodeContained?.attachedMixer = effectInputMixer
+//            node.audioNodeContained?.attachedMixer?.connect(to: chorus)
             break
         case "delay":
             let effectInputMixer = AKMixer()
@@ -257,28 +256,50 @@ class AudioInterfaceHandler {
     
     open func remove(node: SCNNode){
         if (node.nodeDescription?.elementsEqual("oscillator"))! {
-            let oscillator = node.audioNodeContained as! AKMorphingOscillatorBank
-            oscillator.stop(noteNumber: 1)
-            oscillator.disconnectOutput()
-            node.audioNodeContained?.prePitchShifter?.disconnectOutput()
-            node.audioNodeContained?.prePitchShifter = nil
-            node.audioNodeContained = nil
-            //node.audioNodeContained?.sequencerTrack?.clear()
-            let tag = sequencer.tracks.index { (track) -> Bool in
-                var bool = false
-                if track.internalMusicTrack == node.audioNodeContained?.sequencerTrack?.internalMusicTrack {
-                    bool = true
-                } else {
-                    bool = false
+            if (node.inputConnection?.isNotEmpty)!{
+                let oscillator = node.audioNodeContained as! AKMorphingOscillatorBank
+                oscillator.stop(noteNumber: 1)
+                oscillator.disconnectOutput()
+                node.audioNodeContained?.prePitchShifter?.disconnectOutput()
+                node.audioNodeContained?.prePitchShifter = nil
+                node.audioNodeContained = nil
+                let tag = sequencer.tracks.index { (track) -> Bool in
+                    var bool = false
+                    if track.internalMusicTrack == node.audioNodeContained?.sequencerTrack?.internalMusicTrack {
+                        bool = true
+                    } else {
+                        bool = false
+                    }
+                    return bool
                 }
-                return bool
+                sequencer.tracks.remove(at: tag!)
+                log.verbose(sequencer.tracks.count)
+            } else {
+                let oscillator = node.audioNodeContained as! AKMorphingOscillatorBank
+                oscillator.stop(noteNumber: 1)
+                oscillator.disconnectOutput()
+                node.audioNodeContained?.prePitchShifter?.disconnectOutput()
+                node.audioNodeContained?.prePitchShifter = nil
+                node.audioNodeContained = nil
+                //node.audioNodeContained?.sequencerTrack?.clear()
+                let tag = sequencer.tracks.index { (track) -> Bool in
+                    var bool = false
+                    if track.internalMusicTrack == node.audioNodeContained?.sequencerTrack?.internalMusicTrack {
+                        bool = true
+                    } else {
+                        bool = false
+                    }
+                    return bool
+                }
+                sequencer.tracks.remove(at: tag!)
+                log.verbose(sequencer.tracks.count)
             }
-            sequencer.tracks.remove(at: tag!)
-            log.verbose(sequencer.tracks.count)
-        }else {
+
+        }else if (node.nodeDescription?.elementsEqual("chorus"))! {
+
+        } else {
             node.audioNodeContained?.disconnectOutput()
             node.audioNodeContained = nil
-        
         }
     }
 }

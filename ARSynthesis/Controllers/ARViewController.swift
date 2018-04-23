@@ -315,10 +315,14 @@ class ARViewController: UIViewController{
                         guard let inputNode = node.audioNodeContained else {return}
                         inputNode.prePitchShifter?.disconnectOutput()
                         inputNode.connect(to: mixer)
-                    } else {
+                    } else if !(node.nodeDescription?.elementsEqual("chorus"))!{
                         guard let inputNode = node.audioNodeContained else {return}
                         inputNode.disconnectOutput()
                         inputNode.connect(to: mixer)
+                    } else if (node.nodeDescription?.elementsEqual("chorus"))!{
+                        let oscillator = node.outputConnection?.audioNodeContained as! AKMorphingOscillatorBank
+                        oscillator.vibratoDepth = 0
+                        oscillator.vibratoRate = 0
                     }
                 }
             }
@@ -506,7 +510,21 @@ class ARViewController: UIViewController{
         let v2 = destinationNode.position
         switch destinationNode.nodeDescription! {
         case "oscillator":
-            self.showBanner(with: "Could not connect")
+            if (startingNode.nodeDescription?.elementsEqual("chorus"))!{
+                destinationNode.inputIsConnected = true
+                let linkName = "Link \(startingNode.name ?? "") | \(destinationNode.name ?? "")"
+                let lineNode = LineNode(name: linkName, v1: v1, v2: v2, material: [material])
+                lineNode.nodeDescription = "line"
+                destinationNode.inputConnection?.append(startingNode)
+                startingNode.outputConnection = destinationNode
+                self.sceneView.scene.rootNode.addChildNode(lineNode)
+                self.showBanner(with: "Connected to input")
+                let oscillator = destinationNode.audioNodeContained as! AKMorphingOscillatorBank
+                oscillator.vibratoRate = 6
+                oscillator.vibratoDepth = 4
+            }else {
+                self.showBanner(with: "Could not connect")
+            }
             break
         case "reverb", "delay", "lowPass", "distortion", "chorus":
             startingNode.outputIsConnected = true
@@ -609,8 +627,23 @@ class ARViewController: UIViewController{
             for node in nodeArray{
                     node.name = String("\(nodeArray.index(of: node)!)")
             }
-            
+        if !(node.nodeDescription?.elementsEqual("chorus"))!{
             AudioInterfaceHandler.singletonMixer.append(node: node)
+        } else {
+            var oscArray: [SCNNode] = []
+            var modulusDistanceArray: [Double] = []
+            var valuesDictionary: [Double:SCNNode] = [:]
+            for nodeRelative in nodeArray{
+                if (nodeRelative.nodeDescription?.elementsEqual("oscillator"))!{
+                    valuesDictionary.updateValue(nodeRelative, forKey: deltaModulusCalculation(relative: nodeRelative.position, anchor: node.position))
+                    oscArray.append(nodeRelative)
+                    modulusDistanceArray.append(deltaModulusCalculation(relative: nodeRelative.position, anchor: node.position))
+                }
+            }
+            guard let minimumValue = modulusDistanceArray.min() else {return}
+            let destinationNode = valuesDictionary[minimumValue]
+            self.drawLineBetweenNodes(startingNode: node, destinationNode: destinationNode!)
+        }
     }
     
     @IBAction func showInfoView(_ sender: UIButton) {
@@ -694,8 +727,7 @@ class ARViewController: UIViewController{
                         let lowPass = node.audioNodeContained as! AKMoogLadder
                         lowPass.cutoffFrequency = Double(normalisedDataX * 15000)
                     } else if nodeDescription.elementsEqual("chorus") && (self.selectedKeyboardMode.elementsEqual("chorus")){
-                        let chorus = node.audioNodeContained as! AKChorus
-                        chorus.dryWetMix = Double(normalisedDataX)
+
                     } else if (self.selectedKeyboardMode.elementsEqual("sequencer")){
                         self.selectedKeyboardMode = "none"
                     }
@@ -719,8 +751,7 @@ class ARViewController: UIViewController{
                         let lowPass = node.audioNodeContained as! AKMoogLadder
                         lowPass.cutoffFrequency = Double(normalisedDataX * 15000)
                     } else if nodeDescription.elementsEqual("chorus") && (self.selectedKeyboardMode.elementsEqual("chorus")){
-                        let chorus = node.audioNodeContained as! AKChorus
-                        chorus.dryWetMix = Double(normalisedDataX)
+
                     }  else if (self.selectedKeyboardMode.elementsEqual("none")){
                       log.warning("No keyboard mode was selected, hence the keyboard will not have any functionality")
                     }
