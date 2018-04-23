@@ -20,7 +20,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yXG-3s-4WA" customClass="RoundedPopUp" customModule="ARSynthesis" customModuleProvider="target">
                                 <rect key="frame" x="42.5" y="188.5" width="290" height="290"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Settings Background" translatesAutoresizingMaskIntoConstraints="NO" id="gzM-Fo-jRD">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Launch Screen" translatesAutoresizingMaskIntoConstraints="NO" id="gzM-Fo-jRD">
                                         <rect key="frame" x="0.0" y="0.0" width="290" height="290"/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wA1-fK-cwV" customClass="SettingsRoundedButton" customModule="ARSynthesis" customModuleProvider="target">
@@ -234,6 +234,7 @@
                     </view>
                     <connections>
                         <outlet property="itemsCollectionView" destination="YhO-fy-wCm" id="MCh-ol-cPd"/>
+                        <outlet property="planeDetectionButton" destination="uPb-b8-akJ" id="hqp-D0-nh1"/>
                         <outlet property="sceneView" destination="xpg-nn-rwz" id="ELo-GP-5GU"/>
                     </connections>
                 </viewController>
@@ -245,8 +246,8 @@
     <resources>
         <image name="+1 ST" width="97" height="47"/>
         <image name="-1 ST" width="97" height="47"/>
+        <image name="Launch Screen" width="414" height="736"/>
         <image name="Sawtooth" width="97" height="47"/>
-        <image name="Settings Background" width="414" height="736"/>
         <image name="Sine" width="97" height="47"/>
         <image name="Square" width="97" height="47"/>
         <image name="Triangle" width="97" height="47"/>

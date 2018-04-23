@@ -20,9 +20,10 @@ class ARViewController: UIViewController{
     
     @IBOutlet weak var itemsCollectionView: UICollectionView!
     @IBOutlet weak var sceneView: ARSCNView!
+    @IBOutlet weak var planeDetectionButton: UIButton!
     
     let log = DebuggerService.singletonDebugger.log
-    let itemsArray: [String] = ["oscillator", "reverb", "delay", "lowPass", "keyboard", "sequencer"]
+    let itemsArray: [String] = ["oscillator", "reverb", "delay", "lowPass", "chorus", "keyboard", "sequencer"]
     var sequencerArray: [SCNNode] = []
     var configuration = ARWorldTrackingConfiguration()
     var nodeArray: [SCNNode]!
@@ -62,13 +63,33 @@ class ARViewController: UIViewController{
     }
     
     @IBAction func stopPlaneDetection(_ sender: UIButton) {
-        stopPlaneDetection()
+        switch planeDetectionButton.title(for: .normal) {
+        case "Stop Detecting":
+            stopPlaneDetection()
+            break
+        case "Detect Plane":
+            resetPlaneDetection()
+            break
+        default:
+            break
+        }
+    }
+    
+    func resetPlaneDetection(){
+        self.sceneView.session.pause()
+        self.configuration.planeDetection = .horizontal
+        self.sceneView.session.run(self.configuration)
+        planeDetectionButton.setTitle("Stop Detecting", for: .normal)
+        DispatchQueue.main.async{
+             SVProgressHUD.show(withStatus: "Trying to detect plane, please and move around to find a horizontal surface")
+        }
     }
     
     func stopPlaneDetection(){
         self.sceneView.session.pause()
         self.configuration.planeDetection = []
         self.sceneView.session.run(self.configuration)
+        planeDetectionButton.setTitle("Detect Plane", for: .normal)
         if SVProgressHUD.isVisible(){
             SVProgressHUD.dismiss()
         }
@@ -487,7 +508,7 @@ class ARViewController: UIViewController{
         case "oscillator":
             self.showBanner(with: "Could not connect")
             break
-        case "reverb", "delay", "lowPass", "distortion":
+        case "reverb", "delay", "lowPass", "distortion", "chorus":
             startingNode.outputIsConnected = true
             destinationNode.inputIsConnected = true
             let linkName = "Link \(startingNode.name ?? "") | \(destinationNode.name ?? "")"
@@ -612,7 +633,6 @@ class ARViewController: UIViewController{
         }
     }
     
-
     /// When a long press is detected, the pressed node rotates (360 degrees), within 10 seconds. If the press ends, the node stops rotating.
     /// - Parameter sender: Gesture recognizer to handle long presses.
     @objc func longPress(sender: UILongPressGestureRecognizer) {
@@ -650,6 +670,7 @@ class ARViewController: UIViewController{
             default:
                 break
             }
+            
         } else if !hitTest.isEmpty && (hitTest.first?.node.nodeDescription?.elementsEqual("keyboardPlane"))! && sender.numberOfTouches == 1{
             //Decode the functions for the keyboard long press!!
             guard let location = hitTest.first?.localCoordinates else {return}
@@ -672,6 +693,9 @@ class ARViewController: UIViewController{
                     } else if nodeDescription.elementsEqual("lowPass") && (self.selectedKeyboardMode.elementsEqual("lowPass")){
                         let lowPass = node.audioNodeContained as! AKMoogLadder
                         lowPass.cutoffFrequency = Double(normalisedDataX * 15000)
+                    } else if nodeDescription.elementsEqual("chorus") && (self.selectedKeyboardMode.elementsEqual("chorus")){
+                        let chorus = node.audioNodeContained as! AKChorus
+                        chorus.dryWetMix = Double(normalisedDataX)
                     } else if (self.selectedKeyboardMode.elementsEqual("sequencer")){
                         self.selectedKeyboardMode = "none"
                     }
@@ -694,7 +718,10 @@ class ARViewController: UIViewController{
                     } else if nodeDescription.elementsEqual("lowPass") && (self.selectedKeyboardMode.elementsEqual("lowPass")){
                         let lowPass = node.audioNodeContained as! AKMoogLadder
                         lowPass.cutoffFrequency = Double(normalisedDataX * 15000)
-                    } else if (self.selectedKeyboardMode.elementsEqual("none")){
+                    } else if nodeDescription.elementsEqual("chorus") && (self.selectedKeyboardMode.elementsEqual("chorus")){
+                        let chorus = node.audioNodeContained as! AKChorus
+                        chorus.dryWetMix = Double(normalisedDataX)
+                    }  else if (self.selectedKeyboardMode.elementsEqual("none")){
                       log.warning("No keyboard mode was selected, hence the keyboard will not have any functionality")
                     }
                 }
@@ -801,6 +828,9 @@ extension ARViewController: UICollectionViewDataSource, UICollectionViewDelegate
         let reverbMode = UIAlertAction(title: "Reverb Control Mode", style: .default) { (action) in
             self.selectedKeyboardMode = "reverb"
         }
+        let chorusMode = UIAlertAction(title: "Chorus Control Mode", style: .default) { (action) in
+            self.selectedKeyboardMode = "chorus"
+        }
 
         for name in findContainedAudioNodes(){
             switch name {
@@ -815,6 +845,9 @@ extension ARViewController: UICollectionViewDataSource, UICollectionViewDelegate
                 break
             case "lowPass":
                 actionSheet.addAction(filterMode)
+                break
+            case "chorus":
+                actionSheet.addAction(chorusMode)
                 break
             default:
                 break

@@ -66,6 +66,11 @@ class AudioInterfaceHandler {
             lowPass.cutoffFrequency = temporal
             //THIS WORKS
             break
+        case "chorus":
+            let chorus = of.audioNodeContained as! AKChorus
+            let temporal = scaleValue
+            chorus.dryWetMix = temporal
+            break
         default:
             break
         }
@@ -153,6 +158,19 @@ class AudioInterfaceHandler {
             node.audioNodeContained = reverb
             node.audioNodeContained?.attachedMixer = effectInputMixer
             node.audioNodeContained?.attachedMixer?.connect(to: reverb)
+            break
+        case "chorus":
+            let effectInputMixer = AKMixer()
+            let chorus = AKChorus()
+            chorus.start()
+            chorus.dryWetMix = 0.5
+            chorus.depth = 1
+            chorus.feedback = 0.6
+            chorus.frequency = 10
+            chorus.connect(to: mixer)
+            node.audioNodeContained = chorus
+            node.audioNodeContained?.attachedMixer = effectInputMixer
+            node.audioNodeContained?.attachedMixer?.connect(to: chorus)
             break
         case "delay":
             let effectInputMixer = AKMixer()
