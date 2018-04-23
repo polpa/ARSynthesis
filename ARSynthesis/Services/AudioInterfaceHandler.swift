@@ -66,10 +66,13 @@ class AudioInterfaceHandler {
             lowPass.cutoffFrequency = temporal
             //THIS WORKS
             break
-        case "chorus":
-            let chorus = of.audioNodeContained as! AKChorus
-            let temporal = scaleValue
-            chorus.dryWetMix = temporal
+        case "vibrato":
+            let node =  of.outputConnection!
+            let oscillator = node.audioNodeContained as! AKMorphingOscillatorBank
+            let temporalOne = scaleValue
+            let temporalTwo = scaleValue * 10
+            oscillator.vibratoDepth = temporalOne
+            oscillator.vibratoRate = temporalTwo
             break
         default:
             break
@@ -158,18 +161,18 @@ class AudioInterfaceHandler {
             node.audioNodeContained?.attachedMixer = effectInputMixer
             node.audioNodeContained?.attachedMixer?.connect(to: reverb)
             break
-        case "chorus":
+        case "vibrato":
 //            let effectInputMixer = AKMixer()
-//            let chorus = AKChorus()
-//            chorus.start()
-//            chorus.dryWetMix = 0.5
-//            chorus.depth = 1
-//            chorus.feedback = 0.6
-//            chorus.frequency = 10
-//            chorus.connect(to: mixer)
-//            node.audioNodeContained = chorus
+//            let vibrato = AKvibrato()
+//            vibrato.start()
+//            vibrato.dryWetMix = 0.5
+//            vibrato.depth = 1
+//            vibrato.feedback = 0.6
+//            vibrato.frequency = 10
+//            vibrato.connect(to: mixer)
+//            node.audioNodeContained = vibrato
 //            node.audioNodeContained?.attachedMixer = effectInputMixer
-//            node.audioNodeContained?.attachedMixer?.connect(to: chorus)
+//            node.audioNodeContained?.attachedMixer?.connect(to: vibrato)
             break
         case "delay":
             let effectInputMixer = AKMixer()
@@ -295,7 +298,7 @@ class AudioInterfaceHandler {
                 log.verbose(sequencer.tracks.count)
             }
 
-        }else if (node.nodeDescription?.elementsEqual("chorus"))! {
+        }else if (node.nodeDescription?.elementsEqual("vibrato"))! {
 
         } else {
             node.audioNodeContained?.disconnectOutput()

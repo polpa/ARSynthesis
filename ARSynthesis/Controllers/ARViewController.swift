@@ -23,7 +23,7 @@ class ARViewController: UIViewController{
     @IBOutlet weak var planeDetectionButton: UIButton!
     
     let log = DebuggerService.singletonDebugger.log
-    let itemsArray: [String] = ["oscillator", "reverb", "delay", "lowPass", "chorus", "keyboard", "sequencer"]
+    let itemsArray: [String] = ["oscillator", "reverb", "delay", "lowPass", "vibrato", "keyboard", "sequencer"]
     var sequencerArray: [SCNNode] = []
     var configuration = ARWorldTrackingConfiguration()
     var nodeArray: [SCNNode]!
@@ -315,16 +315,17 @@ class ARViewController: UIViewController{
                         guard let inputNode = node.audioNodeContained else {return}
                         inputNode.prePitchShifter?.disconnectOutput()
                         inputNode.connect(to: mixer)
-                    } else if !(node.nodeDescription?.elementsEqual("chorus"))!{
+                    } else if !(node.nodeDescription?.elementsEqual("vibrato"))!{
                         guard let inputNode = node.audioNodeContained else {return}
                         inputNode.disconnectOutput()
                         inputNode.connect(to: mixer)
-                    } else if (node.nodeDescription?.elementsEqual("chorus"))!{
-                        let oscillator = node.outputConnection?.audioNodeContained as! AKMorphingOscillatorBank
-                        oscillator.vibratoDepth = 0
-                        oscillator.vibratoRate = 0
                     }
                 }
+            }
+            if (nodeToBeRemoved.nodeDescription?.elementsEqual("vibrato"))!{
+                let oscillator = nodeToBeRemoved.outputConnection?.audioNodeContained as! AKMorphingOscillatorBank
+                oscillator.vibratoDepth = 0
+                oscillator.vibratoRate = 0
             }
             nodeToBeRemoved.inputConnection?.removeAll()
             if let indexToRemove = nodeToBeRemoved.outputConnection?.inputConnection?.index(of: nodeToBeRemoved)
@@ -510,7 +511,7 @@ class ARViewController: UIViewController{
         let v2 = destinationNode.position
         switch destinationNode.nodeDescription! {
         case "oscillator":
-            if (startingNode.nodeDescription?.elementsEqual("chorus"))!{
+            if (startingNode.nodeDescription?.elementsEqual("vibrato"))!{
                 destinationNode.inputIsConnected = true
                 let linkName = "Link \(startingNode.name ?? "") | \(destinationNode.name ?? "")"
                 let lineNode = LineNode(name: linkName, v1: v1, v2: v2, material: [material])
@@ -526,7 +527,7 @@ class ARViewController: UIViewController{
                 self.showBanner(with: "Could not connect")
             }
             break
-        case "reverb", "delay", "lowPass", "distortion", "chorus":
+        case "reverb", "delay", "lowPass", "distortion", "vibrato":
             startingNode.outputIsConnected = true
             destinationNode.inputIsConnected = true
             let linkName = "Link \(startingNode.name ?? "") | \(destinationNode.name ?? "")"
@@ -627,7 +628,7 @@ class ARViewController: UIViewController{
             for node in nodeArray{
                     node.name = String("\(nodeArray.index(of: node)!)")
             }
-        if !(node.nodeDescription?.elementsEqual("chorus"))!{
+        if !(node.nodeDescription?.elementsEqual("vibrato"))!{
             AudioInterfaceHandler.singletonMixer.append(node: node)
         } else {
             var oscArray: [SCNNode] = []
@@ -726,7 +727,7 @@ class ARViewController: UIViewController{
                     } else if nodeDescription.elementsEqual("lowPass") && (self.selectedKeyboardMode.elementsEqual("lowPass")){
                         let lowPass = node.audioNodeContained as! AKMoogLadder
                         lowPass.cutoffFrequency = Double(normalisedDataX * 15000)
-                    } else if nodeDescription.elementsEqual("chorus") && (self.selectedKeyboardMode.elementsEqual("chorus")){
+                    } else if nodeDescription.elementsEqual("vibrato") && (self.selectedKeyboardMode.elementsEqual("vibrato")){
 
                     } else if (self.selectedKeyboardMode.elementsEqual("sequencer")){
                         self.selectedKeyboardMode = "none"
@@ -750,7 +751,7 @@ class ARViewController: UIViewController{
                     } else if nodeDescription.elementsEqual("lowPass") && (self.selectedKeyboardMode.elementsEqual("lowPass")){
                         let lowPass = node.audioNodeContained as! AKMoogLadder
                         lowPass.cutoffFrequency = Double(normalisedDataX * 15000)
-                    } else if nodeDescription.elementsEqual("chorus") && (self.selectedKeyboardMode.elementsEqual("chorus")){
+                    } else if nodeDescription.elementsEqual("vibrato") && (self.selectedKeyboardMode.elementsEqual("vibrato")){
 
                     }  else if (self.selectedKeyboardMode.elementsEqual("none")){
                       log.warning("No keyboard mode was selected, hence the keyboard will not have any functionality")
@@ -859,8 +860,8 @@ extension ARViewController: UICollectionViewDataSource, UICollectionViewDelegate
         let reverbMode = UIAlertAction(title: "Reverb Control Mode", style: .default) { (action) in
             self.selectedKeyboardMode = "reverb"
         }
-        let chorusMode = UIAlertAction(title: "Chorus Control Mode", style: .default) { (action) in
-            self.selectedKeyboardMode = "chorus"
+        let vibratoMode = UIAlertAction(title: "vibrato Control Mode", style: .default) { (action) in
+            self.selectedKeyboardMode = "vibrato"
         }
 
         for name in findContainedAudioNodes(){
@@ -877,8 +878,8 @@ extension ARViewController: UICollectionViewDataSource, UICollectionViewDelegate
             case "lowPass":
                 actionSheet.addAction(filterMode)
                 break
-            case "chorus":
-                actionSheet.addAction(chorusMode)
+            case "vibrato":
+                actionSheet.addAction(vibratoMode)
                 break
             default:
                 break
