@@ -44,7 +44,7 @@ extension SCNNode{
     
     func initialiseParameters() {
         switch self.nodeDescription! {
-        case "reverb", "delay", "lowPass", "flanger", "distortion", "chorus":
+        case "reverb", "delay", "lowPass", "flanger", "distortion", "vibrato":
             self.inputIsConnected = false
             self.allowsMultipleInputs = true
             self.outputIsConnected = false
