@@ -1,3 +1,16 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:b8cf39d3c45c864b6d34d84eb33ffe3e319ffd22ae20951358929a8ea33d0928
-size 338
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#else
+#ifndef FOUNDATION_EXPORT
+#if defined(__cplusplus)
+#define FOUNDATION_EXPORT extern "C"
+#else
+#define FOUNDATION_EXPORT extern
+#endif
+#endif
+#endif
+
+
+FOUNDATION_EXPORT double NotificationBannerSwiftVersionNumber;
+FOUNDATION_EXPORT const unsigned char NotificationBannerSwiftVersionString[];
+

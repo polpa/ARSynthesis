@@ -1,3 +1,16 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:78988bf83bf70ceca680ec5447ebcf46450cce1eb83833621c51bc5714d8bb73
-size 316
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#else
+#ifndef FOUNDATION_EXPORT
+#if defined(__cplusplus)
+#define FOUNDATION_EXPORT extern "C"
+#else
+#define FOUNDATION_EXPORT extern
+#endif
+#endif
+#endif
+
+
+FOUNDATION_EXPORT double MarqueeLabelVersionNumber;
+FOUNDATION_EXPORT const unsigned char MarqueeLabelVersionString[];
+

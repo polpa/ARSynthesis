@@ -23,7 +23,7 @@ class ARViewController: UIViewController{
     @IBOutlet weak var planeDetectionButton: UIButton!
     
     let log = DebuggerService.singletonDebugger.log
-    let itemsArray: [String] = ["oscillator", "reverb", "delay", "lowPass", "vibrato", "keyboard", "sequencer"]
+    let itemsArray: [String] = ["oscillator", "drums", "reverb", "delay", "lowPass", "vibrato", "keyboard", "sequencer"]
     var sequencerArray: [SCNNode] = []
     var configuration = ARWorldTrackingConfiguration()
     var nodeArray: [SCNNode]!
@@ -228,11 +228,11 @@ class ARViewController: UIViewController{
         let hitTest = sceneView.hitTest(tapLocation)
         
         if !hitTest.isEmpty && (hitTest.first?.node.nodeDescription?.elementsEqual("oscillator"))!{
-            currentOscillator = hitTest.first?.node.audioNodeContained as! AKMorphingOscillatorBank
+            //currentOscillator = hitTest.first?.node.audioNodeContained as! AKMorphingOscillatorBank
             
         } else {
             log.verbose("ended")
-            currentOscillator.vibratoRate = Double(tapLocation.x/100)
+            //currentOscillator.vibratoRate = Double(tapLocation.x/100)
         }
     }
     /// This function handles double tap gestures in the augmented reality scene.
@@ -289,6 +289,9 @@ class ARViewController: UIViewController{
                     }
                     
                 }
+            }
+            if (nodeToBeRemoved.nodeDescription?.elementsEqual("drums"))!{
+                updateInteractionOfCell(for: "drums")
             }
             nodeToBeRemoved.removeAllLinks(scene: sceneView)//First remove all connections
             self.nodeArray.remove(at: nodeArray.index(of: nodeToBeRemoved)!) //Remove it from the array
@@ -510,7 +513,7 @@ class ARViewController: UIViewController{
         let v1 = startingNode.position
         let v2 = destinationNode.position
         switch destinationNode.nodeDescription! {
-        case "oscillator":
+        case "oscillator","drums":
             if (startingNode.nodeDescription?.elementsEqual("vibrato"))!{
                 destinationNode.inputIsConnected = true
                 let linkName = "Link \(startingNode.name ?? "") | \(destinationNode.name ?? "")"
@@ -527,16 +530,23 @@ class ARViewController: UIViewController{
                 self.showBanner(with: "Could not connect")
             }
             break
-        case "reverb", "delay", "lowPass", "distortion", "vibrato":
-            startingNode.outputIsConnected = true
-            destinationNode.inputIsConnected = true
-            let linkName = "Link \(startingNode.name ?? "") | \(destinationNode.name ?? "")"
-            let lineNode = LineNode(name: linkName, v1: v1, v2: v2, material: [material])
-            lineNode.nodeDescription = "line"
-            self.sceneView.scene.rootNode.addChildNode(lineNode)
-            destinationNode.inputConnection?.append(startingNode)
-            startingNode.outputConnection = destinationNode
-            AudioInterfaceHandler.singletonMixer.connect(fromOutput: startingNode, toInput: destinationNode)
+        case "reverb", "delay", "lowPass", "distortion":
+            if (startingNode.nodeDescription?.elementsEqual("vibrato"))!{
+                self.showBanner(with: "Could not connect")
+            } else if !startingNode.chainContainsSampler! {
+                startingNode.outputIsConnected = true
+                destinationNode.inputIsConnected = true
+                let linkName = "Link \(startingNode.name ?? "") | \(destinationNode.name ?? "")"
+                let lineNode = LineNode(name: linkName, v1: v1, v2: v2, material: [material])
+                lineNode.nodeDescription = "line"
+                self.sceneView.scene.rootNode.addChildNode(lineNode)
+                destinationNode.inputConnection?.append(startingNode)
+                startingNode.outputConnection = destinationNode
+                AudioInterfaceHandler.singletonMixer.connect(fromOutput: startingNode, toInput: destinationNode)
+            }
+            break
+        case "vibrato":
+            self.showBanner(with: "Could not connect")
             break
         default:
             break
@@ -597,6 +607,10 @@ class ARViewController: UIViewController{
             log.error("There is no selected item")
             return
         }
+        if selectedItem.elementsEqual("drums"){
+            self.updateInteractionOfCell(for: "drums")
+        }
+    
         
         let transform = hitTestResult.worldTransform
         let thirdColumn = transform.columns.3

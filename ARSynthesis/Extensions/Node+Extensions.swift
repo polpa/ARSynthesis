@@ -12,6 +12,7 @@ extension SCNNode{
         static var allowsMultipleInputs:Bool = true //oscillators don't allow inputs
         static var outputIsConnected:Bool = false
         static var inputIsConnected:Bool = false
+        static var chainContainsSampler: Bool = false
         static var isEffect:Bool = false
         static var adsrIsVisible: Bool = false
         static var nodeDescription: String = ""
@@ -56,6 +57,11 @@ extension SCNNode{
             self.allowsMultipleInputs = false
             self.isEffect = false
             break
+        case "drums":
+            self.inputIsConnected = true
+            self.outputIsConnected = false
+            self.allowsMultipleInputs = false
+            self.isEffect = false
         default:
             break
         }
@@ -70,6 +76,20 @@ extension SCNNode{
             if let unwrappedValue = newValue {
                 objc_setAssociatedObject(self,
                                          &audioNodeProperties.isHandsFreeEnabled,
+                                         unwrappedValue as Bool?,
+                                         .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            }
+        }
+    }
+    
+    var chainContainsSampler: Bool? {
+        get{
+            return objc_getAssociatedObject(self, &audioNodeProperties.chainContainsSampler) as? Bool ?? true
+        }
+        set{
+            if let unwrappedValue = newValue {
+                objc_setAssociatedObject(self,
+                                         &audioNodeProperties.chainContainsSampler,
                                          unwrappedValue as Bool?,
                                          .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             }

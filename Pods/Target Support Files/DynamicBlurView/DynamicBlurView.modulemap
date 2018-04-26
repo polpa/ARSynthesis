@@ -1,3 +1,6 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:745c4af9d3d969194fe18294da80a1a59d79aff94bcc2d7f8b0db27b52e04d77
-size 120
+framework module DynamicBlurView {
+  umbrella header "DynamicBlurView-umbrella.h"
+
+  export *
+  module * { export * }
+}

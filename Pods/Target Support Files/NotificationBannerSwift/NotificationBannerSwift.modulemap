@@ -1,3 +1,6 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:68ce1b41509d9e34439147771af4083e08ebe773523a83381b48bcd1b4990499
-size 136
+framework module NotificationBannerSwift {
+  umbrella header "NotificationBannerSwift-umbrella.h"
+
+  export *
+  module * { export * }
+}

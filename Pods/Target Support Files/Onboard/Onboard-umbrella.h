@@ -1,3 +1,18 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:ffbb53bec4cbca2e0a637b76aaa941483853e5c3d726bfb8b1f976bd5b7053c4
-size 387
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#else
+#ifndef FOUNDATION_EXPORT
+#if defined(__cplusplus)
+#define FOUNDATION_EXPORT extern "C"
+#else
+#define FOUNDATION_EXPORT extern
+#endif
+#endif
+#endif
+
+#import "OnboardingViewController.h"
+#import "OnboardingContentViewController.h"
+
+FOUNDATION_EXPORT double OnboardVersionNumber;
+FOUNDATION_EXPORT const unsigned char OnboardVersionString[];
+

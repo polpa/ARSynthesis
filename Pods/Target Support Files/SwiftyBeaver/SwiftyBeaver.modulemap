@@ -1,3 +1,6 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:64c505a3cce18704d00d02ad542d2d015cbe197bb64400a58faff587b4fa242f
-size 114
+framework module SwiftyBeaver {
+  umbrella header "SwiftyBeaver-umbrella.h"
+
+  export *
+  module * { export * }
+}

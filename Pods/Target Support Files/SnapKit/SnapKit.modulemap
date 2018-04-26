@@ -1,3 +1,6 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:fbb0de705c855e3155a60d8b2ecaa6f1842e153aaf03b08bfc75b2c71fc757fc
-size 104
+framework module SnapKit {
+  umbrella header "SnapKit-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,3 +1,19 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:e6deef539b67a49bf745647f5f482d954ef1daa12df782b6899d2099ea8b0ee8
-size 436
+//
+//  NotificationBannerUtilities.swift
+//  NotificationBanner_Example
+//
+//  Created by Dalton Hinterscher on 9/19/17.
+//  Copyright © 2017 CocoaPods. All rights reserved.
+//
+
+import UIKit
+
+class NotificationBannerUtilities: NSObject {
+
+    class func isiPhoneX() -> Bool {
+        if UIDevice.current.userInterfaceIdiom != .phone {
+            return false
+        }
+        return UIScreen.main.nativeBounds.height == 2436
+    }
+}

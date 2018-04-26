@@ -1,3 +1,17 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:1b7b6518eaa5b870e83eced473a29688d28e333ff7ad41c03ea1abc6a8c50a98
-size 360
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#else
+#ifndef FOUNDATION_EXPORT
+#if defined(__cplusplus)
+#define FOUNDATION_EXPORT extern "C"
+#else
+#define FOUNDATION_EXPORT extern
+#endif
+#endif
+#endif
+
+#import "UIScrollView+EmptyDataSet.h"
+
+FOUNDATION_EXPORT double DZNEmptyDataSetVersionNumber;
+FOUNDATION_EXPORT const unsigned char DZNEmptyDataSetVersionString[];
+

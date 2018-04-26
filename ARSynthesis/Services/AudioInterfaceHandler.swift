@@ -14,6 +14,8 @@ class AudioInterfaceHandler {
     
     var oscillatorArray: [AKMorphingOscillatorBank] = []
     var effectsArray: [AKNode] = []
+    var drumsLoopLauncher: AKAudioPlayer!
+    let songDirectory = Bundle.main
     var mixer = AKMixer()
     var effectsMixer = AKMixer()
     var sequencer = AKSequencer()
@@ -25,8 +27,23 @@ class AudioInterfaceHandler {
 
     func initialize(){
         sequencer.setLength(duration)
-        sequencer.setTempo(248)
+        sequencer.setTempo(246) //The global tempo, for convenience, is set to 123 BPM
         sequencer.enableLooping(duration)
+        if let song = songDirectory.path(forResource: "drums", ofType: ".wav"){
+            print(song)
+        } else {
+            print("Could not retrieve the file information")
+        }
+        
+        do {
+            let audioFile = try AKAudioFile(readFileName: "drums.wav")
+            drumsLoopLauncher = try AKAudioPlayer(file: audioFile)
+            drumsLoopLauncher.volume = 0
+            drumsLoopLauncher.looping = true
+//            drumsLoopLauncher.start()
+        } catch  {
+            print(error.localizedDescription)
+        }
         mixer.start()
         effectsMixer.start()
         AudioKit.output = mixer
@@ -46,25 +63,21 @@ class AudioInterfaceHandler {
         switch of.nodeDescription! {
         case "reverb":
             let reverb = of.audioNodeContained as! AKReverb
-            reverb.dryWetMix = scaleValue
+            reverb.dryWetMix = scaleValue * 0.3
             print(reverb.dryWetMix)
-            //THIS WORKS
             break
         case "oscillator":
             let gainController = of.audioNodeContained?.gainModule!
             gainController?.gain = scaleValue
-            //THIS WORKS
             break
         case "delay":
             let delay = of.audioNodeContained as! AKDelay
             delay.dryWetMix = scaleValue
-            //THIS WORKS
             break
         case "lowPass":
             let lowPass = of.audioNodeContained as! AKMoogLadder
             let temporal = scaleValue * 1000
             lowPass.cutoffFrequency = temporal
-            //THIS WORKS
             break
         case "vibrato":
             let node =  of.outputConnection!
@@ -90,25 +103,37 @@ class AudioInterfaceHandler {
     }
     
     open func connect(fromOutput: SCNNode, toInput: SCNNode){
-        log.verbose(!((fromOutput.nodeDescription?.isEmpty)!))
-        log.verbose(!(fromOutput.nodeDescription?.contains(find: "plane"))!)
-        log.verbose(!((toInput.nodeDescription?.isEmpty)!))
-        log.verbose(!(toInput.nodeDescription?.contains(find: "plane"))!)
-        if !((fromOutput.nodeDescription?.isEmpty)!)
-            && !(fromOutput.nodeDescription?.contains(find: "plane"))!
-            && !((toInput.nodeDescription?.isEmpty)!)
-            && !(toInput.nodeDescription?.contains(find: "plane"))! {
-            log.verbose("Connection was succesful")
-            if (fromOutput.nodeDescription?.elementsEqual("oscillator"))!{
-                log.verbose("Oscillator was succesfully connected")
-                fromOutput.audioNodeContained?.prePitchShifter?.disconnectOutput()
-                fromOutput.audioNodeContained?.prePitchShifter?.connect(to: (toInput.audioNodeContained?.attachedMixer)!)
-            } else {
-                log.verbose("Effect was succesfully connected")
-                fromOutput.audioNodeContained?.disconnectOutput()
-                fromOutput.audioNodeContained?.connect(to: (toInput.audioNodeContained?.attachedMixer)!)
+        
+        if !(toInput.nodeDescription?.elementsEqual("vibrato"))! && !(fromOutput.nodeDescription?.elementsEqual("vibrato"))! {
+            log.verbose(!((fromOutput.nodeDescription?.isEmpty)!))
+            log.verbose(!(fromOutput.nodeDescription?.contains(find: "plane"))!)
+            log.verbose(!((toInput.nodeDescription?.isEmpty)!))
+            log.verbose(!(toInput.nodeDescription?.contains(find: "plane"))!)
+            if !((fromOutput.nodeDescription?.isEmpty)!)
+                && !(fromOutput.nodeDescription?.contains(find: "plane"))!
+                && !((toInput.nodeDescription?.isEmpty)!)
+                && !(toInput.nodeDescription?.contains(find: "plane"))! {
+                log.verbose("Connection was succesful")
+                if (fromOutput.nodeDescription?.elementsEqual("oscillator"))!{
+                    log.verbose("Oscillator was succesfully connected")
+                    fromOutput.audioNodeContained?.prePitchShifter?.disconnectOutput()
+                    fromOutput.audioNodeContained?.prePitchShifter?.connect(to: (toInput.audioNodeContained?.attachedMixer)!)
+                } else if (fromOutput.nodeDescription?.elementsEqual("drums"))! {
+                    toInput.chainContainsSampler = true
+                    drumsLoopLauncher.stop()
+                    fromOutput.audioNodeContained?.disconnectOutput()
+                    fromOutput.audioNodeContained?.connect(to: (toInput.audioNodeContained?.attachedMixer)!)
+                    drumsLoopLauncher.play()
+                } else {
+                    log.verbose("Effect was succesfully connected")
+                    fromOutput.audioNodeContained?.disconnectOutput()
+                    fromOutput.audioNodeContained?.connect(to: (toInput.audioNodeContained?.attachedMixer)!)
+                }
             }
+        } else {
+
         }
+
 
     }
     
@@ -150,11 +175,19 @@ class AudioInterfaceHandler {
                 sequencer.enableLooping(duration)
             }
             break
+        case "drums":
+            drumsLoopLauncher.connect(to: mixer)
+            //drumsLoopLauncher.stop()
+            drumsLoopLauncher.volume = 1
+            drumsLoopLauncher.play()
+            node.chainContainsSampler = false
+            node.audioNodeContained = drumsLoopLauncher
+            break
         case "reverb":
             let effectInputMixer = AKMixer()
             let reverb = AKReverb()
             reverb.start()
-            reverb.dryWetMix = 1
+            reverb.dryWetMix = 0.3
             reverb.loadFactoryPreset(.cathedral)
             reverb.connect(to: mixer)
             node.audioNodeContained = reverb

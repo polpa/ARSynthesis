@@ -19,7 +19,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         DebuggerService.singletonDebugger.initialise()
         let defaults = UserDefaults.standard
         let userHasOnboardedOnce = defaults.bool(forKey: "userHasOnboarded")
-        print("Hello")
         print(userHasOnboardedOnce)
         if userHasOnboardedOnce == true{
             self.setupNormalRootViewController()

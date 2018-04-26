@@ -1,3 +1,6 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:b1906b9c6a00b55db4be94b292eea3b5bffe36d13ad9ad33ea93b0028586c8bf
-size 112
+framework module PopupDialog {
+  umbrella header "PopupDialog-umbrella.h"
+
+  export *
+  module * { export * }
+}
