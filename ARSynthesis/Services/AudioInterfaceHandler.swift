@@ -103,7 +103,6 @@ class AudioInterfaceHandler {
     }
     
     open func connect(fromOutput: SCNNode, toInput: SCNNode){
-        
         if !(toInput.nodeDescription?.elementsEqual("vibrato"))! && !(fromOutput.nodeDescription?.elementsEqual("vibrato"))! {
             log.verbose(!((fromOutput.nodeDescription?.isEmpty)!))
             log.verbose(!(fromOutput.nodeDescription?.contains(find: "plane"))!)

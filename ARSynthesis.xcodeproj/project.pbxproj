@@ -15,7 +15,7 @@
 		0B05EE401F47166600E6F8F4 /* CustomItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B05EE3F1F47166600E6F8F4 /* CustomItemCell.swift */; };
 		0BC46DE41F7490A600C231F6 /* Models.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 0BC46DE31F7490A600C231F6 /* Models.scnassets */; };
 		214E3E402091E6810007327E /* snare.wav in Resources */ = {isa = PBXBuildFile; fileRef = 214E3E3D2091E67D0007327E /* snare.wav */; };
-		214E3E412091E6810007327E /* kick.wav in Resources */ = {isa = PBXBuildFile; fileRef = 214E3E3E2091E6800007327E /* kick.wav */; };
+		214E3E412091E6810007327E /* drums.wav in Resources */ = {isa = PBXBuildFile; fileRef = 214E3E3E2091E6800007327E /* drums.wav */; };
 		214E3E422091E6810007327E /* hats.wav in Resources */ = {isa = PBXBuildFile; fileRef = 214E3E3F2091E6810007327E /* hats.wav */; };
 		2B0CFAE72036E9E200EBF9C5 /* AudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B0CFAE52036E9E100EBF9C5 /* AudioKit.framework */; };
 		2B0CFAE82036E9E200EBF9C5 /* AudioKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B0CFAE62036E9E200EBF9C5 /* AudioKitUI.framework */; };
@@ -82,7 +82,7 @@
 		0B05EE3F1F47166600E6F8F4 /* CustomItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomItemCell.swift; sourceTree = "<group>"; };
 		0BC46DE31F7490A600C231F6 /* Models.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = Models.scnassets; sourceTree = "<group>"; };
 		214E3E3D2091E67D0007327E /* snare.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = snare.wav; sourceTree = "<group>"; };
-		214E3E3E2091E6800007327E /* kick.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = kick.wav; sourceTree = "<group>"; };
+		214E3E3E2091E6800007327E /* drums.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = drums.wav; sourceTree = "<group>"; };
 		214E3E3F2091E6810007327E /* hats.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = hats.wav; sourceTree = "<group>"; };
 		2B0CFAE52036E9E100EBF9C5 /* AudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AudioKit.framework; sourceTree = "<group>"; };
 		2B0CFAE62036E9E200EBF9C5 /* AudioKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AudioKitUI.framework; sourceTree = "<group>"; };
@@ -171,7 +171,7 @@
 			children = (
 				2B97A271201B536A0066B600 /* Info.plist */,
 				214E3E3F2091E6810007327E /* hats.wav */,
-				214E3E3E2091E6800007327E /* kick.wav */,
+				214E3E3E2091E6800007327E /* drums.wav */,
 				214E3E3D2091E67D0007327E /* snare.wav */,
 				2B7DB8D62035F116001A8656 /* Services */,
 				2BE25A962030BA0400BBC7E1 /* Views */,
@@ -387,7 +387,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				214E3E412091E6810007327E /* kick.wav in Resources */,
+				214E3E412091E6810007327E /* drums.wav in Resources */,
 				0B05EE381F47134D00E6F8F4 /* LaunchScreen.storyboard in Resources */,
 				0BC46DE41F7490A600C231F6 /* Models.scnassets in Resources */,
 				0B05EE351F47134D00E6F8F4 /* Assets.xcassets in Resources */,

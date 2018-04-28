@@ -23,7 +23,7 @@ class ARViewController: UIViewController{
     @IBOutlet weak var planeDetectionButton: UIButton!
     
     let log = DebuggerService.singletonDebugger.log
-    let itemsArray: [String] = ["oscillator", "drums", "reverb", "delay", "lowPass", "vibrato", "keyboard", "sequencer"]
+    let itemsArray: [String] = ["oscillator", "reverb", "delay", "lowPass", "vibrato", "keyboard", "sequencer"]
     var sequencerArray: [SCNNode] = []
     var configuration = ARWorldTrackingConfiguration()
     var nodeArray: [SCNNode]!
@@ -516,6 +516,7 @@ class ARViewController: UIViewController{
         case "oscillator","drums":
             if (startingNode.nodeDescription?.elementsEqual("vibrato"))!{
                 destinationNode.inputIsConnected = true
+                startingNode.audioNodeContained = destinationNode.audioNodeContained as! AKMorphingOscillatorBank
                 let linkName = "Link \(startingNode.name ?? "") | \(destinationNode.name ?? "")"
                 let lineNode = LineNode(name: linkName, v1: v1, v2: v2, material: [material])
                 lineNode.nodeDescription = "line"
@@ -631,6 +632,7 @@ class ARViewController: UIViewController{
             }
             
             node.name = "\(selectedItem)"
+            node.chainContainsSampler = false
             node.isHandsFreeEnabled = false
             node.position = SCNVector3(thirdColumn.x, thirdColumn.y + 0.1, thirdColumn.z)
             node.nodeDescription = selectedItem
@@ -658,6 +660,7 @@ class ARViewController: UIViewController{
             guard let minimumValue = modulusDistanceArray.min() else {return}
             let destinationNode = valuesDictionary[minimumValue]
             self.drawLineBetweenNodes(startingNode: node, destinationNode: destinationNode!)
+
         }
     }
     
@@ -923,10 +926,11 @@ extension ARViewController: UICollectionViewDataSource, UICollectionViewDelegate
                     self.motionManager.startAccelerometerUpdates(to: OperationQueue.current!) { (data, error) in
                         if data != nil
                         {
-//                            let oscillator = node.audioNodeContained as! AKMorphingOscillatorBank
-//                            oscillator.rampTime = 0.1
-//                            oscillator.frequency = round((myData.acceleration.x + 1)/2 * 10000)
-//                            oscillator.amplitude = (myData.acceleration.y + 1)/2
+                            let oscillator = node.audioNodeContained as! AKMorphingOscillatorBank
+                            let normalisedPitchBend = (round((data?.acceleration.y)! + 1)/2) * 6
+                            oscillator.rampTime = 0.01
+                            oscillator.pitchBend = normalisedPitchBend * 4
+                            self.log.verbose(normalisedPitchBend)
                         }else {
                             self.log.error("There was an error getting the data from the accelerometer")
                         }
@@ -949,8 +953,34 @@ extension ARViewController: UICollectionViewDataSource, UICollectionViewDelegate
                     node.isHandsFreeEnabled = true
                     break
                 case "delay":
+                    self.motionManager.stopAccelerometerUpdates()
+                    self.showBanner(with: "Hands Free Mode Enabled")
+                    self.motionManager.accelerometerUpdateInterval = 0.01
+                    self.motionManager.startAccelerometerUpdates(to: OperationQueue.current!) { (data, error) in
+                        if let myData = data
+                        {
+                            let delay = node.audioNodeContained as! AKDelay
+                            delay.dryWetMix = (myData.acceleration.y + 1)/2
+                        }else {
+                            self.log.error("There was an error getting the data from the accelerometer")
+                        }
+                    }
+                    node.isHandsFreeEnabled = true
                     break
-                case "mixer":
+                case "vibrato":
+                    self.motionManager.stopAccelerometerUpdates()
+                    self.showBanner(with: "Hands Free Mode Enabled")
+                    self.motionManager.accelerometerUpdateInterval = 0.01
+                    self.motionManager.startAccelerometerUpdates(to: OperationQueue.current!) { (data, error) in
+                        if let myData = data
+                        {
+                            let oscillator = node.audioNodeContained as! AKMorphingOscillatorBank
+                            oscillator.vibratoRate = ((myData.acceleration.y + 1)/2) * 10
+                        }else {
+                            self.log.error("There was an error getting the data from the accelerometer")
+                        }
+                    }
+                    node.isHandsFreeEnabled = true
                     break
                 default:
                     break
