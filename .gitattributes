@@ -4,3 +4,4 @@ AudioKitUI.framework/** filter=lfs diff=lfs merge=lfs -text
 ARSynthesis/hats.wav filter=lfs diff=lfs merge=lfs -text
 ARSynthesis/kick.wav filter=lfs diff=lfs merge=lfs -text
 ARSynthesis/snare.wav filter=lfs diff=lfs merge=lfs -text
+ARSynthesis/drums.wav filter=lfs diff=lfs merge=lfs -text
