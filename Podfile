@@ -10,6 +10,7 @@ target 'ARSynthesis' do
   pod 'NotificationBannerSwift'
   pod 'Onboard'
   pod 'DZNEmptyDataSet'
+  pod 'SwiftGifOrigin', '~> 1.6.1'
   pod 'SVProgressHUD', :git => 'https://github.com/SVProgressHUD/SVProgressHUD.git' #progress dialogs.
   pod 'PopupDialog', '~> 0.6' #This implements functionality for popUp Dialogues.
   pod 'SwiftyBeaver' #This implements functionality for error logging.

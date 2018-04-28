@@ -34,6 +34,11 @@
 		2BA0339A2045C1A70056F200 /* RoundedBackgroundImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA033992045C1A70056F200 /* RoundedBackgroundImage.swift */; };
 		2BA2F4CF205081F700F81211 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA2F4CE205081F700F81211 /* Double+Extensions.swift */; };
 		2BBA5DBC2031F6CE00900054 /* RoundedPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5DBB2031F6CE00900054 /* RoundedPopUp.swift */; };
+		2BBE49182094D10E000FA6E3 /* detection.gif in Resources */ = {isa = PBXBuildFile; fileRef = 2BBE49172094D10D000FA6E3 /* detection.gif */; };
+		2BBE491A2094D2CE000FA6E3 /* placeNodes.gif in Resources */ = {isa = PBXBuildFile; fileRef = 2BBE49192094D2CE000FA6E3 /* placeNodes.gif */; };
+		2BBE491C2094D3F6000FA6E3 /* connectedNodes.gif in Resources */ = {isa = PBXBuildFile; fileRef = 2BBE491B2094D3F5000FA6E3 /* connectedNodes.gif */; };
+		2BBE491E2094D53A000FA6E3 /* sequencerAdd.gif in Resources */ = {isa = PBXBuildFile; fileRef = 2BBE491D2094D53A000FA6E3 /* sequencerAdd.gif */; };
+		2BBE49202094D5B8000FA6E3 /* equi.gif in Resources */ = {isa = PBXBuildFile; fileRef = 2BBE491F2094D5B8000FA6E3 /* equi.gif */; };
 		2BD87B8B2041B4BD00EDC63E /* ViewControllerTestClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD87B8A2041B4BD00EDC63E /* ViewControllerTestClass.swift */; };
 		2BDA89B4202B559700D1989E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDA89B3202B559700D1989E /* SettingsViewController.swift */; };
 		2BDA89B6202B55F000D1989E /* ModifiedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDA89B5202B55F000D1989E /* ModifiedCollectionViewCell.swift */; };
@@ -102,6 +107,11 @@
 		2BA033992045C1A70056F200 /* RoundedBackgroundImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedBackgroundImage.swift; sourceTree = "<group>"; };
 		2BA2F4CE205081F700F81211 /* Double+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
 		2BBA5DBB2031F6CE00900054 /* RoundedPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedPopUp.swift; sourceTree = "<group>"; };
+		2BBE49172094D10D000FA6E3 /* detection.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = detection.gif; sourceTree = "<group>"; };
+		2BBE49192094D2CE000FA6E3 /* placeNodes.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = placeNodes.gif; sourceTree = "<group>"; };
+		2BBE491B2094D3F5000FA6E3 /* connectedNodes.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = connectedNodes.gif; sourceTree = "<group>"; };
+		2BBE491D2094D53A000FA6E3 /* sequencerAdd.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = sequencerAdd.gif; sourceTree = "<group>"; };
+		2BBE491F2094D5B8000FA6E3 /* equi.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = equi.gif; sourceTree = "<group>"; };
 		2BD87B802041AE5800EDC63E /* ARSynthesisTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ARSynthesisTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BD87B842041AE5800EDC63E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2BD87B8A2041B4BD00EDC63E /* ViewControllerTestClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerTestClass.swift; sourceTree = "<group>"; };
@@ -169,6 +179,11 @@
 		0B05EE2C1F47134D00E6F8F4 /* ARSynthesis */ = {
 			isa = PBXGroup;
 			children = (
+				2BBE49172094D10D000FA6E3 /* detection.gif */,
+				2BBE49192094D2CE000FA6E3 /* placeNodes.gif */,
+				2BBE491B2094D3F5000FA6E3 /* connectedNodes.gif */,
+				2BBE491D2094D53A000FA6E3 /* sequencerAdd.gif */,
+				2BBE491F2094D5B8000FA6E3 /* equi.gif */,
 				2B97A271201B536A0066B600 /* Info.plist */,
 				214E3E3F2091E6810007327E /* hats.wav */,
 				214E3E3E2091E6800007327E /* drums.wav */,
@@ -387,10 +402,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2BBE49182094D10E000FA6E3 /* detection.gif in Resources */,
 				214E3E412091E6810007327E /* drums.wav in Resources */,
+				2BBE491A2094D2CE000FA6E3 /* placeNodes.gif in Resources */,
 				0B05EE381F47134D00E6F8F4 /* LaunchScreen.storyboard in Resources */,
+				2BBE491E2094D53A000FA6E3 /* sequencerAdd.gif in Resources */,
 				0BC46DE41F7490A600C231F6 /* Models.scnassets in Resources */,
 				0B05EE351F47134D00E6F8F4 /* Assets.xcassets in Resources */,
+				2BBE491C2094D3F6000FA6E3 /* connectedNodes.gif in Resources */,
+				2BBE49202094D5B8000FA6E3 /* equi.gif in Resources */,
 				214E3E422091E6810007327E /* hats.wav in Resources */,
 				214E3E402091E6810007327E /* snare.wav in Resources */,
 				0B05EE331F47134D00E6F8F4 /* Main.storyboard in Resources */,
@@ -429,6 +449,7 @@
 				"${BUILT_PRODUCTS_DIR}/PopupDialog/PopupDialog.framework",
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftGifOrigin/SwiftGifOrigin.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyBeaver/SwiftyBeaver.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -441,6 +462,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PopupDialog.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftGifOrigin.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyBeaver.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;

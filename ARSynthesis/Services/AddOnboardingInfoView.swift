@@ -8,6 +8,7 @@
 
 import UIKit
 import Onboard
+import SwiftGifOrigin
 
 class AddOnboardingInfoView {
     private init(){}
@@ -50,16 +51,31 @@ class AddOnboardingInfoView {
         var onboardingVC = OnboardingViewController()
         keyValue = key
         // Create slides
-        let firstPage = OnboardingContentViewController.content(withTitle: "Welcome To The App!", body: "This app is part of a research project conducted at The University of York, AR Synthesis.", image: UIImage(named: "image1"), buttonText: nil, action: nil)
-        
-        let secondPage = OnboardingContentViewController.content(withTitle: "Step 1: Structure", body: "First of all, select a node and wait for a horizontal plane to be detected.", image: UIImage(named:"image2"), buttonText: nil, action: nil)
-        
-        let thirdPage = OnboardingContentViewController.content(withTitle: "Step 2: Connections", body: "Connect oscillator nodes to effects to create the oscillator structure. Do this by simply dragging from one node to the next one.", image: UIImage(named: "image3"), buttonText: nil, action: nil)
-        
-        let fourthPage = OnboardingContentViewController.content(withTitle: "Step 3: Gestures", body: "1 tap - launch settings, 2 taps - remove node", image: UIImage(named: "image4"), buttonText: nil, action: nil)
-        
-        let fifthPage = OnboardingContentViewController.content(withTitle: "Step 4: Playing", body: "Add a sequencer or a vertical keyboard to start playing.", image: UIImage(named: "image4"), buttonText: "Proceed to Application", action: self.handleOnboardingCompletion)
-        
+        let firstPage = OnboardingContentViewController.content(withTitle: "Welcome To The App!", body: "Welcome to an Augmented Reality sound synthesis experience!", image: UIImage(named: "image1"), buttonText: nil, action: nil)
+        firstPage.bottomPadding = 10
+        firstPage.iconHeight = 350
+        firstPage.iconWidth = 350
+        firstPage.iconImageView.loadGif(name: "equi")
+        let secondPage = OnboardingContentViewController.content(withTitle: "Step 1: Detect", body: "", image: UIImage(named: "image2"), buttonText: nil, action: nil)
+        secondPage.bottomPadding = 10
+        secondPage.iconHeight = 550
+        secondPage.iconWidth = 300
+        secondPage.iconImageView.loadGif(name: "detection")
+        let thirdPage = OnboardingContentViewController.content(withTitle: "Step 2: Place", body: "", image: UIImage(named: "image3"), buttonText: nil, action: nil)
+        thirdPage.bottomPadding = 10
+        thirdPage.iconHeight = 550
+        thirdPage.iconWidth = 300
+        thirdPage.iconImageView.loadGif(name: "placeNodes")
+        let fourthPage = OnboardingContentViewController.content(withTitle: "Step 3: Connect", body: "", image: UIImage(named: "image4"), buttonText: nil, action: nil)
+        fourthPage.bottomPadding = 10
+        fourthPage.iconHeight = 550
+        fourthPage.iconWidth = 300
+        fourthPage.iconImageView.loadGif(name: "connectedNodes")
+        let fifthPage = OnboardingContentViewController.content(withTitle: "Step 4: Add Playability", body: "", image: UIImage(named: "image4"), buttonText: "Proceed to Application", action: self.handleOnboardingCompletion)
+        fifthPage.bottomPadding = 10
+        fifthPage.iconHeight = 550
+        fifthPage.iconWidth = 300
+        fifthPage.iconImageView.loadGif(name: "sequencerAdd")
         
         // Define onboarding view controller properties
         onboardingVC = OnboardingViewController.onboard(withBackgroundImage: #imageLiteral(resourceName: "Onboarding"), contents: [firstPage, secondPage, thirdPage, fourthPage, fifthPage])

@@ -10,6 +10,7 @@ PODS:
     - DynamicBlurView (~> 2.0)
   - SnapKit (4.0.0)
   - SVProgressHUD (2.2.2)
+  - SwiftGifOrigin (1.6.1)
   - SwiftyBeaver (1.5.1)
 
 DEPENDENCIES:
@@ -19,6 +20,7 @@ DEPENDENCIES:
   - Onboard
   - PopupDialog (~> 0.6)
   - SVProgressHUD (from `https://github.com/SVProgressHUD/SVProgressHUD.git`)
+  - SwiftGifOrigin (~> 1.6.1)
   - SwiftyBeaver
 
 EXTERNAL SOURCES:
@@ -39,8 +41,9 @@ SPEC CHECKSUMS:
   PopupDialog: 4abc6db5b22b7c8029e2162bde8891ee6aa4b6c8
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   SVProgressHUD: 59b2d3dabacbd051576d21d32293ca7228dc18b0
+  SwiftGifOrigin: d6679d3ebe9df2e049a84bc52582635107b581f6
   SwiftyBeaver: 4f74563624b2c1e821c522c54142b5dd5ebb0f30
 
-PODFILE CHECKSUM: 06fdc9b2b540ef344030632de38b38fd3d019611
+PODFILE CHECKSUM: 5ecc3df6a2376ae491f877d80c8b53e41802465e
 
 COCOAPODS: 1.4.0
