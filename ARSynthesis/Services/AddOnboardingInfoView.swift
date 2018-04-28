@@ -71,7 +71,7 @@ class AddOnboardingInfoView {
         fourthPage.iconHeight = 550
         fourthPage.iconWidth = 300
         fourthPage.iconImageView.loadGif(name: "connectedNodes")
-        let fifthPage = OnboardingContentViewController.content(withTitle: "Step 4: Add Playability", body: "", image: UIImage(named: "image4"), buttonText: "Proceed to Application", action: self.handleOnboardingCompletion)
+        let fifthPage = OnboardingContentViewController.content(withTitle: "", body: "", image: UIImage(named: "image4"), buttonText: "Add Playing Method. Press here to continue!", action: self.handleOnboardingCompletion)
         fifthPage.bottomPadding = 10
         fifthPage.iconHeight = 550
         fifthPage.iconWidth = 300
