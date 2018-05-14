@@ -14,9 +14,7 @@
 		0B05EE381F47134D00E6F8F4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B05EE361F47134D00E6F8F4 /* LaunchScreen.storyboard */; };
 		0B05EE401F47166600E6F8F4 /* CustomItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B05EE3F1F47166600E6F8F4 /* CustomItemCell.swift */; };
 		0BC46DE41F7490A600C231F6 /* Models.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 0BC46DE31F7490A600C231F6 /* Models.scnassets */; };
-		214E3E402091E6810007327E /* snare.wav in Resources */ = {isa = PBXBuildFile; fileRef = 214E3E3D2091E67D0007327E /* snare.wav */; };
 		214E3E412091E6810007327E /* drums.wav in Resources */ = {isa = PBXBuildFile; fileRef = 214E3E3E2091E6800007327E /* drums.wav */; };
-		214E3E422091E6810007327E /* hats.wav in Resources */ = {isa = PBXBuildFile; fileRef = 214E3E3F2091E6810007327E /* hats.wav */; };
 		2B0CFAE72036E9E200EBF9C5 /* AudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B0CFAE52036E9E100EBF9C5 /* AudioKit.framework */; };
 		2B0CFAE82036E9E200EBF9C5 /* AudioKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B0CFAE62036E9E200EBF9C5 /* AudioKitUI.framework */; };
 		2B1DE0AD202A502F00760129 /* ARPlane+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1DE0AC202A502F00760129 /* ARPlane+Extensions.swift */; };
@@ -32,7 +30,6 @@
 		2B9BFCD9201A15D600F52D1A /* AudioInterfaceHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B9BFCD8201A15D600F52D1A /* AudioInterfaceHandler.swift */; };
 		2BA033982045BD610056F200 /* SettingsRoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA033972045BD610056F200 /* SettingsRoundedButton.swift */; };
 		2BA0339A2045C1A70056F200 /* RoundedBackgroundImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA033992045C1A70056F200 /* RoundedBackgroundImage.swift */; };
-		2BA2F4CF205081F700F81211 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA2F4CE205081F700F81211 /* Double+Extensions.swift */; };
 		2BBA5DBC2031F6CE00900054 /* RoundedPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5DBB2031F6CE00900054 /* RoundedPopUp.swift */; };
 		2BBE49182094D10E000FA6E3 /* detection.gif in Resources */ = {isa = PBXBuildFile; fileRef = 2BBE49172094D10D000FA6E3 /* detection.gif */; };
 		2BBE491A2094D2CE000FA6E3 /* placeNodes.gif in Resources */ = {isa = PBXBuildFile; fileRef = 2BBE49192094D2CE000FA6E3 /* placeNodes.gif */; };
@@ -40,7 +37,6 @@
 		2BBE491E2094D53A000FA6E3 /* sequencerAdd.gif in Resources */ = {isa = PBXBuildFile; fileRef = 2BBE491D2094D53A000FA6E3 /* sequencerAdd.gif */; };
 		2BBE49202094D5B8000FA6E3 /* equi.gif in Resources */ = {isa = PBXBuildFile; fileRef = 2BBE491F2094D5B8000FA6E3 /* equi.gif */; };
 		2BD87B8B2041B4BD00EDC63E /* ViewControllerTestClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD87B8A2041B4BD00EDC63E /* ViewControllerTestClass.swift */; };
-		2BDA89B4202B559700D1989E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDA89B3202B559700D1989E /* SettingsViewController.swift */; };
 		2BDA89B6202B55F000D1989E /* ModifiedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDA89B5202B55F000D1989E /* ModifiedCollectionViewCell.swift */; };
 		2BE50A2720263A06002685E5 /* LineNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE50A2620263A06002685E5 /* LineNode.swift */; };
 		2BF0CE70204562C8000E019C /* ARSynthesisUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF0CE6F204562C8000E019C /* ARSynthesisUITests.swift */; };
@@ -86,9 +82,7 @@
 		0B05EE371F47134D00E6F8F4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0B05EE3F1F47166600E6F8F4 /* CustomItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomItemCell.swift; sourceTree = "<group>"; };
 		0BC46DE31F7490A600C231F6 /* Models.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = Models.scnassets; sourceTree = "<group>"; };
-		214E3E3D2091E67D0007327E /* snare.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = snare.wav; sourceTree = "<group>"; };
 		214E3E3E2091E6800007327E /* drums.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = drums.wav; sourceTree = "<group>"; };
-		214E3E3F2091E6810007327E /* hats.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = hats.wav; sourceTree = "<group>"; };
 		2B0CFAE52036E9E100EBF9C5 /* AudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AudioKit.framework; sourceTree = "<group>"; };
 		2B0CFAE62036E9E200EBF9C5 /* AudioKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AudioKitUI.framework; sourceTree = "<group>"; };
 		2B1DE0AC202A502F00760129 /* ARPlane+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARPlane+Extensions.swift"; sourceTree = "<group>"; };
@@ -105,7 +99,6 @@
 		2B9BFCD8201A15D600F52D1A /* AudioInterfaceHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioInterfaceHandler.swift; sourceTree = "<group>"; };
 		2BA033972045BD610056F200 /* SettingsRoundedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRoundedButton.swift; sourceTree = "<group>"; };
 		2BA033992045C1A70056F200 /* RoundedBackgroundImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedBackgroundImage.swift; sourceTree = "<group>"; };
-		2BA2F4CE205081F700F81211 /* Double+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
 		2BBA5DBB2031F6CE00900054 /* RoundedPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedPopUp.swift; sourceTree = "<group>"; };
 		2BBE49172094D10D000FA6E3 /* detection.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = detection.gif; sourceTree = "<group>"; };
 		2BBE49192094D2CE000FA6E3 /* placeNodes.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = placeNodes.gif; sourceTree = "<group>"; };
@@ -115,7 +108,6 @@
 		2BD87B802041AE5800EDC63E /* ARSynthesisTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ARSynthesisTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BD87B842041AE5800EDC63E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2BD87B8A2041B4BD00EDC63E /* ViewControllerTestClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerTestClass.swift; sourceTree = "<group>"; };
-		2BDA89B3202B559700D1989E /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		2BDA89B5202B55F000D1989E /* ModifiedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifiedCollectionViewCell.swift; sourceTree = "<group>"; };
 		2BE50A2620263A06002685E5 /* LineNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineNode.swift; sourceTree = "<group>"; };
 		2BF0CE6D204562C8000E019C /* ARSynthesisUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ARSynthesisUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -185,9 +177,7 @@
 				2BBE491D2094D53A000FA6E3 /* sequencerAdd.gif */,
 				2BBE491F2094D5B8000FA6E3 /* equi.gif */,
 				2B97A271201B536A0066B600 /* Info.plist */,
-				214E3E3F2091E6810007327E /* hats.wav */,
 				214E3E3E2091E6800007327E /* drums.wav */,
-				214E3E3D2091E67D0007327E /* snare.wav */,
 				2B7DB8D62035F116001A8656 /* Services */,
 				2BE25A962030BA0400BBC7E1 /* Views */,
 				2BE25A972030BA2E00BBC7E1 /* Controllers */,
@@ -217,7 +207,6 @@
 				2B967DFA2028CADF009FBB48 /* PopUpDialog+Extensions.swift */,
 				2B1DE0AC202A502F00760129 /* ARPlane+Extensions.swift */,
 				2B262385202F76EF00F1C108 /* AudioNodes+ConvenienceExtensions.swift */,
-				2BA2F4CE205081F700F81211 /* Double+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -252,7 +241,6 @@
 			children = (
 				0B05EE2D1F47134D00E6F8F4 /* AppDelegate.swift */,
 				0B05EE2F1F47134D00E6F8F4 /* ARViewController.swift */,
-				2BDA89B3202B559700D1989E /* SettingsViewController.swift */,
 				2B59CECE204346D600C1CD9C /* OscillatorParametersViewController.swift */,
 			);
 			path = Controllers;
@@ -411,8 +399,6 @@
 				0B05EE351F47134D00E6F8F4 /* Assets.xcassets in Resources */,
 				2BBE491C2094D3F6000FA6E3 /* connectedNodes.gif in Resources */,
 				2BBE49202094D5B8000FA6E3 /* equi.gif in Resources */,
-				214E3E422091E6810007327E /* hats.wav in Resources */,
-				214E3E402091E6810007327E /* snare.wav in Resources */,
 				0B05EE331F47134D00E6F8F4 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -515,7 +501,6 @@
 				0B05EE301F47134D00E6F8F4 /* ARViewController.swift in Sources */,
 				2BE50A2720263A06002685E5 /* LineNode.swift in Sources */,
 				2B9BFCD9201A15D600F52D1A /* AudioInterfaceHandler.swift in Sources */,
-				2BDA89B4202B559700D1989E /* SettingsViewController.swift in Sources */,
 				2B4B13C12044838B00513B9C /* DebuggerService.swift in Sources */,
 				0B05EE401F47166600E6F8F4 /* CustomItemCell.swift in Sources */,
 				2B1DE0AD202A502F00760129 /* ARPlane+Extensions.swift in Sources */,
@@ -524,7 +509,6 @@
 				2BA033982045BD610056F200 /* SettingsRoundedButton.swift in Sources */,
 				2BDA89B6202B55F000D1989E /* ModifiedCollectionViewCell.swift in Sources */,
 				2BBA5DBC2031F6CE00900054 /* RoundedPopUp.swift in Sources */,
-				2BA2F4CF205081F700F81211 /* Double+Extensions.swift in Sources */,
 				2B59CECF204346D600C1CD9C /* OscillatorParametersViewController.swift in Sources */,
 				0B05EE2E1F47134D00E6F8F4 /* AppDelegate.swift in Sources */,
 				2B967DF82028B923009FBB48 /* Node+Extensions.swift in Sources */,

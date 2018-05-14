@@ -1,4 +1,3 @@
-
 import ObjectiveC
 import UIKit
 import Foundation
@@ -10,24 +9,27 @@ extension SCNNode{
     
     private struct audioNodeProperties{
         static var allowsMultipleInputs:Bool = true //oscillators don't allow inputs
-        static var outputIsConnected:Bool = false
-        static var inputIsConnected:Bool = false
-        static var chainContainsSampler: Bool = false
-        static var isEffect:Bool = false
-        static var adsrIsVisible: Bool = false
-        static var nodeDescription: String = ""
-        static var isLinkedBy: String = ""
+        static var outputIsConnected:Bool = false //connection handling flag
+        static var inputIsConnected:Bool = false //connection handling flag
+        static var chainContainsSampler: Bool = false //Future Work: Sampler (drums)
+        static var isEffect:Bool = false //Connection handling flag
+        static var adsrIsVisible: Bool = false //Checks whether the ADSR envelope is present (Future Work)
+        static var nodeDescription: String = "" //Defines what the node is
+        static var isLinkedBy: String = "" //Name of the link structure
         static var inputConnection: SCNNode = SCNNode()
         static var outputConnection: SCNNode = SCNNode()
-        static var audioNodeContained: [AKNode] = []
+        static var audioNodeContained: [AKNode] = [] //The AKNode audio structure embedded in the ARKit component
         static var overallAmplitude: CGFloat = 1.0
-        static var sides: [Any?] = []
-        static var isHandsFreeEnabled:Bool = false
+        static var sides: [Any?] = [] //Material from each of the shape's sides
+        static var isHandsFreeEnabled:Bool = false //Flag for accelerometer data (Future Work)
         static var width:CGFloat = 0.0
         static var height: CGFloat = 0.0
         static var mode: String = ""
     }
     
+    /// Removes all of the connection structures between nodes.
+    ///
+    /// - Parameter scene: ARKit Scene.
     func removeAllLinks(scene: ARSCNView) {
         scene.scene.rootNode.enumerateChildNodes { (node, stop) in
             let keyStringPath = "Link"
@@ -43,6 +45,7 @@ extension SCNNode{
     }
     
     
+    /// Initialises the parameters for the different nodes.
     func initialiseParameters() {
         switch self.nodeDescription! {
         case "reverb", "delay", "lowPass", "flanger", "distortion", "vibrato":

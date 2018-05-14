@@ -1,14 +1,9 @@
-//
-//  PopUpDialog+Extensions.swift
-//  ARSynthesis
-//
-//  Created by Pol Piella on 05/02/2018.
-//  Copyright © 2018 Pol Piella. All rights reserved.
-//
-
 import Foundation
 import PopupDialog
+
+// MARK: - This is an extension to the popup dialog to change the initialiser to a more convenient one, where a string identifies the kind of popup dialog and hence changes the messages using a switch/case statement.
 extension PopupDialog {
+    
     public convenience init(identifier: String) {
         var message = ""
         var title = ""

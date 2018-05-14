@@ -1,10 +1,3 @@
-//
-//  ViewController.swift
-//  ARSynthesis
-//
-//  Created by Pol Piella on 2017-08-18.
-//  Copyright © 2017 Pol Piella. All rights reserved.
-//
 import UIKit
 import ARKit
 import AudioKit
@@ -21,9 +14,11 @@ class ARViewController: UIViewController{
     @IBOutlet weak var itemsCollectionView: UICollectionView!
     @IBOutlet weak var sceneView: ARSCNView!
     @IBOutlet weak var planeDetectionButton: UIButton!
+    @IBOutlet weak var initialPresetButton: UIButton!
+    @IBOutlet weak var removeAllButton: UIButton!
     
     let log = DebuggerService.singletonDebugger.log
-    let itemsArray: [String] = ["oscillator", "reverb", "delay", "lowPass", "vibrato", "keyboard", "sequencer"]
+    let itemsArray: [String] = ["oscillator", "sequencer", "reverb", "delay", "lowPass", "vibrato", "keyboard"]
     var sequencerArray: [SCNNode] = []
     var configuration = ARWorldTrackingConfiguration()
     var nodeArray: [SCNNode]!
@@ -40,6 +35,7 @@ class ARViewController: UIViewController{
     var sequencerPresent = false
     var minimumPlacementHeight = 0.0
     var currentOscillator = AKMorphingOscillatorBank()
+    var planeIsEmpty = true
     
     /// This method sets up the scene configuration when the view is loaded.
     fileprivate func setupScene() {
@@ -55,6 +51,8 @@ class ARViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        initialPresetButton.isUserInteractionEnabled = false
+        selectedItem = "oscillator"
         firstTime = true
         if (firstTime){
             nodeArray = []
@@ -62,6 +60,9 @@ class ARViewController: UIViewController{
         setupScene()
     }
     
+    /// Turns off plane detection from the session.
+    ///
+    /// - Parameter sender: Stop Plane Detection Button.
     @IBAction func stopPlaneDetection(_ sender: UIButton) {
         switch planeDetectionButton.title(for: .normal) {
         case "Stop Detecting":
@@ -75,6 +76,116 @@ class ARViewController: UIViewController{
         }
     }
     
+    /// Adds a basic structure to get the user started.
+    ///
+    /// - Parameter sender: Get Started button.
+    @IBAction func addInitialNodes(_ sender: UIButton) {
+        sceneView.scene.rootNode.enumerateChildNodes { (node, _) in
+            if (node.nodeDescription?.elementsEqual("basePlane"))!{
+                if node.height! != Float(1.0) && node.width != Float(1.0){
+                    if node.width! >= Float(0.5) || node.height! >= Float(0.5) && planeIsEmpty == true{
+                        log.verbose("I am ready to do stuff here")
+                        let scene = SCNScene(named: "Models.scnassets/itemShape.scn")
+                        let oscillatorNode = (scene?.rootNode.childNode(withName: "itemShape", recursively: false))!
+                        let currentIndex = nodeArray.count
+                        let sides = [UIColor.white,
+                                     UIColor.white,
+                                     UIColor.white,
+                                     UIColor.white,
+                                     UIImage(named:"oscillator.png") ?? UIImage(),UIColor.black]
+                            as [Any]
+                        let materials = sides.map { (side) -> SCNMaterial in
+                            let material = SCNMaterial()
+                            material.diffuse.contents = side
+                            material.locksAmbientWithDiffuse = true
+                            return material
+                        }
+                        oscillatorNode.name = "oscillator"
+                        oscillatorNode.nodeDescription = "oscillator"
+                        oscillatorNode.chainContainsSampler = false
+                        oscillatorNode.isHandsFreeEnabled = false
+                        oscillatorNode.position = SCNVector3(node.position.x, node.position.y + 0.1, node.position.z)
+                        oscillatorNode.geometry?.materials = materials
+                        oscillatorNode.initialiseParameters()
+                        nodeArray.insert(oscillatorNode, at: currentIndex)
+                        self.sceneView.scene.rootNode.addChildNode(nodeArray[currentIndex])
+                        AudioInterfaceHandler.singletonMixer.append(node: oscillatorNode)
+                        for node in nodeArray{
+                            node.name = String("\(nodeArray.index(of: node)!)")
+                        }
+                        
+                        let secondScene = SCNScene(named: "Models.scnassets/itemShape.scn")
+                        let reverbNode = (secondScene?.rootNode.childNode(withName: "itemShape", recursively: false))!
+                        let currentIndex2 = nodeArray.count
+                        let sidesReverb = [UIColor.white,
+                                     UIColor.white,
+                                     UIColor.white,
+                                     UIColor.white,
+                                     UIImage(named:"reverb.png") ?? UIImage(),UIColor.black]
+                            as [Any]
+                        let materialsReverb = sidesReverb.map { (side) -> SCNMaterial in
+                            let material = SCNMaterial()
+                            material.diffuse.contents = side
+                            material.locksAmbientWithDiffuse = true
+                            return material
+                        }
+                        reverbNode.name = "reverb"
+                        reverbNode.nodeDescription = "reverb"
+                        reverbNode.chainContainsSampler = false
+                        reverbNode.isHandsFreeEnabled = false
+                        reverbNode.position = SCNVector3(node.position.x + 0.2, node.position.y + 0.1, node.position.z)
+                        reverbNode.geometry?.materials = materialsReverb
+                        reverbNode.initialiseParameters()
+                        nodeArray.insert(reverbNode, at: currentIndex2)
+                        self.sceneView.scene.rootNode.addChildNode(nodeArray[currentIndex2])
+                        AudioInterfaceHandler.singletonMixer.append(node: reverbNode)
+                        for node in nodeArray{
+                            node.name = String("\(nodeArray.index(of: node)!)")
+                        }
+                        self.drawLineBetweenNodes(startingNode: oscillatorNode, destinationNode: reverbNode)
+                        let vector = SCNVector3(node.position.x, node.position.y, node.position.y)
+                        addSequencerInitial(position: vector)
+                        initialPresetButton.isUserInteractionEnabled = false
+                    }
+                }
+            }
+        }
+    }
+    
+    /// Function to add a sequencer when the get started button is started.
+    ///
+    /// - Parameter position: Position where the sequencer is to be placed.
+    func addSequencerInitial(position: SCNVector3){
+        updateInteractionOfCell(for: "oscillator")
+        updateInteractionOfCell(for: "sequencer")
+        AudioInterfaceHandler.singletonMixer.sequencerSelected()
+        var n = 0
+        repeat {
+            let node = SCNNode(geometry: SCNBox(width: 0.07, height: 0.08, length: 0.07, chamferRadius: 0))
+            node.name = "sequencer"
+            node.geometry?.firstMaterial?.diffuse.contents = UIColor.black
+            node.nodeDescription = "Sequencer(\(n))"
+            if n >= 0 && n<4{
+                node.position = SCNVector3Make(Float(position.x + 0.2*(n)), position.y + 0.15, position.z)
+                node.geometry?.firstMaterial?.diffuse.contents = UIColor.purple
+                node.name = "\(n).0"
+            }else if n >= 4 && n<8{
+                node.position = SCNVector3Make(Float(position.x + 0.2*(n-4)), position.y + 0.35, position.z)
+                node.name = "\(n-4).1"
+            } else if n>=8 && n<12{
+                node.position = SCNVector3Make(Float(position.x + 0.2*(n-8)), position.y + 0.50, position.z)
+                node.name = "\(n-8).2"
+            }else {
+                node.position = SCNVector3Make(Float(position.x + 0.2*(n-12)), position.y + 0.65, position.z)
+                node.name = "\(n-12).3"
+            }
+            sequencerArray.append(node)
+            self.sceneView.scene.rootNode.addChildNode(node)
+            n = n + 1
+        }while n < 16
+    }
+    
+    /// Restarts plane detection.
     func resetPlaneDetection(){
         self.sceneView.session.pause()
         self.configuration.planeDetection = .horizontal
@@ -85,6 +196,7 @@ class ARViewController: UIViewController{
         }
     }
     
+    /// Stops plane detection.
     func stopPlaneDetection(){
         self.sceneView.session.pause()
         self.configuration.planeDetection = []
@@ -95,6 +207,9 @@ class ARViewController: UIViewController{
         }
     }
     
+    /// Shows a banner (Notification) showns at the top of the scene to give some feedback to the user. 
+    ///
+    /// - Parameter titleInput: Title.
     func showBanner(with titleInput: String){
         let title = NSAttributedString(string: titleInput)
         let banner = StatusBarNotificationBanner(attributedTitle: title, style: .info, colors: CustomBannerColors())
@@ -128,7 +243,31 @@ class ARViewController: UIViewController{
         popup.addButtons([cancelButton])
         self.present(popup, animated: animated, completion: nil)
     }
-
+    
+    /// When the user presses on the remove all button, all nodes are removed from the scene.
+    ///
+    /// - Parameter sender: Remove All Nodes from the scene.
+    @IBAction func removeAllNodes(_ sender: UIButton) {
+        var foundSequencer = false
+        var sequencerNode = SCNNode()
+        sceneView.scene.rootNode.enumerateChildNodes { (node, _) in
+            switch node.nodeDescription {
+            case "oscillator", "reverb", "delay", "lowPass", "vibrato":
+                nodeRemove(with: node)
+                break
+            default:
+                if (node.nodeDescription?.contains(find: "Sequencer"))!{
+                foundSequencer = true
+                sequencerNode = node
+                } else {}
+                break
+            }
+        }
+        if foundSequencer{
+            nodeRemove(with: sequencerNode)
+        } else {}
+    }
+    
     /// This function registers all of the gesture recognizers, initializes them and adds them to the augmented reality scene.
     func registerGestureRecognizers() {
         let oneTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapped))
@@ -154,6 +293,9 @@ class ARViewController: UIViewController{
         self.sceneView.addGestureRecognizer(doubleTapGestureRecognizer)
     }
     
+    /// Tapping three times on an oscillator adds an ADSR structure to it.
+    ///
+    /// - Parameter sender: Tap Gesture Recogniser.
     @objc func ADSR(sender: UITapGestureRecognizer){
         let sceneView = sender.view as! ARSCNView
         let tapLocation = sender.location(in: sceneView)
@@ -222,6 +364,9 @@ class ARViewController: UIViewController{
         }
     }
     
+    /// This handles double long presses and it is not yet implemented (Future Work).
+    ///
+    /// - Parameter sender: Long Press Gesture Recogniser.
     @objc func doubleLongPress(sender: UITapGestureRecognizer){
         let sceneView = sender.view as! ARSCNView
         let tapLocation = sender.location(in: sceneView)
@@ -235,6 +380,7 @@ class ARViewController: UIViewController{
             //currentOscillator.vibratoRate = Double(tapLocation.x/100)
         }
     }
+    
     /// This function handles double tap gestures in the augmented reality scene.
     ///
     /// - Parameter sender: Double tap gesture recognizer.
@@ -248,6 +394,10 @@ class ARViewController: UIViewController{
             nodeRemove(with: (hitTest.first?.node)!)
         }
     }
+    
+    /// Updates the user interaction of the cell button. It determines whether the cell can be selected or not.
+    ///
+    /// - Parameter description: Description of the cell that is to be modified.
     func updateInteractionOfCell(for description: String){
         let index = itemsArray.index(of: description)
         let cell = collectionCells[index!]
@@ -343,6 +493,19 @@ class ARViewController: UIViewController{
         }
     }
     
+    /// Checks whether the scene is empty or not.
+    ///
+    /// - Returns: Returns a boolean, true if the scene is empty and false if the scene has any element.
+    func sceneIsEmpty() -> Bool{
+        var isEmpty = true
+        sceneView.scene.rootNode.enumerateChildNodes { (node, _) in
+            if node.name != nil{
+                return isEmpty = false
+            }
+        }
+        return isEmpty
+    }
+    
     /// This function detects any node being pinched and scales it accordingly
     ///
     /// - Parameter sender: Pinch Gesture Recognizer
@@ -379,6 +542,7 @@ class ARViewController: UIViewController{
         let hitTestItems = sceneView.hitTest(tapLocation)
        if !hitTest.isEmpty {
         if !hitTestItems.isEmpty && (hitTestItems.first?.node.nodeDescription?.elementsEqual("basePlane"))! {
+            initialPresetButton.isUserInteractionEnabled = false
             if (self.selectedItem?.elementsEqual("sequencer"))! {
                 if !self.sequencerPresent{
                     self.sequencerPresent = true
@@ -552,7 +716,6 @@ class ARViewController: UIViewController{
         default:
             break
         }
-        
     }
     
     /// Calculates the modulus of the horizontal distance between two nodes (audio modules) and returns a Double. This can then be used to find the nearest neighbor.
@@ -568,6 +731,9 @@ class ARViewController: UIViewController{
         return modulus
     }
     
+    /// Adds a sequencer to the scene.
+    ///
+    /// - Parameter hitTestResult: Hit test result from the user's press.
     func addSequencer(hitTestResult: ARHitTestResult){
         let transform = hitTestResult.worldTransform
         let thirdColumn = transform.columns.3
@@ -664,6 +830,9 @@ class ARViewController: UIViewController{
         }
     }
     
+    /// Shows the information Onboarding view controller, to provide some extra guidance to the user when needed.
+    ///
+    /// - Parameter sender: Info Button.
     @IBAction func showInfoView(_ sender: UIButton) {
         var progressWasVisible = false
         let infoVC = AddOnboardingInfoView.viewController.getViewController(with: "info")
@@ -769,7 +938,8 @@ class ARViewController: UIViewController{
                         let lowPass = node.audioNodeContained as! AKMoogLadder
                         lowPass.cutoffFrequency = Double(normalisedDataX * 15000)
                     } else if nodeDescription.elementsEqual("vibrato") && (self.selectedKeyboardMode.elementsEqual("vibrato")){
-
+                        let oscillator = node.audioNodeContained as! AKMorphingOscillatorBank
+                        oscillator.vibratoRate = Double(normalisedDataX)
                     }  else if (self.selectedKeyboardMode.elementsEqual("none")){
                       log.warning("No keyboard mode was selected, hence the keyboard will not have any functionality")
                     }
@@ -815,22 +985,9 @@ class ARViewController: UIViewController{
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         //sceneView.session.pause()
-        var stringArray: [String] = []
-        if segue.destination is SettingsViewController
-        {
-            nodeArray.removeAll()
-            let vc = segue.destination as? SettingsViewController
-            self.sceneView.scene.rootNode.enumerateChildNodes { (node, stop) in
-                if !(node.nodeDescription?.elementsEqual(""))!{
-                    stringArray.append(node.nodeDescription!)
-                    nodeArray.append(node)
-                }
-           }
-           vc?.mainMenu = stringArray
-           vc?.nodeArray = self.nodeArray
+        var _: [String] = []
         
-        } else if segue.destination is OscillatorParametersViewController{
-//            let vc = segue.destination as? OscillatorParametersViewController
+        if segue.destination is OscillatorParametersViewController{
         }
     }
     
@@ -903,6 +1060,13 @@ extension ARViewController: UICollectionViewDataSource, UICollectionViewDelegate
             }
         
         }
+        
+        if let popoverController = actionSheet.popoverPresentationController {
+            popoverController.sourceView = self.view
+            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+            popoverController.permittedArrowDirections = []
+        }
+        
         actionSheet.addAction(cancelButton)
         self.present(actionSheet, animated: true, completion: nil)
     }
@@ -1006,12 +1170,19 @@ extension ARViewController: UICollectionViewDataSource, UICollectionViewDelegate
             actionSheet.addAction(advancedSettings)
         }
         
+        if let popoverController = actionSheet.popoverPresentationController {
+            popoverController.sourceView = self.view
+            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+            popoverController.permittedArrowDirections = []
+        }
+        
         actionSheet.addAction(cancelButton)
         if !(node.nodeDescription?.contains(find: "/"))!{
             present(actionSheet,animated: true,completion: nil)
         }
         node.isHandsFreeEnabled = false
     }
+    
     /// This function is called whenever an item in the collection view is deselected.
     ///
     /// - Parameters:
@@ -1040,6 +1211,7 @@ extension ARViewController: UICollectionViewDataSource, UICollectionViewDelegate
             log.error("The cell is not ready for interaction, could not be visible.")
         }
     }
+    
     /// This function is called whenever an item in the collection view is selected.
     ///
     /// - Parameters:
@@ -1085,6 +1257,7 @@ extension ARViewController: UICollectionViewDataSource, UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return itemsArray.count
     }
+    
     /// This function handles all of cell functions, such as label, background, etc.
     ///
     /// - Parameters:
@@ -1104,6 +1277,7 @@ extension ARViewController: UICollectionViewDataSource, UICollectionViewDelegate
         collectionCells.append(cell)
         return cell
     }
+    
     /// This renderer calls this function every time a plane is detected and added.
     ///
     /// - Parameters:
@@ -1111,15 +1285,17 @@ extension ARViewController: UICollectionViewDataSource, UICollectionViewDelegate
     ///   - node: Plane added
     ///   - anchor: Anchor for the plane
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
-        log.verbose("Vertical Node Added")
         guard let planeAnchor = anchor as? ARPlaneAnchor else {return}
         log.verbose(self.configuration.planeDetection)
         if self.configuration.planeDetection == .horizontal {
             node.nodeDescription = "basePlane"
+            node.width = planeAnchor.extent.x
+            node.height = planeAnchor.extent.z
             self.planeNode = planeAnchor.addPlaneDebugging()
             node.addChildNode(self.planeNode)
             self.firstPlaneDetected = true
             DispatchQueue.main.async {
+                self.initialPresetButton.isUserInteractionEnabled = true
                 SVProgressHUD.dismiss()
                 self.showBanner(with: "Found a horizontal node")
             }
@@ -1142,6 +1318,7 @@ extension ARViewController: UICollectionViewDataSource, UICollectionViewDelegate
             log.verbose("Wrong iOS Version!")
         }
     }
+    
     /// This renderer calls this function every time an already detected plane is updated
     ///
     /// - Parameters:
@@ -1152,6 +1329,8 @@ extension ARViewController: UICollectionViewDataSource, UICollectionViewDelegate
         guard let planeAnchor = anchor as? ARPlaneAnchor else {return}
         switch node.nodeDescription! {
         case "basePlane":
+            node.width = planeAnchor.extent.x
+            node.height = planeAnchor.extent.z
             node.addChildNode(planeAnchor.updatePlaneDebugging(parentNode: node))
             break
         case "keyboardPlane":
@@ -1163,6 +1342,7 @@ extension ARViewController: UICollectionViewDataSource, UICollectionViewDelegate
             break
         }
     }
+    
     /// This renderer calls this function every time an already detected plane is removed
     ///
     /// - Parameters:
@@ -1172,11 +1352,23 @@ extension ARViewController: UICollectionViewDataSource, UICollectionViewDelegate
     func renderer(_ renderer: SCNSceneRenderer, didRemove node: SCNNode, for anchor: ARAnchor){
         guard anchor is ARPlaneAnchor else {return}
     }
+    
     /// This renderer calls this function at a rate of frames per second (60).
     ///
     /// - Parameters:
     ///   - renderer: Scene Renderer
     ///   - time: Frames Per Second (times this function is called every second. (60)
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
+        if sceneIsEmpty(){
+            DispatchQueue.main.async{
+                self.removeAllButton.isUserInteractionEnabled = false
+                self.initialPresetButton.isUserInteractionEnabled = true
+            }
+        } else {
+            DispatchQueue.main.async {
+                self.removeAllButton.isUserInteractionEnabled = true
+                self.initialPresetButton.isUserInteractionEnabled = false
+            }
+        }
     }
 }

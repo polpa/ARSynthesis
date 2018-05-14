@@ -1,18 +1,10 @@
-//
-//  ARPlane+Extensions.swift
-//  ARSynthesis
-//
-//  Created by Pol Piella on 06/02/2018.
-//  Copyright © 2018 Pol Piella. All rights reserved.
-//
-
 import Foundation
 import ARKit
-extension ARPlaneAnchor{
-    
-    private struct audioNodeProperties{
 
-    }
+// MARK: - This extension will add debug features to the plane detection, as it can be seen in the code below and the keyboard and plane debugging functions. 
+extension ARPlaneAnchor{
+
+    private struct audioNodeProperties{}
     
     func addPlaneDebugging() -> SCNNode{
         let width = self.extent.x

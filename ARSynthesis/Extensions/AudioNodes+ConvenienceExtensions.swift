@@ -1,14 +1,9 @@
-//
-//  AudioNodes+ConvenienceExtensions.swift
-//  ARSynthesis
-//
-//  Created by Pol Piella on 10/02/2018.
-//  Copyright © 2018 Pol Piella. All rights reserved.
-//
-
 import Foundation
 import AudioKit
+
+// MARK: - This class adds the necessary AudioKit Audio Components to create a suitable AKNode.
 extension AKNode{
+    
     private struct audioAddOns{
         static var attachedMixer = AKMixer()
         static var prePitchShifter = AKPitchShifter()
@@ -17,6 +12,7 @@ extension AKNode{
         static var attachedFlanger = AKFlanger()
     }
 
+    /// This is a module attached to the AKNode, giving a hint to adding a flanger as future work.
     var attachedFlanger: AKFlanger? {
         get{
             return objc_getAssociatedObject(self, &audioAddOns.attachedFlanger) as? AKFlanger ?? AKFlanger()
@@ -31,6 +27,7 @@ extension AKNode{
         }
     }
 
+    /// This will be amed at oscillators, which need to have an embedded sequencer track in order to play.
     var sequencerTrack: AKMusicTrack? {
         get{
             return objc_getAssociatedObject(self, &audioAddOns.sequencerTrack) as? AKMusicTrack ?? AKMusicTrack()
@@ -45,6 +42,7 @@ extension AKNode{
         }
     }
 
+    /// This variable is aimed at effect nodes and handles all of the unlimited input connections to these.
     var attachedMixer: AKMixer? {
         get{
             return objc_getAssociatedObject(self, &audioAddOns.attachedMixer) as? AKMixer ?? AKMixer()
@@ -59,6 +57,7 @@ extension AKNode{
         }
     }
     
+    /// This is a module which can prevent clipping if necessary but turning down the gain of the sound chain at any point.
     var gainModule: AKBooster? {
         get{
             return objc_getAssociatedObject(self, &audioAddOns.gainModule) as? AKBooster ?? AKBooster()
@@ -74,6 +73,7 @@ extension AKNode{
     }
 
     
+    /// In order to change the pitch in an efficient manner, a pitch shifter is attached to the AKNode. 
     var prePitchShifter: AKPitchShifter? {
         get{
             return objc_getAssociatedObject(self, &audioAddOns.prePitchShifter) as? AKPitchShifter ?? AKPitchShifter()

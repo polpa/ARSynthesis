@@ -1,32 +1,41 @@
-//
-//  OscillatorParametersViewController.swift
-//  ARSynthesis
-//
-//  Created by Pol Piella on 25/02/2018.
-//  Copyright © 2018 Pol Piella. All rights reserved.
-//
-
 import UIKit
 import AudioKit
 import ARKit
 
+/// This is the view controller swift class that handles all of the user interaction for the parameters view.
 class OscillatorParametersViewController: UIViewController {
+    
     var nodeToModify = SCNNode()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
+    
+    /// This closes the popup when the close button is pressed.
+    ///
+    /// - Parameter sender: Close Button.
     @IBAction func closePopUp(_ sender: UIButton) {
         DebuggerService.singletonDebugger.log.info("Closing PopUp")
         self.view.removeFromSuperview()
     }
+    
+    /// Shifts the pitch up by one semitone.
+    ///
+    /// - Parameter sender: +1 Button.
     @IBAction func pitchShiftUp(_ sender: UIButton) {
         AudioInterfaceHandler.singletonMixer.detunePlusOne(with: nodeToModify)
     }
+    
+    /// Shifts the pitch down by one semitone.
+    ///
+    /// - Parameter sender: -1 Button.
     @IBAction func pitchShiftDown(_ sender: UIButton) {
         AudioInterfaceHandler.singletonMixer.detuneMinusOne(with: nodeToModify)
     }
+    
+    /// Sets the waveform to: square, sine, triangle or sawtooth.
+    ///
+    /// - Parameter sender: Different waveform buttons.
     @IBAction func setWaveform(_ sender: UIButton) {
         guard let oscillator = nodeToModify.audioNodeContained as? AKMorphingOscillatorBank else {return}
         switch sender.tag {
@@ -45,10 +54,5 @@ class OscillatorParametersViewController: UIViewController {
         default:
             break
         }
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 }

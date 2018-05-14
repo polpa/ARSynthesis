@@ -1,11 +1,3 @@
-//
-//  AppDelegate.swift
-//  Ikea
-//
-//  Created by Rayan Slim on 2017-08-18.
-//  Copyright © 2017 Rayan Slim. All rights reserved.
-//
-
 import UIKit
 import Onboard
 
@@ -15,6 +7,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        /// Parameters are initialised here in order to save time later on.
         AudioInterfaceHandler.singletonMixer.initialize()
         DebuggerService.singletonDebugger.initialise()
         let defaults = UserDefaults.standard
@@ -23,11 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if userHasOnboardedOnce == true{
             self.setupNormalRootViewController()
        } else {
-            print("Hello")
             self.window?.rootViewController = AddOnboardingInfoView.viewController.getViewController(with: "intro")
         }
-        //let onboardingVC = OnboardingInfoViewController()
-        // Override point for customization after application launch.
         return true
     }
     

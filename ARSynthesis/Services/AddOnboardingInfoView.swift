@@ -1,15 +1,8 @@
-//
-//  OnboardingInfoViewController.swift
-//  ARSynthesis
-//
-//  Created by Pol Piella on 25/03/2018.
-//  Copyright © 2018 Pol Piella. All rights reserved.
-//
-
 import UIKit
 import Onboard
 import SwiftGifOrigin
 
+/// Adds the necessary information and structures for an Onboarding info view controller. 
 class AddOnboardingInfoView {
     private init(){}
     static let viewController = AddOnboardingInfoView()

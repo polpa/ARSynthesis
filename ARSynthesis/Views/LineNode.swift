@@ -1,11 +1,7 @@
-//
-//  LineNode.swift
-//  ARSynthesis
-//
-//  Created by Pol Piella on 03/02/2018.
-//  Copyright © 2018 Pol Piella. All rights reserved.
-//
+//Refer to the report to check where this code has been adapted from.
 import ARKit
+
+/// This class creates a line node structure between the center of two nodes. 
 class LineNode: SCNNode
 {
     init(name: String,

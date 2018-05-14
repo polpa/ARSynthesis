@@ -1,15 +1,8 @@
-//
-//  AudioMixer.swift
-//  ARSynthesis
-//
-//  Created by Pol Piella on 25/01/2018.
-//  Copyright © 2018 Pol Piella. All rights reserved.
-//
-
 import Foundation
 import AudioKit
 import ARKit
 
+/// This class takes care of all the necessary audio processing and, since it is a singleton, can be accessed from anywhere across the workspace.
 class AudioInterfaceHandler {
     
     var oscillatorArray: [AKMorphingOscillatorBank] = []
@@ -40,7 +33,6 @@ class AudioInterfaceHandler {
             drumsLoopLauncher = try AKAudioPlayer(file: audioFile)
             drumsLoopLauncher.volume = 0
             drumsLoopLauncher.looping = true
-//            drumsLoopLauncher.start()
         } catch  {
             print(error.localizedDescription)
         }
@@ -92,16 +84,27 @@ class AudioInterfaceHandler {
         }
     }
     
+    /// Detunes the oscillator's pitch by 1 semitone.
+    ///
+    /// - Parameter node: The pressed node.
     open func detuneMinusOne(with node: SCNNode){
         guard let pitchShifter = node.audioNodeContained?.prePitchShifter else {return}
         pitchShifter.shift = pitchShifter.shift - 1.0
     }
     
+    /// Shifts the pitch of the oscillator up by 1 semitone.
+    ///
+    /// - Parameter node: The pressed node.
     open func detunePlusOne(with node: SCNNode){
         guard let pitchShifter = node.audioNodeContained?.prePitchShifter else {return}
         pitchShifter.shift = pitchShifter.shift + 1.0
     }
     
+    /// This handles all the necessary parameters and components for a successful and safe connection.
+    ///
+    /// - Parameters:
+    ///   - fromOutput: Starting node.
+    ///   - toInput: Destination node.
     open func connect(fromOutput: SCNNode, toInput: SCNNode){
         if !(toInput.nodeDescription?.elementsEqual("vibrato"))! && !(fromOutput.nodeDescription?.elementsEqual("vibrato"))! {
             log.verbose(!((fromOutput.nodeDescription?.isEmpty)!))
@@ -129,18 +132,18 @@ class AudioInterfaceHandler {
                     fromOutput.audioNodeContained?.connect(to: (toInput.audioNodeContained?.attachedMixer)!)
                 }
             }
-        } else {
-
-        }
-
-
+        } else {}
     }
     
+    /// If a sequencer is placed on the scene, this is called.
     open func sequencerSelected(){
         sequencer.play()
         log.verbose("Num. of sequencer tracks: \(sequencer.tracks.count)")
     }
     
+    /// When a node is placed on the scene, this method handles all of the necessary components for their initialisation.
+    ///
+    /// - Parameter node: Placed Node.
     open func append(node: SCNNode){
         switch node.nodeDescription! {
         case "oscillator":
@@ -234,10 +237,9 @@ class AudioInterfaceHandler {
         
     }
     
-    private func restartSequencer(){
-        
-        
-    }
+    /// The selected sequencer track is initialised.
+    ///
+    /// - Parameter track: Sequencer Track.
     private func initialiseTrack (with track: AKMusicTrack){
         track.clear()
         track.add(noteNumber: 60, velocity: 60, position: AKDuration(beats: 0), duration: AKDuration(beats: 1))
@@ -246,6 +248,9 @@ class AudioInterfaceHandler {
         track.add(noteNumber: 60, velocity: 60, position: AKDuration(beats: 3), duration: AKDuration(beats: 1))
     }
 
+    /// Removes the note at the given place in the grid from the sequencer track.
+    ///
+    /// - Parameter buttonTag: The box pressed in the sequencer grid.
     open func removeFromSequence(buttonTag: String){
         let theSequencerTag = buttonTag
         let row: Int = Int(theSequencerTag.components(separatedBy: ".")[0])!
@@ -255,6 +260,9 @@ class AudioInterfaceHandler {
         
     }
     
+    /// Performs the necessary information for the sequencer value pressed.
+    ///
+    /// - Parameter buttonTag: Pressed sequencer node.
     open func sequenceValue(buttonTag: String){
         let theSequencerTag = buttonTag
         var row: Int = 0
@@ -289,6 +297,9 @@ class AudioInterfaceHandler {
         }
     }
     
+    /// Removes the selected node from the scene. 
+    ///
+    /// - Parameter node: Double-tapped node.
     open func remove(node: SCNNode){
         if (node.nodeDescription?.elementsEqual("oscillator"))! {
             if (node.inputConnection?.isNotEmpty)!{
